@@ -28,8 +28,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 
 LOCAL_PATH := device/nothing/Spacewar
 
-include kernel/nothing/sm7325/Android.mk
-
 # A/B
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
