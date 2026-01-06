@@ -55,6 +55,14 @@ AB_OTA_PARTITIONS += \
 TARGET_NO_KERNEL := true
 TARGET_NO_KERNEL_HEADERS := true
 
+# Prebuilt kernel extracted from stock boot.img
+TARGET_PREBUILT_KERNEL := device/nothing/Spacewar/prebuilt/boot.img-kernel
+
+# Prebuilt DTBO
+BOARD_PREBUILT_DTBOIMAGE := device/nothing/Spacewar/prebuilt/dtbo.img
+
+TARGET_FORCE_PREBUILT_KERNEL := true
+
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_KERNEL_PAGESIZE := 4096
