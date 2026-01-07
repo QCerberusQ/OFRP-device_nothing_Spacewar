@@ -7,6 +7,8 @@ on early-init
     symlink /vendor/bt_firmware /bt_firmware
     symlink /vendor/dsp /dsp
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
+    write /sys/class/leds/vibrator/activate 0
+    write /sys/class/leds/vibrator/enable 0
 
 on init
     mount_all /vendor/etc/charger_fw_fstab.qti --early
@@ -48,6 +50,8 @@ service wrapped-key /system/bin/wrappedkey-fix.sh
 on boot
 #    start vendor.qti.vibrator
     setprop sys.usb.config adb
+    write /sys/class/leds/vibrator/activate 0
+    write /sys/class/leds/vibrator/enable 0
 
 on property:modem.partition.mounted=1
     insmod /vendor/lib/modules/q6_dlkm.ko
