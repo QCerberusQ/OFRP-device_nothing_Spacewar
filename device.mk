@@ -45,7 +45,7 @@ PRODUCT_PACKAGES += \
 
 # Touchscreen modüllerini recovery ramdisk'ine kopyala
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/fts_tp.ko:$(TARGET_RECOVERY_ROOT_OUT)/lib/modules/fts_tp.ko
+    $(LOCAL_PATH)/vendor/lib/modules/fts_tp.ko:$(TARGET_RECOVERY_ROOT_OUT)/lib/modules/fts_tp.ko
 
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
