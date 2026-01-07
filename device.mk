@@ -43,6 +43,11 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.1-impl-qti.recovery \
     bootctrl.lahaina.recovery
 
+# Touchscreen modüllerini recovery ramdisk'ine kopyala
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/recovery/root/vendor/modules/fts_tp.ko:$(TARGET_RECOVERY_ROOT_OUT)/lib/modules/fts_tp.ko \
+    $(LOCAL_PATH)/recovery/root/vendor/modules/nvt_36xxx.ko:$(TARGET_RECOVERY_ROOT_OUT)/lib/modules/nvt_36xxx.ko
+
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
 
