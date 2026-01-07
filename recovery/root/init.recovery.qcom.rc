@@ -52,7 +52,8 @@ on boot
     setprop sys.usb.config adb
     write /sys/class/leds/vibrator/activate 0
     write /sys/class/leds/vibrator/enable 0
-    insmod /lib/modules/fts_tp.ko
+    insmod /vendor/lib/modules/msm_drm.ko
+    insmod /vendor/lib/modules/fts_tp.ko
 
 on property:modem.partition.mounted=1
     insmod /vendor/lib/modules/q6_dlkm.ko
@@ -61,7 +62,6 @@ on property:modem.partition.mounted=1
     insmod /vendor/lib/modules/snd_event_dlkm.ko
     insmod /vendor/lib/modules/apr_dlkm.ko
     insmod /vendor/lib/modules/adsp_loader_dlkm.ko
-    #insmod /vendor/lib/modules/fts_tp.ko
 
 on property:dev.mnt.blk.firmware=*
     wait /sys/kernel/boot_adsp/boot
