@@ -59,7 +59,7 @@ TARGET_NO_KERNEL_HEADERS := true
 BOARD_INCLUDE_RECOVERY_DTBO := true
 
 # Prebuilt kernel extracted from stock boot.img
-TARGET_PREBUILT_KERNEL := device/nothing/Spacewar/prebuilt/boot.img-kernel
+TARGET_PREBUILT_KERNEL := device/nothing/Spacewar/prebuilt/Image
 
 # Prebuilt DTBO
 BOARD_PREBUILT_DTBOIMAGE := device/nothing/Spacewar/prebuilt/dtbo.img
