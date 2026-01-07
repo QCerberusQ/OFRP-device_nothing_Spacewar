@@ -56,6 +56,7 @@ AB_OTA_PARTITIONS += \
 # Kernel
 TARGET_NO_KERNEL := true
 TARGET_NO_KERNEL_HEADERS := true
+BOARD_INCLUDE_RECOVERY_DTBO := true
 
 # Prebuilt kernel extracted from stock boot.img
 TARGET_PREBUILT_KERNEL := device/nothing/Spacewar/prebuilt/boot.img-kernel
