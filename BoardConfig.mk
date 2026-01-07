@@ -51,6 +51,15 @@ AB_OTA_PARTITIONS += \
     vendor \
     vendor_boot
 
+#Touch
+RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_VENDOR)/lib/modules/fts_touch.ko
+
+# I2C/ SPI adresi tanımlamaları
+TW_CUSTOM_TOUCH_DEVICE := "fts" # veya "goodix"
+TW_MAX_BRIGHTNESS := 1200
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+
+
 # Kernel
 TARGET_NO_KERNEL := true
 TARGET_NO_KERNEL_HEADERS := true
