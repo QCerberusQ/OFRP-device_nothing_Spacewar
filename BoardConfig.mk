@@ -52,9 +52,6 @@ AB_OTA_PARTITIONS += \
     vendor_boot
 
 
-# I2C/ SPI adresi tanımlamaları
-TW_CUSTOM_TOUCH_DEVICE := "fts" # veya "goodix"
-
 
 # Kernel
 TARGET_NO_KERNEL := true
