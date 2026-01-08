@@ -79,22 +79,22 @@ BOARD_MKBOOTIMG_ARGS += \
     --cmdline "androidboot.console=ttyMSM0 androidboot.hardware=qcom androidboot.memcg=1 androidboot.selinux=permissive androidboot.usbcontroller=a600000.dwc3 cgroup.memory=nokmem,nosocket console=ttyMSM0,115200n8 earlycon=msm_geni_serial,0x880000 ip6table_raw.raw_before_defrag=1 iptable_raw.raw_before_defrag=1 lpm_levels.sleep_disabled=1 msm_rtb.filter=0x237 pcie_ports=compat service_locator.enable=1 swiotlb=0 androidboot.vibrator.disabled=1"
 
 
-BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM0
-BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
-BOARD_KERNEL_CMDLINE += androidboot.memcg=1
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-BOARD_KERNEL_CMDLINE += androidboot.usbcontroller=a600000.dwc3
-BOARD_KERNEL_CMDLINE += cgroup.memory=nokmem,nosocket
-BOARD_KERNEL_CMDLINE += console=ttyMSM0,115200n8
-BOARD_KERNEL_CMDLINE += earlycon=msm_geni_serial,0x880000
-BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
-BOARD_KERNEL_CMDLINE += iptable_raw.raw_before_defrag=1
-BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1
-BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x237
-BOARD_KERNEL_CMDLINE += pcie_ports=compat
-BOARD_KERNEL_CMDLINE += service_locator.enable=1
-BOARD_KERNEL_CMDLINE += swiotlb=0
-BOARD_KERNEL_CMDLINE += androidboot.vibrator.disabled=1
+#BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM0
+#BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
+#BOARD_KERNEL_CMDLINE += androidboot.memcg=1
+#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+#BOARD_KERNEL_CMDLINE += androidboot.usbcontroller=a600000.dwc3
+#BOARD_KERNEL_CMDLINE += cgroup.memory=nokmem,nosocket
+#BOARD_KERNEL_CMDLINE += console=ttyMSM0,115200n8
+#BOARD_KERNEL_CMDLINE += earlycon=msm_geni_serial,0x880000
+#BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
+#BOARD_KERNEL_CMDLINE += iptable_raw.raw_before_defrag=1
+#BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1
+#BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x237
+#BOARD_KERNEL_CMDLINE += pcie_ports=compat
+#BOARD_KERNEL_CMDLINE += service_locator.enable=1
+#BOARD_KERNEL_CMDLINE += swiotlb=0
+#BOARD_KERNEL_CMDLINE += androidboot.vibrator.disabled=1
 
 
 BOARD_RAMDISK_USE_LZ4 := true
