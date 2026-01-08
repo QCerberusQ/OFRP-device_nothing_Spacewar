@@ -13,8 +13,11 @@ on late-init
     # modprobe vendor yolu
     export MODPROBE_OPTIONS "-d /vendor"
 
-    # Display
+    # Display stack (panel MODÜL olduğu için önce drm)
     modprobe msm_drm
+
+    # KISA GECİKME – I2C/regulator için
+    exec u:r:recovery:s0 -- /system/bin/sleep 1
 
     # Touch
     modprobe fts_tp
