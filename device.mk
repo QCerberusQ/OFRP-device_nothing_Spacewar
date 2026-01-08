@@ -45,8 +45,7 @@ PRODUCT_PACKAGES += \
 
 # FocalTech touchscreen module for recovery
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/fts_tp.ko:$(TARGET_RECOVERY_ROOT_OUT)/vendor/lib/modules/fts_tp.ko \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules/msm_drm.ko:$(TARGET_RECOVERY_ROOT_OUT)/vendor/lib/modules/msm_drm.ko
+    $(LOCAL_PATH)/recovery/root/vendor/lib/modules:$(TARGET_RECOVERY_ROOT_OUT)/vendor/lib/modules
 
 
 PRODUCT_PACKAGES_DEBUG += \
