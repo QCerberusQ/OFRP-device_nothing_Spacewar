@@ -1,23 +1,24 @@
-# Android fstab for OrangeFox Recovery - Nothing Phone 1 (Spacewar)
+# --- Dynamic partitions ---
+system          /system         ext4    ro,barrier=1,discard    wait,slotselect,logical,first_stage_mount
+system_ext      /system_ext     ext4    ro,barrier=1,discard    wait,slotselect,logical,first_stage_mount
+product         /product        ext4    ro,barrier=1,discard    wait,slotselect,logical,first_stage_mount
 
-# A/B slots
-system          /system         ext4    ro,barrier=1,discard    wait,slotselect,logical
-system_ext      /system_ext     ext4    ro,barrier=1,discard    wait,slotselect,logical
-product         /product        ext4    ro,barrier=1,discard    wait,slotselect,logical
+# --- Vendor ---
+vendor          /vendor         erofs   ro                      wait,slotselect,logical,first_stage_mount
+vendor_dlkm     /vendor_dlkm    erofs   ro                      wait,slotselect,logical,first_stage_mount
+odm             /odm            erofs   ro                      wait,slotselect,logical,first_stage_mount
 
-# Vendor partitions - SADECE bir seçenek (erofs veya ext4)
-vendor          /vendor         erofs   ro                      wait,slotselect,logical
-vendor_dlkm     /vendor_dlkm    erofs   ro                      wait,slotselect,logical
-odm             /odm            erofs   ro                      wait,slotselect,logical
+# --- Metadata (FBE) ---
+/dev/block/by-name/metadata     /metadata   ext4   noatime,discard   wait,check,first_stage_mount
 
-# Metadata for encryption
-/metadata       /metadata       ext4    noatime,discard         wait,check
+# --- Persist ---
+/dev/block/bootdevice/by-name/persist   /mnt/vendor/persist   ext4   noatime,barrier=1   wait
 
-# Persist for settings
-/persist        /mnt/vendor/persist ext4  noatime,barrier=1       wait
+# --- Data ---
+/dev/block/bootdevice/by-name/userdata  /data  f2fs \
+noatime,discard,inlinecrypt,reserve_root=32768,resgid=1065,fsync_mode=nobarrier \
+latemount,wait,check,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0,\
+keydirectory=/metadata/vold/metadata_encryption,metadata_encryption=aes-256-xts:wrappedkey_v0
 
-# Data - FBE encryption
-/data           /data           f2fs    noatime,discard,inlinecrypt,reserve_root=32768,resgid=1065,fsync_mode=nobarrier    wait,check,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0,keydirectory=/metadata/vold/metadata_encryption,metadata_encryption=aes-256-xts:wrappedkey_v0
-
-# Misc
-/misc           /misc           emmc    defaults                defaults
+# --- Misc ---
+/dev/block/bootdevice/by-name/misc   /misc   emmc   defaults   defaults
