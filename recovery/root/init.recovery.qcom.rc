@@ -2,26 +2,19 @@ import /init.recovery.qcom_decrypt.rc
 
 on early-init
     exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
-    mkdir /vendor
-    mkdir /vendor_dlkm
 
 on init
-    mount_all /vendor/etc/charger_fw_fstab.qti --early
     write /sys/class/backlight/panel0-backlight/brightness 200
     setprop sys.usb.configfs 1
-
-on fs
-    wait /dev/block/mapper/vendor_dlkm${ro.boot.slot_suffix}
-    mount erofs /dev/block/mapper/vendor_dlkm${ro.boot.slot_suffix} /vendor_dlkm ro
 
 on late-init
     # Display stack
     insmod /vendor_dlkm/lib/modules/msm_drm.ko
 
-    # Donanım stabilizasyonu
+    # kısa gecikme
     exec u:r:recovery:s0 -- /system/bin/sleep 1
 
-    # Touch – STOCK KAYNAK
+    # Touch (STOCK yol)
     insmod /vendor_dlkm/lib/modules/fts_tp.ko
 
 on boot
