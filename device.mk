@@ -43,10 +43,6 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.1-impl-qti.recovery \
     bootctrl.lahaina.recovery
 
-# FocalTech touchscreen module for recovery
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/recovery/root/vendor/lib/modules:$(TARGET_RECOVERY_ROOT_OUT)/vendor/lib/modules
-
 
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
