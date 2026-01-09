@@ -3,24 +3,26 @@ import /init.recovery.qcom_decrypt.rc
 on early-init
     exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
     mkdir /vendor
-    mount_all /vendor/etc/charger_fw_fstab.qti --early
+    mkdir /vendor_dlkm
 
 on init
+    mount_all /vendor/etc/charger_fw_fstab.qti --early
     write /sys/class/backlight/panel0-backlight/brightness 200
     setprop sys.usb.configfs 1
 
+on fs
+    wait /dev/block/mapper/vendor_dlkm${ro.boot.slot_suffix}
+    mount erofs /dev/block/mapper/vendor_dlkm${ro.boot.slot_suffix} /vendor_dlkm ro
+
 on late-init
-    # modprobe vendor yolu
-    export MODPROBE_OPTIONS "-d /vendor"
+    # Display stack
+    insmod /vendor_dlkm/lib/modules/msm_drm.ko
 
-    # Display stack (panel MODÜL olduğu için önce drm)
-    modprobe msm_drm
-
-    # KISA GECİKME – I2C/regulator için
+    # Donanım stabilizasyonu
     exec u:r:recovery:s0 -- /system/bin/sleep 1
 
-    # Touch
-    modprobe fts_tp
+    # Touch – STOCK KAYNAK
+    insmod /vendor_dlkm/lib/modules/fts_tp.ko
 
 on boot
     setprop sys.usb.config adb
