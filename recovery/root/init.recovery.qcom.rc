@@ -2,27 +2,95 @@ import /init.recovery.qcom_decrypt.rc
 
 on early-init
     exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
+    symlink /vendor/firmware_mnt /firmware
+    symlink /vendor/bt_firmware /bt_firmware
+    symlink /vendor/dsp /dsp
+    write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on init
+    mount_all /vendor/etc/charger_fw_fstab.qti --early
     write /sys/class/backlight/panel0-backlight/brightness 200
     setprop sys.usb.configfs 1
+    write /sys/class/power_supply/usb/otg_switch 1
 
-on late-init
-    # Display stack
-    insmod /vendor_dlkm/lib/modules/msm_drm.ko
+on fs
+    wait /dev/block/platform/soc/${ro.boot.bootdevice}
+    symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    # kısa gecikme
+    mkdir /firmware
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} \
+        /firmware ro context=u:object_r:firmware_file:s0
+
+on late-fs
+    start keymasterd
+    start set_permissive
+
+on post-fs
+    start boot-hal-1-1
+
+    # ✅ vendor_dlkm OTOMATİK mount edilir (fstab)
+    # modüller hazır mı?
+    wait /dev/block/mapper/vendor_dlkm
+    wait /vendor_dlkm/lib/modules/5.4-gki/modules.dep
+
+    # modprobe vendor_dlkm kökünü kullansın
+    export MODPROBE_OPTIONS "-d /vendor_dlkm/lib/modules/5.4-gki"
+
+    # DSP / Audio / Display stack
+    exec u:r:recovery:s0 -- /system/bin/modprobe -a \
+        q6_pdr_dlkm \
+        q6_notifier_dlkm \
+        snd_event_dlkm \
+        apr_dlkm \
+        adsp_loader_dlkm \
+        msm_drm
+
+    # Touch öncesi kısa gecikme
     exec u:r:recovery:s0 -- /system/bin/sleep 1
 
-    # Touch (STOCK yol)
-    insmod /vendor_dlkm/lib/modules/fts_tp.ko
+    # Touch panel
+    exec u:r:recovery:s0 -- /system/bin/modprobe fts_tp
+
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    chmod 0777 /system/bin/wrappedkey-fix.sh
+    start wrapped-key
 
 on boot
     setprop sys.usb.config adb
     write /sys/class/leds/vibrator/activate 0
     write /sys/class/leds/vibrator/enable 0
 
+on property:dev.mnt.blk.firmware=*
+    wait /sys/kernel/boot_adsp/boot
+    write /sys/kernel/boot_adsp/boot 1
+    wait /sys/class/power_supply/battery
+    start health-hal-2-1
+
+on property:ro.boot.usbcontroller=*
+    setprop sys.usb.controller ${ro.boot.usbcontroller}
+    wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
+    write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
+
 service set_permissive /system/bin/set_permissive.sh
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+service keymasterd /system/bin/keymasterd
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service wrapped-key /system/bin/wrappedkey-fix.sh
     user root
     group root
     disabled
