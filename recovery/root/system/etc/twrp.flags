@@ -36,4 +36,4 @@
 /usbstorage      auto       /dev/block/sdg1                                      flags=display="USB Storage";storage;wipeingui;removable
 
 # Vendor DLKM (kernel modules)
-/vendor_dlkm     erofs      /dev/block/mapper/vendor_dlkm                         flags=wait,slotselect
+/vendor_dlkm     erofs      /dev/block/mapper/vendor_dlkm                        flags=wait,slotselect
