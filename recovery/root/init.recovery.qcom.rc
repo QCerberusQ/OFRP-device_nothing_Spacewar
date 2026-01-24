@@ -20,5 +20,5 @@ on post-fs
     # Touch
     insmod /vendor_dlkm/lib/modules/fts_tp.ko
 
-on boot
-    setprop sys.usb.config adb
+#on boot
+#    setprop sys.usb.config adb
