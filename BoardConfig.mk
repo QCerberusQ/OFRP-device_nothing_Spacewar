@@ -180,3 +180,4 @@ TW_CUSTOM_BATTERY_PATH := "/sys/class/power_supply/battery"
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 TW_SKIP_ADDITIONAL_FSTAB := true
 
+TARGET_SUPPORTS_64_BIT_APPS := false
