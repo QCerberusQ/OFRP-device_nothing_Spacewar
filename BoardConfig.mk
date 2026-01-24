@@ -54,7 +54,7 @@ AB_OTA_PARTITIONS += \
 
 
 # Kernel
-TARGET_NO_KERNEL := true
+TARGET_NO_KERNEL := false
 TARGET_NO_KERNEL_HEADERS := true
 BOARD_INCLUDE_RECOVERY_DTBO := true
 
@@ -179,5 +179,4 @@ TW_CUSTOM_BATTERY_PATH := "/sys/class/power_supply/battery"
 # Vibrator
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 TW_SKIP_ADDITIONAL_FSTAB := true
-#
-TARGET_SUPPORTS_64_BIT_APPS := false
+
