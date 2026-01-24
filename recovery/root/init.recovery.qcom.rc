@@ -11,8 +11,10 @@ on fs
 on post-fs
     # vendor_dlkm hazır mı?
     wait /dev/block/mapper/vendor_dlkm${ro.boot.slot_suffix}
+    mkdir /vendor_dlkm
     mount erofs /dev/block/mapper/vendor_dlkm${ro.boot.slot_suffix} /vendor_dlkm ro
 
+    # touch modülü gerçekten var mı?
     wait /vendor_dlkm/lib/modules/fts_tp.ko
 
     # Touch
