@@ -48,15 +48,14 @@ AB_OTA_PARTITIONS += \
     system_ext \
     vbmeta \
     vbmeta_system \
-    vendor \
-    vendor_boot
+    vendor
 
 
 
 # Kernel
-TARGET_NO_KERNEL := false
+TARGET_NO_KERNEL := true
 TARGET_NO_KERNEL_HEADERS := true
-BOARD_INCLUDE_RECOVERY_DTBO := true
+BOARD_INCLUDE_RECOVERY_DTBO := false
 
 # Prebuilt kernel extracted from stock boot.img
 TARGET_PREBUILT_KERNEL := device/nothing/Spacewar/prebuilt/Image
