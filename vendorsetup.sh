@@ -3,8 +3,6 @@ export LC_ALL="C"
 
 # Device identity (KRİTİK)
 export FOX_BUILD_DEVICE=Spacewar
-export FOX_TARGET_DEVICES=Spacewar,spacewar
-export TARGET_DEVICE_ALT=Spacewar,spacewar
 
 # A/B & Virtual A/B
 export FOX_VIRTUAL_AB_DEVICE=1
