@@ -110,19 +110,17 @@ BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
 TARGET_COPY_OUT_VENDOR_BOOT := vendor_boot
 
 # Kernel
-
+BOARD_KERNEL_PAGESIZE := 4096
 TARGET_NO_KERNEL := false
+TARGET_KERNEL_ARCH := arm64
+TARGET_KERNEL_HEADER_ARCH := arm64
+BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_BOOT_HEADER_VERSION := 3
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/$(BOARD_KERNEL_IMAGE_NAME)
 # -----------------------------------------------------------------------------
 # Kernel & Boot Image Offsets (v3 Fixed)
 # -----------------------------------------------------------------------------
-TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_HEADER_ARCH := arm64
-BOARD_KERNEL_IMAGE_NAME := Image
-BOARD_KERNEL_PAGESIZE := 4096
-
 # Standart Qualcomm Offsetleri (Spacewar için genelde budur)
 BOARD_KERNEL_BASE        := 0x00000000
 BOARD_KERNEL_OFFSET      := 0x00008000
@@ -139,8 +137,6 @@ BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_TAGS_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --board ""
-
-
 
 # Platform
 TARGET_BOARD_PLATFORM := lahaina
