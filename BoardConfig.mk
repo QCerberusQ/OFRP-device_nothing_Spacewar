@@ -7,7 +7,7 @@ DEVICE_PATH := device/nothing/Spacewar
 # A/B
 AB_OTA_UPDATER := true
 
-AB_OTA_PARTITIONS := \
+AB_OTA_PARTITIONS += \
     boot \
     dtbo \
     odm \
@@ -17,6 +17,7 @@ AB_OTA_PARTITIONS := \
     vbmeta \
     vbmeta_system \
     vendor \
+    vendor_dlkm \
     vendor_boot
 
 # Architecture
