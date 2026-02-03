@@ -50,14 +50,12 @@
 #endif
 #include <inttypes.h>
 
-
 #define LOG_TAG "gpt-utils"
-#include <cutils/log.h>
+#include <log/log.h>
 #include <cutils/properties.h>
 #include "gpt-utils.h"
 #include <zlib.h>
 #include <endian.h>
-
 
 /******************************************************************************
  * DEFINE SECTION
@@ -86,7 +84,6 @@
 /******************************************************************************
  * MACROS
  ******************************************************************************/
-
 
 #define GET_4_BYTES(ptr)    ((uint32_t) *((uint8_t *)(ptr)) | \
         ((uint32_t) *((uint8_t *)(ptr) + 1) << 8) | \
@@ -166,8 +163,6 @@ static int blk_rw(int fd, int rw, int64_t offset, uint8_t *buf, unsigned len)
     return r;
 }
 
-
-
 /**
  *  ==========================================================================
  *
@@ -211,8 +206,6 @@ static uint8_t *gpt_pentry_seek(const char *ptn_name,
     return NULL;
 }
 
-
-
 /**
  *  ==========================================================================
  *
@@ -239,11 +232,11 @@ static int gpt_boot_chain_swap(const uint8_t *pentries_start,
         uint8_t *ptn_entry;
         uint8_t *ptn_bak_entry;
         uint8_t ptn_swap[PTN_ENTRY_SIZE];
-        //Skip the xbl, multiimgoem, multiimgqti partitions on UFS devices. That is handled
+        //Skip the xbl partition on UFS devices. That is handled
         //seperately.
-        if ((gpt_utils_is_ufs_device() && !strncmp(ptn_swap_list[i],PTN_XBL,strlen(PTN_XBL)))
-            || !strncmp(ptn_swap_list[i],PTN_MULTIIMGOEM,strlen(PTN_MULTIIMGOEM))
-            || !strncmp(ptn_swap_list[i],PTN_MULTIIMGQTI,strlen(PTN_MULTIIMGQTI)))
+        if (gpt_utils_is_ufs_device() && !strncmp(ptn_swap_list[i],
+                                PTN_XBL,
+                                strlen(PTN_XBL)))
             continue;
 
         ptn_entry = gpt_pentry_seek(ptn_swap_list[i], pentries_start,
@@ -268,8 +261,6 @@ static int gpt_boot_chain_swap(const uint8_t *pentries_start,
 
     return backup_not_found;
 }
-
-
 
 /**
  *  ==========================================================================
@@ -297,7 +288,6 @@ static int gpt2_set_boot_chain(int fd, enum boot_chain boot)
     uint32_t crc_zero;
     uint32_t blk_size = 0;
     int r;
-
 
     crc_zero = crc32(0L, Z_NULL, 0);
     if (ioctl(fd, BLKSSZGET, &blk_size) != 0) {
@@ -457,8 +447,6 @@ error:
     return -1;
 }
 
-
-
 /**
  *  ==========================================================================
  *
@@ -606,8 +594,6 @@ error:
                 closedir(scsi_dir);
         return -1;
 }
-
-
 
 //Swtich betwieen using either the primary or the backup
 //boot LUN for boot. This is required since UFS boot partitions
@@ -970,9 +956,9 @@ int prepare_boot_update(enum boot_update_stage stage)
                         //of being loaded based on well known GUID'S.
                         //We take care of switching the UFS boot LUN
                         //explicitly later on.
-                        if (!strncmp(ptn_swap_list[i],PTN_XBL,strlen(PTN_XBL))
-                            || !strncmp(ptn_swap_list[i],PTN_MULTIIMGOEM,strlen(PTN_MULTIIMGOEM))
-                            || !strncmp(ptn_swap_list[i],PTN_MULTIIMGQTI,strlen(PTN_MULTIIMGQTI)))
+                        if (!strncmp(ptn_swap_list[i],
+                                                PTN_XBL,
+                                                strlen(PTN_XBL)))
                                 continue;
                         snprintf(buf, sizeof(buf),
                                         "%s/%sbak",
@@ -1301,8 +1287,6 @@ error:
         return -1;
 }
 
-
-
 //Allocate a handle used by calls to the "gpt_disk" api's
 struct gpt_disk * gpt_disk_alloc()
 {
@@ -1339,12 +1323,12 @@ void gpt_disk_free(struct gpt_disk *disk)
 int gpt_disk_get_disk_info(const char *dev, struct gpt_disk *dsk)
 {
 
-	struct gpt_disk *disk = NULL;
-	int fd = -1;
-	uint32_t gpt_header_size = 0;
-	uint32_t crc_zero;
+    struct gpt_disk *disk = NULL;
+    int fd = -1;
+    uint32_t gpt_header_size = 0;
+    uint32_t crc_zero;
 
-	crc_zero = crc32(0L, Z_NULL, 0);
+    crc_zero = crc32(0L, Z_NULL, 0);
         if (!dsk || !dev) {
                 ALOGE("%s: Invalid arguments", __func__);
                 goto error;
@@ -1478,7 +1462,7 @@ int gpt_disk_commit(struct gpt_disk *disk)
                 ALOGE("%s: Invalid args", __func__);
                 goto error;
         }
-        fd = open(disk->devpath, O_RDWR | O_DSYNC);
+        fd = open(disk->devpath, O_RDWR);
         if (fd < 0) {
                 ALOGE("%s: Failed to open %s: %s",
                                 __func__,
@@ -1510,7 +1494,6 @@ int gpt_disk_commit(struct gpt_disk *disk)
                                 __func__);
                 goto error;
         }
-        fsync(fd);
         close(fd);
         return 0;
 error:

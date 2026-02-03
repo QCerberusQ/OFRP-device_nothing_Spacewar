@@ -1,60 +1,57 @@
-# Android fstab file for OrangeFox (vendor_boot recovery)
-# Nothing Phone (1) - spacewar
-#
-# mount point        fstype   device                                             flags
+# --- Userdata ---
+/metadata        ext4   /dev/block/bootdevice/by-name/metadata \
+flags=display="Metadata";backup=1;wrappedkey
 
-# -----------------------------------------------------------------------------
-# Metadata / Data
-# -----------------------------------------------------------------------------
-/metadata            ext4     /dev/block/bootdevice/by-name/metadata              flags=display="Metadata";backup=1;wrappedkey;wipeingui
-/data                f2fs     /dev/block/bootdevice/by-name/userdata              flags=fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0,metadata_encryption=aes-256-xts:wrappedkey_v0,keydirectory=/metadata/vold/metadata_encryption
+/data            f2fs   /dev/block/bootdevice/by-name/userdata \
+flags=fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0;keydirectory=/metadata/vold/metadata_encryption;metadata_encryption=aes-256-xts:wrappedkey_v0
 
-# -----------------------------------------------------------------------------
-# Internal storage (bind mount)
-# -----------------------------------------------------------------------------
-/storage             f2fs     /data/media/0                                       flags=display="Internal Storage";backup=1;fsflags="bind,utf8";usermrf;removable
+# --- Boot / AVB ---
+/boot            emmc   /dev/block/bootdevice/by-name/boot \
+flags=backup=1;slotselect;flashimg=1
 
-# -----------------------------------------------------------------------------
-# Boot / AVB (vendor_boot recovery)
-# -----------------------------------------------------------------------------
-/vendor_boot         emmc     /dev/block/bootdevice/by-name/vendor_boot           flags=backup=1;display="vendor_boot";slotselect;flashimg=1
-/dtbo                emmc     /dev/block/bootdevice/by-name/dtbo                  flags=backup=1;display="dtbo";slotselect;flashimg=1
-/vbmeta              emmc     /dev/block/bootdevice/by-name/vbmeta                flags=backup=1;display="vbmeta";slotselect;flashimg=1
-/vbmeta_system       emmc     /dev/block/bootdevice/by-name/vbmeta_system         flags=backup=1;display="vbmeta_system";slotselect;flashimg=1
+/vendor_boot     emmc   /dev/block/bootdevice/by-name/vendor_boot \
+flags=backup=1;slotselect;display="Vendor Boot";flashimg=1
 
-# NOTE:
-# /boot is intentionally NOT flashable on vendor_boot recovery
+/dtbo            emmc   /dev/block/bootdevice/by-name/dtbo \
+flags=backup=1;slotselect;display="DTBO";flashimg=1
 
-# -----------------------------------------------------------------------------
-# Super / Dynamic partitions
-# -----------------------------------------------------------------------------
-/super               emmc     /dev/block/bootdevice/by-name/super                 flags=backup=1;display="Super";flashimg=1
+/vbmeta          emmc   /dev/block/bootdevice/by-name/vbmeta \
+flags=backup=1;slotselect;display="VBMeta";flashimg=1
 
-# -----------------------------------------------------------------------------
-# Persist
-# -----------------------------------------------------------------------------
-/persist             ext4     /dev/block/bootdevice/by-name/persist               flags=display="Persist";backup=1
-/prodpersist         ext4     /dev/block/bootdevice/by-name/prodpersist           flags=display="Product Persist";backup=1
+/vbmeta_system   emmc   /dev/block/bootdevice/by-name/vbmeta_system \
+flags=backup=1;slotselect;display="VBMeta System";flashimg=1
 
-# -----------------------------------------------------------------------------
-# Firmware partitions
-# -----------------------------------------------------------------------------
-/modem               vfat     /dev/block/bootdevice/by-name/modem                 flags=display="Modem";slotselect;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337";wait
-/bluetooth           vfat     /dev/block/bootdevice/by-name/bluetooth             flags=display="Bluetooth";slotselect;fsflags="ro,shortname=lower,uid=1002,gid=3002,dmask=227,fmask=337";wait
-/dsp                 vfat     /dev/block/bootdevice/by-name/dsp                   flags=display="DSP";slotselect;wait
+# --- Persistent ---
+/persist         ext4   /dev/block/bootdevice/by-name/persist \
+flags=backup=1;display="Persist"
 
-# -----------------------------------------------------------------------------
-# Vendor DLKM (kernel modules - mount only)
-# -----------------------------------------------------------------------------
-/vendor_dlkm         erofs    /dev/block/mapper/vendor_dlkm                       flags=wait,slotselect
+# --- Firmware (mount) ---
+/modem           vfat   /dev/block/bootdevice/by-name/modem \
+flags=display="Modem";slotselect;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337"
 
-# -----------------------------------------------------------------------------
-# Misc / Logo
-# -----------------------------------------------------------------------------
-/misc                emmc     /dev/block/bootdevice/by-name/misc                  flags=display="Misc";backup=1
-/logo                emmc     /dev/block/bootdevice/by-name/logo                  flags=backup=1;display="Logo";slotselect;flashimg=1
+/bluetooth       vfat   /dev/block/bootdevice/by-name/bluetooth \
+flags=display="Bluetooth";slotselect;fsflags="ro,shortname=lower,uid=1002,gid=3002,dmask=227,fmask=337"
 
-# -----------------------------------------------------------------------------
-# Removable storage
-# -----------------------------------------------------------------------------
-/usb_otg             auto     /dev/block/sdg1     /dev/block/sdg4                 flags=display="USB-Storage";storage;wipeingui;removable
+/dsp             vfat   /dev/block/bootdevice/by-name/dsp \
+flags=display="DSP";slotselect
+
+# --- Firmware (raw images) ---
+/modem_img       emmc   /dev/block/bootdevice/by-name/modem \
+flags=backup=1;slotselect;flashimg=1;display="Modem Image"
+
+/bluetooth_img   emmc   /dev/block/bootdevice/by-name/bluetooth \
+flags=backup=1;slotselect;flashimg=1;display="Bluetooth Image"
+
+/dsp_img         emmc   /dev/block/bootdevice/by-name/dsp \
+flags=backup=1;slotselect;flashimg=1;display="DSP Image"
+
+# --- Misc ---
+/misc            emmc   /dev/block/bootdevice/by-name/misc \
+flags=backup=1;display="Misc"
+
+/logo            emmc   /dev/block/bootdevice/by-name/logo \
+flags=backup=1;slotselect;flashimg=1;display="Logo"
+
+# --- USB OTG ---
+/usb_otg         auto   /dev/block/sdg1   /dev/block/sdg \
+flags=storage;wipeingui;removable
