@@ -1,57 +1,85 @@
-import /init.recovery.qcom_decrypt.rc
+# -----------------------------------------------------------------------------
+# Qualcomm Recovery Init – Nothing Phone (1) / Spacewar
+# FINAL VERSION: Hybrid Logic + Stability Fixes (Wait commands & Permissions)
+# -----------------------------------------------------------------------------
 
-on early-init
-    exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
+import /init.recovery.qcom_decrypt.rc
 
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
-    # Create location for fs_mgr to store abbreviated output from filesystem
-    # checker programs.
-    mkdir /dev/fscklogs 0770 root system
     setprop sys.usb.configfs 1
 
 on fs
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+
+    # Bootdevice symlink
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-    # Mount firmware
-    mkdir /firmware
-    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
-    # Set fscklog permission
+
+    # Dosya sistemi logları için klasör (Standart Recovery yapısı)
+    mkdir /dev/fscklogs 0770 root system
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
 
+    # --- Firmware Mount (Daha Güvenli Yöntem) ---
+    # wait komutu, bölümün hazır olmasını bekler, hata riskini sıfırlar.
+    wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
+    mkdir /firmware 0755 root root
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
+
+    # --- WrappedKey Fix ---
+    # 0755 izni yeterli ve güvenlidir.
+    chmod 0755 /system/bin/wrappedkey-fix.sh
+    start wrapped-key
+
+on property:ro.boot.usbcontroller=*
+    setprop sys.usb.controller ${ro.boot.usbcontroller}
+    write /sys/class/udc/${ro.boot.usbcontroller}/device/../mode peripheral
+
+on early-fs
+    write /proc/sys/kernel/sched_lib_name "recovery,Updater,updater,update_engine_sideload"
+    write /proc/sys/kernel/sched_lib_mask_force 255
+
 on post-fs
+    # Boot HAL 1.2 (Senin cihaz yapına uygun olan)
     start boot-hal-1-2
 
-on late-fs
-    start keymasterd
-    start set_permissive
-    start health-hal-2-1
-
 on boot
-    setprop sys.usb.config mtp,adb
+    start health-hal-2-1
+    start vendor.qti.vibrator
+    
+    # Decryption için Keymaster servisi (Gerekli)
+    start keymasterd
 
+    setprop sys.usb.config adb
+
+# --- ADSP ve Batarya Tetikleyici ---
+# Modüller yüklendiğinde sistemi tam ayağa kaldırır
 on property:twrp.modules.loaded=true
-    # Load ADSP firmware for PMIC
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
 
-service set_permissive /system/bin/set_permissive.sh
+# -----------------------------------------------------------------------------
+# Servisler
+# -----------------------------------------------------------------------------
+
+service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
     user root
     group root
     disabled
-    oneshot 
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    seclabel u:r:recovery:s0
+
+service wrapped-key /system/bin/wrappedkey-fix.sh
+    user root
+    group root
+    disabled
+    oneshot
     seclabel u:r:recovery:s0
 
 service keymasterd /system/bin/keymasterd
-     user root
-     group root
-     disabled
-     seclabel u:r:recovery:s0
-
-service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
     user root
     group root
     disabled
-    seclabel u:r:recovery:s0	
+    seclabel u:r:recovery:s0
