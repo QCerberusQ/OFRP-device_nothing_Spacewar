@@ -56,6 +56,38 @@ BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
 BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := odm product system system_ext vendor vendor_dlkm
 BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 6438256640
 
+# -----------------------------------------------------------------------------
+# Kernel CMDLINE (v3 Header Uyumlu)
+# -----------------------------------------------------------------------------
+BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8
+BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM0
+BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
+BOARD_KERNEL_CMDLINE += androidboot.memcg=1
+BOARD_KERNEL_CMDLINE += androidboot.usbcontroller=a600000.dwc3
+BOARD_KERNEL_CMDLINE += service_locator.enable=1
+BOARD_KERNEL_CMDLINE += lpm_levels.sleep_disabled=1
+BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x237
+BOARD_KERNEL_CMDLINE += swiotlb=0
+BOARD_KERNEL_CMDLINE += cgroup.memory=nokmem,nosocket
+BOARD_KERNEL_CMDLINE += pcie_ports=compat
+
+# Debug için önemli (Ekran gelmezse log okumanı sağlar)
+BOARD_KERNEL_CMDLINE += earlycon=msm_geni_serial,0x880000
+
+# Dinamik bölümlerin görünmesi için KRİTİK (Bunu unutma!)
+BOARD_KERNEL_CMDLINE += loop.max_part=7
+
+# Recovery'nin açılması için "Gevşek" mod (İlk build için ŞART)
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+
+# Firewall/Ağ hatalarını engeller
+BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
+BOARD_KERNEL_CMDLINE += iptable_raw.raw_before_defrag=1
+
+# v3 Header olduğu için bu değişkeni build sistemine tanıtıyoruz:
+# (Build sistemi bunu otomatik alsa da garantiye alıyoruz)
+BOARD_MKBOOTIMG_ARGS += --cmdline "$(BOARD_KERNEL_CMDLINE)"
+
 # File systems
 BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := erofs
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
