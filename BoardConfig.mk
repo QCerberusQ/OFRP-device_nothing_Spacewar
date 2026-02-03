@@ -19,9 +19,6 @@ AB_OTA_PARTITIONS := \
     vendor \
     vendor_boot
 
-# Assert
-TARGET_OTA_ASSERT_DEVICE := Spacewar
-
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
