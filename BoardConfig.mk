@@ -119,10 +119,6 @@ BOARD_BOOT_HEADER_VERSION := 3
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/$(BOARD_KERNEL_IMAGE_NAME)
 
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtbs/Spacewar.dtb
-BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
-
 # -----------------------------------------------------------------------------
 # Kernel & Boot Image Offsets (v3 Fixed)
 # -----------------------------------------------------------------------------
