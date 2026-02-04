@@ -52,7 +52,8 @@ on early-fs
 on post-fs
     # Boot HAL 1.2 (correct for vendor_boot + virtual A/B)
     start boot-hal-1-2
-
+    start keymaster
+    start vold
 # -----------------------------------------------------------------------------
 # BOOT
 # -----------------------------------------------------------------------------
