@@ -10,7 +10,6 @@ import /init.recovery.qcom_decrypt.rc
 # -----------------------------------------------------------------------------
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
-    set_permissive
     setprop sys.usb.configfs 1
 
 # -----------------------------------------------------------------------------
@@ -60,7 +59,6 @@ on post-fs
 on boot
     start health-hal-2-1
     start vendor.qti.vibrator
-    start keymasterd
     setprop sys.usb.config adb
 
 # -----------------------------------------------------------------------------
@@ -104,9 +102,3 @@ service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
 #    disabled
 #    oneshot
 #    seclabel u:r:recovery:s0
-
-service keymasterd /system/bin/keymasterd
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
