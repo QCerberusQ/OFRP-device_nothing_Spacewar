@@ -25,15 +25,13 @@ export FOX_BUILD_TYPE="Beta"
 # ARCHITECTURE SETTINGS (PURE VENDOR BOOT)
 # -----------------------------------------------------------------------------
 # Bu satır, BoardConfig ve Device tree'deki tüm v4 ayarlarını tetikler.
-export FOX_VENDOR_BOOT_RECOVERY=1
 export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
 
 # Kurulum ZIP'i hazırlanırken "vendor_boot" bölümüne kurulacağını belirtir.
-export FOX_INSTALLER_VENDOR_BOOT_RAMDISK_INSTALL=1
 
 # Versiyon etiketi
-export FOX_VARIANT="vBaR"
+export FOX_VARIANT="BaR"
 
 # -----------------------------------------------------------------------------
 # Screen & UI Settings (Eski Dosyadan Optimize Edildi)
