@@ -192,24 +192,12 @@ TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone50/temp"
 TW_CUSTOM_BATTERY_PATH := "/sys/class/power_supply/battery"
 TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 
-# 1. Hangi modül dosyası fiziksel olarak kopyalansın?
-TARGET_RECOVERY_DEVICE_MODULES := \
-    qcedev-mod.ko \             # Crypto Arayüzü (qce50 yerine bu var)
-    qseecom-mod.ko \            # TrustZone İletişimi (Keymaster için ŞART)
-    smcinvoke.ko \              # Güvenli Ortam Çağrısı (Decrypt için ŞART)
-    qcom_hwspinlock.ko \        # Donanım Kilidi
-    msm_rng.ko \                # Rastgele Sayı Üreteci (Şifreleme için gerekir)
-    qcom_ipcc.ko \              # İşlemciler Arası İletişim
-    msm_drm.ko \                # Ekran
-    fts_tp.ko \                 # Dokunmatik
-    goodix_fp.ko \              # Parmak İzi
-    adsp_loader_dlkm.ko \       # DSP
-    q6_notifier_dlkm.ko \
-    q6_pdr_dlkm.ko \
-    sensors_ssc.ko \
-    qti_battery_charger_main.ko
 
-# Yükleme Sırası (RNG ve Crypto en başta)
-TW_LOAD_VENDOR_MODULES := "msm_rng.ko qcedev-mod.ko qseecom-mod.ko smcinvoke.ko qcom_hwspinlock.ko qcom_ipcc.ko msm_drm.ko fts_tp.ko goodix_fp.ko adsp_loader_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko"
+# 1. Hangi modül dosyası fiziksel olarak kopyalansın?
+TARGET_RECOVERY_DEVICE_MODULES := goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko
+
+# 3. Recovery açılınca hangi modül "insmod" ile yüklensin?
+TW_LOAD_VENDOR_MODULES := "goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko"
+
 # Hedef Klasör
 TW_LOAD_VENDOR_MODULES_TARGET := /vendor/lib/modules
