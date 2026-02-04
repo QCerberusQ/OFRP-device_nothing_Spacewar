@@ -74,8 +74,8 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so
 
 # Keystore
-PRODUCT_PACKAGES += \
-    android.system.keystore2
+#PRODUCT_PACKAGES += \
+#    android.system.keystore2
 
 PRODUCT_PACKAGES += \
     qcom_decrypt \
