@@ -10,6 +10,7 @@ import /init.recovery.qcom_decrypt.rc
 # -----------------------------------------------------------------------------
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
+    set_permissive
     setprop sys.usb.configfs 1
 
 # -----------------------------------------------------------------------------
