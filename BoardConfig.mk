@@ -25,17 +25,17 @@ AB_OTA_PARTITIONS += \
 
 # Architecture
 TARGET_ARCH := arm64
-TARGET_ARCH_VARIANT := armv8-a
+TARGET_ARCH_VARIANT := armv8-2a-dotprod
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := cortex-a76
 
 
 TARGET_2ND_ARCH := arm
-TARGET_2ND_ARCH_VARIANT := armv8-a
+TARGET_2ND_ARCH_VARIANT := armv8-2a-dotprod
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := cortex-a76
+TARGET_2ND_CPU_VARIANT := cortex-a55
 
 
 ENABLE_CPUSETS := true
@@ -79,9 +79,6 @@ BOARD_KERNEL_CMDLINE += earlycon=msm_geni_serial,0x880000
 
 # Dinamik bölümlerin görünmesi için KRİTİK (Bunu unutma!)
 BOARD_KERNEL_CMDLINE += loop.max_part=7
-
-# Recovery'nin açılması için "Gevşek" mod (İlk build için ŞART)
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 # Firewall/Ağ hatalarını engeller
 BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
@@ -139,7 +136,7 @@ BOARD_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_TAGS_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --board ""
+BOARD_MKBOOTIMG_ARGS += --board "$(TARGET_BOOTLOADER_BOARD_NAME)"
 
 # System as root
 BOARD_ROOT_EXTRA_FOLDERS := bluetooth dsp firmware persist
