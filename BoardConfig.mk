@@ -193,10 +193,25 @@ TW_CUSTOM_BATTERY_PATH := "/sys/class/power_supply/battery"
 TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 
 # 1. Hangi modül dosyası fiziksel olarak kopyalansın?
-TARGET_RECOVERY_DEVICE_MODULES := goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko
+TARGET_RECOVERY_DEVICE_MODULES := \
+    qce50.ko \                  # Qualcomm Crypto Engine (Şifreleme Motoru)
+    qcedev-mod.ko \             # Crypto Arayüzü
+    qseecom-mod.ko \            # TrustZone İletişimi (Keymaster buna muhtaç!)
+    smcinvoke.ko \              # Secure Monitor Call (Güvenli Ortam Çağrısı)
+    qcom_hwspinlock.ko \        # Donanım Kilidi (Crypto işlemleri için gerekli)
+    qcom_ipcc.ko \              # İşlemciler Arası İletişim (IPC)
+    qcom_q6v5_pas.ko \          # (Eğer varsa ekle, yoksa sorun değil)
+    msm_drm.ko \                # Ekran Görüntüsü
+    fts_tp.ko \                 # Dokunmatik (FocalTech)
+    goodix_fp.ko \              # Parmak İzi (Bazen dokunmatik ile bağlıdır)
+    adsp_loader_dlkm.ko \       # DSP Yükleyici
+    q6_notifier_dlkm.ko \       # DSP Haberleşme
+    q6_pdr_dlkm.ko \            # DSP PDR
+    sensors_ssc.ko \            # Sensörler
+    qti_battery_charger_main.ko # Batarya Durumu
 
-# 2. Modül Ramdisk içinde nereye gitsin? (Standart GKI yolu)
+# Modülleri Yükleme Sırası (Crypto En Başta!)
+TW_LOAD_VENDOR_MODULES := "qce50.ko qcedev-mod.ko qseecom-mod.ko smcinvoke.ko qcom_hwspinlock.ko qcom_ipcc.ko msm_drm.ko fts_tp.ko goodix_fp.ko adsp_loader_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko"
+
+# Hedef Klasör
 TW_LOAD_VENDOR_MODULES_TARGET := /vendor/lib/modules
-
-# 3. Recovery açılınca hangi modül "insmod" ile yüklensin?
-TW_LOAD_VENDOR_MODULES := "goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko"
