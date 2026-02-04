@@ -143,7 +143,6 @@ BOARD_MKBOOTIMG_ARGS += --board ""
 
 # System as root
 BOARD_ROOT_EXTRA_FOLDERS := bluetooth dsp firmware persist
-BOARD_SUPPRESS_SECURE_ERASE := true
 
 # Properties
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
