@@ -1,53 +1,37 @@
 #!/system/bin/sh
-#
-#	This file is part of the OrangeFox Recovery Project
-# 	Copyright (C) 2022-2023 The OrangeFox Recovery Project
-# Copyright (C) 2023 Maitreya Patni
-#
-#	OrangeFox is free software: you can redistribute it and/or modify
-#	it under the terms of the GNU General Public License as published by
-#	the Free Software Foundation, either version 3 of the License, or
-#	any later version.
-#
-#	OrangeFox is distributed in the hope that it will be useful,
-#	but WITHOUT ANY WARRANTY; without even the implied warranty of
-#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#	GNU General Public License for more details.
-#
-# 	This software is released under GPL version 3 or any later version.
-#	See <http://www.gnu.org/licenses/>.
-#
-# 	Please maintain this if you use this script or any part of it
-#
+# wrappedkey-fix.sh
+# Nothing Phone (1) / Spacewar
+# Enable Wrapped Key support in kernel (Recovery side)
 
-# Deal with situations where the ROM doesn't support wrappedkey encryption;
-# In such cases, remove the wrappedkey flag from the fstab file
-#
+LOG=/dev/fscklogs/log/wrappedkey-fix.log
+echo "[wrappedkey] start $(date)" >> $LOG
 
-check_vendor_wrappedkey() {
-    local V=/dev/block/bootdevice/by-name/vendor;
-    local VENDORDIR=/FFiles/temp/vendor_prop;
-    local VENDORFSTAB=/FFiles/temp/vendor_fstab;
-
-    mkdir -p $VENDORDIR;
-    mount $V $VENDORDIR;
-
-    cp $VENDORDIR/etc/fstab.default $VENDORFSTAB;
-    if [ ! -e $VENDORFSTAB ]; then
-        return;
-    fi
-
-    if grep -q "wrappedkey" $VENDORFSTAB; then
-        cp /system/etc/recovery-wrappedkey.fstab /system/etc/recovery.fstab;
+try_write() {
+    NODE="$1"
+    if [ -e "$NODE" ]; then
+        echo 1 > "$NODE" 2>>$LOG
+        if [ $? -eq 0 ]; then
+            echo "[wrappedkey] enabled via $NODE" >> $LOG
+            return 0
+        else
+            echo "[wrappedkey] write failed $NODE" >> $LOG
+        fi
     else
-        cp /system/etc/recovery-no-wrappedkey.fstab /system/etc/recovery.fstab;
+        echo "[wrappedkey] node missing $NODE" >> $LOG
     fi
-
-    umount $VENDORDIR;
-    rmdir $VENDORDIR;
-    rm -f $VENDORFSTAB;
+    return 1
 }
 
-check_vendor_wrappedkey;
+# 1️⃣ Qualcomm ICE (generic)
+try_write /sys/module/qti_ice/parameters/use_wrapped_key
 
-exit 0;
+# 2️⃣ Spacewar UFS controller (Snapdragon 778G+)
+try_write /sys/devices/platform/soc/1d84000.ufshc/ice/use_wrapped_key
+
+# 3️⃣ Fallback (bazı kernel varyantları)
+for h in /sys/class/scsi_host/host*/use_wrapped_key; do
+    try_write "$h"
+done
+
+echo "[wrappedkey] end $(date)" >> $LOG
+exit 0
