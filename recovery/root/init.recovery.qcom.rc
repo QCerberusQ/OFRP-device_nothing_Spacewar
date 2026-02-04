@@ -11,6 +11,7 @@ import /init.recovery.qcom_decrypt.rc
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
     setprop sys.usb.configfs 1
+    start keymaster-4-1
 
 # -----------------------------------------------------------------------------
 # FILESYSTEM SETUP
@@ -50,10 +51,8 @@ on early-fs
 # POST FS
 # -----------------------------------------------------------------------------
 on post-fs
-    # Boot HAL 1.2 (correct for vendor_boot + virtual A/B)
-    start boot-hal-1-2
-    start keymaster
     start vold
+    start boot-hal-1-2
 # -----------------------------------------------------------------------------
 # BOOT
 # -----------------------------------------------------------------------------
@@ -65,10 +64,9 @@ on boot
 # -----------------------------------------------------------------------------
 # WRAPPED KEY – CORRECT TIMING
 # -----------------------------------------------------------------------------
-# Run ONLY after kernel modules & UFS/ICE are ready
-#on property:twrp.modules.loaded=true
-#    chmod 0755 /system/bin/wrappedkey-fix.sh
-#    start wrapped-key
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    chmod 0755 /system/bin/wrappedkey-fix.sh
+    start wrapped-key
 
 # -----------------------------------------------------------------------------
 # ADSP & BATTERY (safe Qualcomm logic)
@@ -97,9 +95,28 @@ service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
     setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
     seclabel u:r:recovery:s0
 
-#service wrapped-key /system/bin/wrappedkey-fix.sh
-#    user root
-#    group root
-#    disabled
-#    oneshot
-#    seclabel u:r:recovery:s0
+service wrapped-key /system/bin/wrappedkey-fix.sh
+    class core
+    user root
+    group root
+    seclabel u:r:recovery:s0
+    oneshot
+
+
+service keymaster-4-1 /vendor/bin/hw/android.hardware.keymaster@4.1-service
+    class core
+    user root
+    group root
+    seclabel u:r:recovery:keymaster:s0
+
+service boot-hal-1-2 /vendor/bin/hw/android.hardware.boot@1.2-service
+    class core
+    user root
+    group root
+    seclabel u:r:recovery:boothal1_2:s0
+
+service vold /system/bin/vold
+    class core
+    user root
+    group system
+    seclabel u:r:recovery:vold:s0
