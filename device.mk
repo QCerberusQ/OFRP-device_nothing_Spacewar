@@ -89,3 +89,7 @@ PRODUCT_PACKAGES += \
 
 # VINTF
 #PRODUCT_ENFORCE_VINTF_MANIFEST := true
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.virtual_ab.skip_verify_source_hash=true
+
