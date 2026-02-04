@@ -17,11 +17,12 @@ OF_HIDE_NOTCH := 1
 OF_CLOCK_POS := 1
 
 # -----------------------------------------------------------------------------
-# LED & Haptics
+# LED & FRP
 # -----------------------------------------------------------------------------
 OF_USE_GREEN_LED := 0
-# Titreşim desteği
-#OF_ENABLE_HAPTICS := 1
+
+# frp
+OF_ENABLE_FRP_ADDON := 1
 
 # -----------------------------------------------------------------------------
 # Backup Settings
@@ -48,21 +49,6 @@ OF_WIPE_METADATA_AFTER_DATAFORMAT := 1
 
 # Format sonrası MTP sorunlarını çözer
 OF_BIND_MOUNT_SDCARD_ON_FORMAT := 1
-
-# -----------------------------------------------------------------------------
-# FLASHER SETTINGS (MANDATORY FOR VENDOR BOOT)
-# -----------------------------------------------------------------------------
-# ifeq koşullarını kaldırdık. Doğrudan v4 ayarlarını veriyoruz.
-
-# OrangeFox yüklenirken tüm Ramdisk'i vendor_boot içine yeniden paketler.
-# Bu, cihazın OrangeFox'u kalıcı hale getirmesi için ŞARTTIR.
-OF_RECOVERY_AB_FULL_REFLASH_RAMDISK := 1
-
-# A/B Slot yapısına uygun kurulum
-OF_SLOT_BASED_INSTALLER := 1
-
-# Magisk boot yamasını engeller (Biz kendimiz hallediyoruz)
-OF_NO_RELOAD_MAGISK_MODULES := 1
 
 # -----------------------------------------------------------------------------
 # Extras
