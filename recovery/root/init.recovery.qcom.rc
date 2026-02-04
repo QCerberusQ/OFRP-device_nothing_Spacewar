@@ -66,9 +66,9 @@ on boot
 # WRAPPED KEY – CORRECT TIMING
 # -----------------------------------------------------------------------------
 # Run ONLY after kernel modules & UFS/ICE are ready
-on property:twrp.modules.loaded=true
-    chmod 0755 /system/bin/wrappedkey-fix.sh
-    start wrapped-key
+#on property:twrp.modules.loaded=true
+#    chmod 0755 /system/bin/wrappedkey-fix.sh
+#    start wrapped-key
 
 # -----------------------------------------------------------------------------
 # ADSP & BATTERY (safe Qualcomm logic)
@@ -97,12 +97,12 @@ service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
     setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
     seclabel u:r:recovery:s0
 
-service wrapped-key /system/bin/wrappedkey-fix.sh
-    user root
-    group root
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0
+#service wrapped-key /system/bin/wrappedkey-fix.sh
+#    user root
+#    group root
+#    disabled
+#    oneshot
+#    seclabel u:r:recovery:s0
 
 service keymasterd /system/bin/keymasterd
     user root
