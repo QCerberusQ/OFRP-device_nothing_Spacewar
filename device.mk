@@ -83,9 +83,8 @@ PRODUCT_PACKAGES += \
 
 # Health HAL
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl \
-    android.hardware.health@2.1-service \
-    libhealthd.$(PRODUCT_PLATFORM)
+    android.hardware.health@2.1-impl.recovery \
+    android.hardware.health@2.1-service
 
 # VINTF
 #PRODUCT_ENFORCE_VINTF_MANIFEST := true
