@@ -108,3 +108,21 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vold \
     libvold_crypto
+
+# ---------------------------------------------------------
+# Recovery’ye taşınması gereken ek bileşenler
+# ---------------------------------------------------------
+
+# vold ve qcom_decrypt ikincil kütüphane/binary
+RECOVERY_COPY_FILES += \
+    $(TARGET_OUT_EXECUTABLES)/vold \
+    $(TARGET_OUT_EXECUTABLES)/qcom_decrypt \
+    $(TARGET_OUT_EXECUTABLES)/qcom_decrypt_fbe
+
+# keymaster + gatekeeper libleri
+RECOVERY_LIBRARY_SOURCE_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libvold_crypto.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster_messages.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libgatekeeper.so
