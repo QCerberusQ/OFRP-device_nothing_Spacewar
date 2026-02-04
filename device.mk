@@ -98,3 +98,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.virtual_ab.skip_verify_source_hash=true \
     ro.product.device=$(PRODUCT_RELEASE_NAME)
+
+# Keymaster
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@4.1-impl \
+    android.hardware.keymaster@4.1-service
+
+# vold crypto
+PRODUCT_PACKAGES += \
+    vold \
+    libvold_crypto
