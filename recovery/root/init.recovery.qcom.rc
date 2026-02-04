@@ -13,7 +13,6 @@ on init
     setprop sys.usb.configfs 1
     start qseecomd
     start gatekeeper-1-0
-    start keymaster-4-1
 
 # -----------------------------------------------------------------------------
 # FILESYSTEM SETUP
@@ -53,6 +52,7 @@ on early-fs
 # POST FS
 # -----------------------------------------------------------------------------
 on post-fs
+    start keymaster-4-1
     start vold
     start boot-hal-1-2
 # -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ on boot
 # -----------------------------------------------------------------------------
 # WRAPPED KEY – CORRECT TIMING
 # -----------------------------------------------------------------------------
-on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file && property:twrp.modules.loaded=true
     chmod 0755 /system/bin/wrappedkey-fix.sh
     start wrapped-key
 
@@ -109,7 +109,7 @@ service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service-qti
     seclabel u:r:recovery:gatekeeper:s0
 
 service vold /system/bin/vold
-    class core
+    class main
     user root
     group system
     seclabel u:r:recovery:vold:s0
