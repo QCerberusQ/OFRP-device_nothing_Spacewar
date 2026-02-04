@@ -1,67 +1,93 @@
 # -----------------------------------------------------------------------------
 # Qualcomm Recovery Init – Nothing Phone (1) / Spacewar
-# FINAL VERSION: Hybrid Logic + Stability Fixes (Wait commands & Permissions)
+# FINAL CLEAN VERSION (Merged with safe parts)
 # -----------------------------------------------------------------------------
 
 import /init.recovery.qcom_decrypt.rc
 
+# -----------------------------------------------------------------------------
+# INIT
+# -----------------------------------------------------------------------------
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
     setprop sys.usb.configfs 1
 
+# -----------------------------------------------------------------------------
+# FILESYSTEM SETUP
+# -----------------------------------------------------------------------------
 on fs
-    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+    # Library paths
+    export LD_LIBRARY_PATH /system/lib64:/system_ext/lib64:/vendor/lib64:/vendor/lib64/hw
 
     # Bootdevice symlink
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    # Dosya sistemi logları için klasör (Standart Recovery yapısı)
+    # Firmware symlinks (safe & useful)
+    symlink /vendor/firmware_mnt /firmware
+    symlink /vendor/bt_firmware /bt_firmware
+    symlink /vendor/dsp /dsp
+
+    # fsck logs
     mkdir /dev/fscklogs 0770 root system
+    mkdir /dev/fscklogs/log 0770 root system
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
 
-    # --- Firmware Mount (Daha Güvenli Yöntem) ---
-    # wait komutu, bölümün hazır olmasını bekler, hata riskini sıfırlar.
+    # Modem firmware mount
     wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
-    mkdir /firmware 0755 root root
-    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} \
+        /firmware ro context=u:object_r:firmware_file:s0
 
-    # --- WrappedKey Fix ---
-    # 0755 izni yeterli ve güvenlidir.
-    chmod 0755 /system/bin/wrappedkey-fix.sh
-    start wrapped-key
-
-on property:ro.boot.usbcontroller=*
-    setprop sys.usb.controller ${ro.boot.usbcontroller}
-    write /sys/class/udc/${ro.boot.usbcontroller}/device/../mode peripheral
-
+# -----------------------------------------------------------------------------
+# EARLY FS
+# -----------------------------------------------------------------------------
 on early-fs
     write /proc/sys/kernel/sched_lib_name "recovery,Updater,updater,update_engine_sideload"
     write /proc/sys/kernel/sched_lib_mask_force 255
 
+# -----------------------------------------------------------------------------
+# POST FS
+# -----------------------------------------------------------------------------
 on post-fs
-    # Boot HAL 1.2 (Senin cihaz yapına uygun olan)
+    # Boot HAL 1.2 (correct for vendor_boot + virtual A/B)
     start boot-hal-1-2
 
+# -----------------------------------------------------------------------------
+# BOOT
+# -----------------------------------------------------------------------------
 on boot
     start health-hal-2-1
     start vendor.qti.vibrator
-    
-    # Decryption için Keymaster servisi (Gerekli)
     start keymasterd
-
     setprop sys.usb.config adb
 
-# --- ADSP ve Batarya Tetikleyici ---
-# Modüller yüklendiğinde sistemi tam ayağa kaldırır
+# -----------------------------------------------------------------------------
+# WRAPPED KEY – CORRECT TIMING
+# -----------------------------------------------------------------------------
+# Run ONLY after kernel modules & UFS/ICE are ready
+on property:twrp.modules.loaded=true
+    chmod 0755 /system/bin/wrappedkey-fix.sh
+    start wrapped-key
+
+# -----------------------------------------------------------------------------
+# ADSP & BATTERY (safe Qualcomm logic)
+# -----------------------------------------------------------------------------
 on property:twrp.modules.loaded=true
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
 
 # -----------------------------------------------------------------------------
-# Servisler
+# USB CONTROLLER (improved wait)
+# -----------------------------------------------------------------------------
+on property:ro.boot.usbcontroller=*
+    setprop sys.usb.controller ${ro.boot.usbcontroller}
+    wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
+    write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
+
+# -----------------------------------------------------------------------------
+# SERVICES
 # -----------------------------------------------------------------------------
 
 service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
