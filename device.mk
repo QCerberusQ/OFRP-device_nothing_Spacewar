@@ -74,12 +74,15 @@ PRODUCT_PACKAGES_DEBUG += \
 # -----------------------------------------------------------------------------
 # Decryption stack (NO HAL SERVICES)
 # -----------------------------------------------------------------------------
-# Only binaries – no keymaster / gatekeeper services
+# Only binaries –
 PRODUCT_PACKAGES += \
     vold \
     qcom_decrypt \
     qcom_decrypt_fbe \
     libvold_crypto
+
+PRODUCT_PACKAGES += \
+    android.system.keystore2
 
 # -----------------------------------------------------------------------------
 # Health HAL (safe)
