@@ -86,7 +86,7 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
 # Decryption (Şifre Çözme)
 PRODUCT_PACKAGES += \
     qcom_decrypt \
-    qcom_decrypt_fbe
+    qcom_decrypt_fbe \
     vold \
     libvold_crypto
 
