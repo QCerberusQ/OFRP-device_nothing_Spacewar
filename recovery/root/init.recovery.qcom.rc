@@ -26,12 +26,22 @@ on fs
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
 
-on post-fs
-    start boot-hal-1-2
 
 on early-fs
     write /proc/sys/kernel/sched_lib_name "recovery"
     write /proc/sys/kernel/sched_lib_mask_force 255
+
+
+on post-fs
+    start boot-hal-1-2
+
+on late-fs
+    # ---------------------------------------------------------
+    # 2. Servisleri Başlat (Vold'un kilitlenmesini engeller)
+    # ---------------------------------------------------------
+    start keymaster-4-0
+    start gatekeeper-1-0
+    start keystore2
 
 on boot
     setprop sys.usb.state adb
@@ -52,3 +62,26 @@ on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
     wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
     write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
+
+
+# ---------------------------------------------------------
+# SERVİS TANIMLARI
+# ---------------------------------------------------------
+
+service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service-qti
+    user root
+    group root drmrpc
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
+    seclabel u:r:recovery:s0
+
+service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service.qti
+    user root
+    group root
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
+    seclabel u:r:recovery:s0
+
+service keystore2 /system/bin/keystore2 /data/misc/keystore
+    user root
+    group root
+    setenv LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/sbin
+    seclabel u:r:recovery:s0
