@@ -118,7 +118,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.virtual_ab.skip_verify_source_hash=true \
     ro.product.device=$(PRODUCT_RELEASE_NAME)
 
-
+# Bunu MUTLAKA EKLE (Çünkü senin listede keystore2 yok):
+RECOVERY_COPY_FILES += \
+    $(TARGET_OUT_EXECUTABLES)/keystore2:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/keystore2
 # -----------------------------------------------------------------------------
 # TW
 # -----------------------------------------------------------------------------
