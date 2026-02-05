@@ -86,7 +86,9 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
 # Decryption (Şifre Çözme)
 PRODUCT_PACKAGES += \
     qcom_decrypt \
-    qcom_decrypt_fbe
+    qcom_decrypt_fbe \
+    vold \
+    libvold_crypto
 
 # Health HAL (Standart ve Güvenli Olan)
 PRODUCT_PACKAGES += \
@@ -98,3 +100,18 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.virtual_ab.skip_verify_source_hash=true \
     ro.product.device=$(PRODUCT_RELEASE_NAME)
+
+# ---------------------------------------------------------
+# Recovery’ye taşınması gereken ek bileşenler
+# ---------------------------------------------------------
+
+# vold ve qcom_decrypt ikincil kütüphane/binary
+RECOVERY_COPY_FILES += \
+    $(TARGET_OUT_EXECUTABLES)/vold \
+    $(TARGET_OUT_EXECUTABLES)/qcom_decrypt \
+    $(TARGET_OUT_EXECUTABLES)/qcom_decrypt_fbe
+
+# keymaster + gatekeeper libleri
+RECOVERY_LIBRARY_SOURCE_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libvold_crypto.so
+
