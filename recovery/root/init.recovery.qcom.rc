@@ -1,107 +1,60 @@
 # -----------------------------------------------------------------------------
 # Qualcomm Recovery Init – Nothing Phone (1) / Spacewar
-# FINAL CLEAN VERSION (Merged with safe parts)
+# FINAL / MINIMAL / CORRECT
 # -----------------------------------------------------------------------------
-
-import /init.recovery.qcom_decrypt.rc
 
 # -----------------------------------------------------------------------------
 # INIT
 # -----------------------------------------------------------------------------
 on init
+    # Ekran parlaklığı
     write /sys/class/backlight/panel0-backlight/brightness 200
+
+    # USB ADB (recovery için yeterli)
+    setprop sys.usb.config adb
     setprop sys.usb.configfs 1
 
 # -----------------------------------------------------------------------------
 # FILESYSTEM SETUP
 # -----------------------------------------------------------------------------
 on fs
-    # Library paths
-    export LD_LIBRARY_PATH /system/lib64:/system_ext/lib64:/vendor/lib64:/vendor/lib64/hw
+    # Library path (recovery için yeterli set)
+    export LD_LIBRARY_PATH /system/lib64:/system_ext/lib64:/vendor/lib64
 
     # Bootdevice symlink
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    # Firmware symlinks (safe & useful)
+    # Firmware symlink’leri (güvenli)
     symlink /vendor/firmware_mnt /firmware
     symlink /vendor/bt_firmware /bt_firmware
     symlink /vendor/dsp /dsp
 
-    # fsck logs
+    # fsck log dizini
     mkdir /dev/fscklogs 0770 root system
     mkdir /dev/fscklogs/log 0770 root system
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
 
-    # Modem firmware mount
-    wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
-    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} \
-        /firmware ro context=u:object_r:firmware_file:s0
-
 # -----------------------------------------------------------------------------
 # EARLY FS
 # -----------------------------------------------------------------------------
 on early-fs
-    write /proc/sys/kernel/sched_lib_name "recovery,Updater,updater,update_engine_sideload"
+    # Scheduler optimizasyonu (zararsız)
+    write /proc/sys/kernel/sched_lib_name "recovery"
     write /proc/sys/kernel/sched_lib_mask_force 255
 
-# -----------------------------------------------------------------------------
-# POST FS
-# -----------------------------------------------------------------------------
-on post-fs
-    start vold
-    start boot-hal-1-2
 # -----------------------------------------------------------------------------
 # BOOT
 # -----------------------------------------------------------------------------
 on boot
-    start health-hal-2-1
-    start vendor.qti.vibrator
-    setprop sys.usb.config adb
+    # USB hazır
+    setprop sys.usb.state adb
 
 # -----------------------------------------------------------------------------
-# WRAPPED KEY – CORRECT TIMING
-# -----------------------------------------------------------------------------
-on property:twrp.modules.loaded=true
-    chmod 0755 /system/bin/wrappedkey-fix.sh
-    start wrapped-key
-
-# -----------------------------------------------------------------------------
-# ADSP & BATTERY (safe Qualcomm logic)
-# -----------------------------------------------------------------------------
-on property:twrp.modules.loaded=true
-    wait /sys/kernel/boot_adsp/boot
-    write /sys/kernel/boot_adsp/boot 1
-    wait /sys/class/power_supply/battery
-
-# -----------------------------------------------------------------------------
-# USB CONTROLLER (improved wait)
+# USB CONTROLLER
 # -----------------------------------------------------------------------------
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
     wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
     write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
-
-# -----------------------------------------------------------------------------
-# SERVICES
-# -----------------------------------------------------------------------------
-
-service vold /system/bin/vold
-    class core
-    user root
-    group system
-    seclabel u:r:recovery:s0
-
-service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
-    class core
-    user root
-    group root
-    seclabel u:r:recovery:s0
-
-service wrapped-key /system/bin/wrappedkey-fix.sh
-    user root
-    group root
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0
