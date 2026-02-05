@@ -198,11 +198,6 @@ TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 #TARGET_RECOVERY_DEVICE_MODULES := crypto-qti-common.ko cqhci-crypto.ko cqhci-crypto-qti.ko ufs-qcom.ko ufshcd-crypto-qti.ko goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko
 
 TARGET_RECOVERY_DEVICE_MODULES := \
-    crypto-qti-common.ko \
-    cqhci-crypto.ko \
-    cqhci-crypto-qti.ko \
-    ufs-qcom.ko \
-    ufshcd-crypto-qti.ko \
     adsp_loader_dlkm.ko \
     q6_dlkm.ko \
     q6_notifier_dlkm.ko \
@@ -210,8 +205,7 @@ TARGET_RECOVERY_DEVICE_MODULES := \
     msm_drm.ko \
     goodix_fp.ko \
     fts_tp.ko \
-    sensors_ssc.ko \
-    qti_battery_charger_main.ko
+    swr_haptics_dlkm.ko
 
 
 
