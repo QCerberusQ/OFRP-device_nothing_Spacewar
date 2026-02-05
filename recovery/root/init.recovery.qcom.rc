@@ -1,7 +1,7 @@
-# -----------------------------------------------------------------------------
+# ---------------------------------------------------------------------
 # Qualcomm Recovery Init – Nothing Phone (1) / Spacewar
-# FINAL / MINIMAL / CORRECT
-# -----------------------------------------------------------------------------
+# FINAL / DEADLOCK-FREE
+# ---------------------------------------------------------------------
 
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
@@ -29,6 +29,18 @@ on early-fs
 
 on boot
     setprop sys.usb.state adb
+
+# 🔥 SADECE crypto state hazır olunca çalışır
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    chmod 0755 /system/bin/wrappedkey-fix.sh
+    start wrapped-key
+
+service wrapped-key /system/bin/wrappedkey-fix.sh
+    user root
+    group root
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
 
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
