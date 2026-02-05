@@ -1,10 +1,3 @@
-# ---- CRYPTO / UFS (ŞİFRE ÇÖZME İÇİN ZORUNLU) ----
-crypto-qti-common.ko
-cqhci-crypto.ko
-cqhci-crypto-qti.ko
-ufs-qcom.ko
-ufshcd-crypto-qti.ko
-
 # ---- ADSP / QDSP (QCOM SERVİSLERİ ÇAKILMASIN DİYE) ----
 adsp_loader_dlkm.ko
 q6_dlkm.ko
