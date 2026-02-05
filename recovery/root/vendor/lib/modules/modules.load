@@ -1,16 +1,23 @@
+# ---- CRYPTO / UFS (ŞİFRE ÇÖZME İÇİN ZORUNLU) ----
 crypto-qti-common.ko
 cqhci-crypto.ko
 cqhci-crypto-qti.ko
 ufs-qcom.ko
 ufshcd-crypto-qti.ko
 
+# ---- ADSP / QDSP (QCOM SERVİSLERİ ÇAKILMASIN DİYE) ----
 adsp_loader_dlkm.ko
 q6_dlkm.ko
 q6_notifier_dlkm.ko
 q6_pdr_dlkm.ko
 
+# ---- DISPLAY (LOGODA KALMAMASI İÇİN) ----
 msm_drm.ko
-goodix_fp.ko
+
+# ---- INPUT / TOUCH / FP ----
 fts_tp.ko
+goodix_fp.ko
 sensors_ssc.ko
+
+# ---- POWER / BATTERY ----
 qti_battery_charger_main.ko
