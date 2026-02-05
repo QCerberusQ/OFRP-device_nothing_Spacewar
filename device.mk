@@ -87,6 +87,8 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
 PRODUCT_PACKAGES += \
     qcom_decrypt \
     qcom_decrypt_fbe
+    vold \
+    libvold_crypto
 
 # Health HAL (Standart ve Güvenli Olan)
 PRODUCT_PACKAGES += \
@@ -98,11 +100,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.virtual_ab.skip_verify_source_hash=true \
     ro.product.device=$(PRODUCT_RELEASE_NAME)
-
-# vold crypto
-PRODUCT_PACKAGES += \
-    vold \
-    libvold_crypto
 
 # ---------------------------------------------------------
 # Recovery’ye taşınması gereken ek bileşenler
