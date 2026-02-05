@@ -104,7 +104,7 @@ PRODUCT_PACKAGES += \
 # -----------------------------------------------------------------------------
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
-    ardware/qcom-caf/bootctrl \
+    hardware/qcom-caf/bootctrl \
     vendor/qcom/opensource/commonsys-intf/display
 
 # -----------------------------------------------------------------------------
