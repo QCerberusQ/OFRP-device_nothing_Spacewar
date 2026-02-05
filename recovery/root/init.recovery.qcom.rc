@@ -1,68 +1,54 @@
 # ---------------------------------------------------------------------
 # Qualcomm Recovery Init – Nothing Phone (1) / Spacewar
-# FINAL / SAFE / BOOTIMAGE BASED
+# FINAL: Local Binaries + Permissions Fix
 # ---------------------------------------------------------------------
 
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
     setprop sys.usb.config adb
     setprop sys.usb.configfs 1
+    write /sys/fs/selinux/enforce 0
+
+    # Çalışma klasörlerini oluştur
+    mkdir /data/misc/keystore 0700 root root
+    mkdir /data/misc/gatekeeper 0700 root root
 
 on fs
-    # Recovery için yeterli library path
-    export LD_LIBRARY_PATH /system/lib64:/system_ext/lib64:/vendor/lib64:/vendor/lib64/hw
+    # Kütüphane yolları
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
 
-    # bootdevice symlink
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    # Firmware symlinkler (mount YOK)
-    symlink /vendor/firmware_mnt /firmware
-    symlink /vendor/dsp /dsp
+    # Firmware Mount
+    mkdir /firmware
+    mkdir /dsp
+    mount vfat /dev/block/bootdevice/by-name/modem /firmware ro
+    mount ext4 /dev/block/bootdevice/by-name/dsp /dsp ro
+    symlink /firmware /vendor/firmware_mnt
+    symlink /dsp /vendor/dsp
     symlink /vendor/bt_firmware /bt_firmware
-
-    mkdir /dev/fscklogs 0770 root system
-    mkdir /dev/fscklogs/log 0770 root system
-    chown root system /dev/fscklogs/log
-    chmod 0770 /dev/fscklogs/log
-
-
-on early-fs
-    write /proc/sys/kernel/sched_lib_name "recovery"
-    write /proc/sys/kernel/sched_lib_mask_force 255
-
 
 on post-fs
     start boot-hal-1-2
 
+on early-boot
+    # ---------------------------------------------------------
+    # KRİTİK: Dosyalara Çalışma İzni Ver (chmod 755)
+    # ---------------------------------------------------------
+    # Git'ten gelen dosyalarda izin sorunu olabilir, bunu düzeltiyoruz.
+    chmod 0755 /system/bin/keystore2
+    chmod 0755 /system/bin/android.hardware.keymaster@4.0-service-qti
+    chmod 0755 /system/bin/android.hardware.gatekeeper@1.0-service-qti
+
 on late-fs
-    # ---------------------------------------------------------
-    # 2. Servisleri Başlat (Vold'un kilitlenmesini engeller)
-    # ---------------------------------------------------------
+    # Servisleri başlat
     start keymaster-4-0
     start gatekeeper-1-0
     start keystore2
 
 on boot
     setprop sys.usb.state adb
-
-# wrappedkey sadece property geldikten sonra
-on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
-    chmod 0755 /system/bin/wrappedkey-fix.sh
-    start wrapped-key
-
-service wrapped-key /system/bin/wrappedkey-fix.sh
-    user root
-    group root
-    oneshot
-    disabled
-    seclabel u:r:recovery:s0
-
-on property:ro.boot.usbcontroller=*
-    setprop sys.usb.controller ${ro.boot.usbcontroller}
-    wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
-    write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
-
 
 # ---------------------------------------------------------
 # SERVİS TANIMLARI
@@ -85,3 +71,22 @@ service keystore2 /system/bin/keystore2 /data/misc/keystore
     group root
     setenv LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/sbin
     seclabel u:r:recovery:s0
+
+# ---------------------------------------------------------
+# Diğer
+# ---------------------------------------------------------
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    chmod 0755 /system/bin/wrappedkey-fix.sh
+    start wrapped-key
+
+service wrapped-key /system/bin/wrappedkey-fix.sh
+    user root
+    group root
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
+
+on property:ro.boot.usbcontroller=*
+    setprop sys.usb.controller ${ro.boot.usbcontroller}
+    wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
+    write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
