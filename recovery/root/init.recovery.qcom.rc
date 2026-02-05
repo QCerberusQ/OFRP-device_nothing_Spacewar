@@ -88,7 +88,7 @@ on property:ro.boot.usbcontroller=*
 # -----------------------------------------------------------------------------
 
 service vold /system/bin/vold
-    class main
+    class core
     user root
     group system
     seclabel u:r:recovery:s0
