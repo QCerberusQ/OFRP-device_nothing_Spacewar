@@ -3,57 +3,33 @@
 # FINAL / MINIMAL / CORRECT
 # -----------------------------------------------------------------------------
 
-# -----------------------------------------------------------------------------
-# INIT
-# -----------------------------------------------------------------------------
 on init
-    # Ekran parlaklığı
     write /sys/class/backlight/panel0-backlight/brightness 200
-
-    # USB ADB (recovery için yeterli)
     setprop sys.usb.config adb
     setprop sys.usb.configfs 1
 
-# -----------------------------------------------------------------------------
-# FILESYSTEM SETUP
-# -----------------------------------------------------------------------------
 on fs
-    # Library path (recovery için yeterli set)
     export LD_LIBRARY_PATH /system/lib64:/system_ext/lib64:/vendor/lib64:/vendor/lib64/hw
 
-    # Bootdevice symlink
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    # Firmware symlink’leri (güvenli)
     symlink /vendor/firmware_mnt /firmware
     symlink /vendor/bt_firmware /bt_firmware
     symlink /vendor/dsp /dsp
 
-    # fsck log dizini
     mkdir /dev/fscklogs 0770 root system
     mkdir /dev/fscklogs/log 0770 root system
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
 
-# -----------------------------------------------------------------------------
-# EARLY FS
-# -----------------------------------------------------------------------------
 on early-fs
-    # Scheduler optimizasyonu (zararsız)
     write /proc/sys/kernel/sched_lib_name "recovery"
     write /proc/sys/kernel/sched_lib_mask_force 255
 
-# -----------------------------------------------------------------------------
-# BOOT
-# -----------------------------------------------------------------------------
 on boot
-    # USB hazır
     setprop sys.usb.state adb
 
-# -----------------------------------------------------------------------------
-# USB CONTROLLER
-# -----------------------------------------------------------------------------
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
     wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
