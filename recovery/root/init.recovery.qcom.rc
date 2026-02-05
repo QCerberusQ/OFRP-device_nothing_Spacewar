@@ -19,7 +19,7 @@ on init
 # -----------------------------------------------------------------------------
 on fs
     # Library path (recovery için yeterli set)
-    export LD_LIBRARY_PATH /system/lib64:/system_ext/lib64:/vendor/lib64
+    export LD_LIBRARY_PATH /system/lib64:/system_ext/vendor/lib64:/vendor/lib64/hw
 
     # Bootdevice symlink
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
