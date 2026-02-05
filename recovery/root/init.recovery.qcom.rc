@@ -63,8 +63,8 @@ on boot
 # -----------------------------------------------------------------------------
 # WRAPPED KEY – CORRECT TIMING
 # -----------------------------------------------------------------------------
-on property:twrp.modules.loaded=true
-    chmod 0755 /system/bin/wrappedkey-fix.sh
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    chmod 0777 /system/bin/wrappedkey-fix.sh
     start wrapped-key
 
 # -----------------------------------------------------------------------------
@@ -106,8 +106,8 @@ service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
     seclabel u:r:recovery:s0
 
 service wrapped-key /system/bin/wrappedkey-fix.sh
-    class core
     user root
     group root
-    seclabel u:r:recovery:s0
+    disabled
     oneshot
+    seclabel u:r:recovery:s0
