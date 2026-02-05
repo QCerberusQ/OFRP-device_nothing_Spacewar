@@ -93,12 +93,6 @@ service vold /system/bin/vold
     group system
     seclabel u:r:recovery:s0
 
-service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
-    class core
-    user root
-    group root
-    seclabel u:r:recovery:health2_1:s0
-
 service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
     class core
     user root
