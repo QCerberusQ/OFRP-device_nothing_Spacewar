@@ -195,7 +195,7 @@ TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 
 
 # 1. Hangi modül dosyası fiziksel olarak kopyalansın?
-#TARGET_RECOVERY_DEVICE_MODULES := crypto-qti-common.ko cqhci-crypto.ko cqhci-crypto-qti.ko ufs-qcom.ko ufshcd-crypto-qti.ko goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko
+#TARGET_RECOVERY_DEVICE_MODULES := goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko
 
 TARGET_RECOVERY_DEVICE_MODULES := \
     adsp_loader_dlkm.ko \
@@ -210,7 +210,7 @@ TARGET_RECOVERY_DEVICE_MODULES := \
 
 
 # 3. Recovery açılınca hangi modül "insmod" ile yüklensin?
-#TW_LOAD_VENDOR_MODULES := "crypto-qti-common.ko cqhci-crypto.ko cqhci-crypto-qti.ko ufs-qcom.ko ufshcd-crypto-qti.ko goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko"
+#TW_LOAD_VENDOR_MODULES := "goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko"
 
 # Hedef Klasör
 #TW_LOAD_VENDOR_MODULES_TARGET := /vendor/lib/modules
