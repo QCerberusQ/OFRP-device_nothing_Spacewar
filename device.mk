@@ -72,17 +72,14 @@ PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
 
 # -----------------------------------------------------------------------------
-# Decryption stack (NO HAL SERVICES)
+# Decryption stack (NO HAL SERVICES - MANUAL COPY)
 # -----------------------------------------------------------------------------
-# Only binaries –
+# Sadece binary araçları paket olarak ekle
 PRODUCT_PACKAGES += \
     vold \
     qcom_decrypt \
     qcom_decrypt_fbe \
     libvold_crypto
-
-PRODUCT_PACKAGES += \
-    android.system.keystore2
 
 # -----------------------------------------------------------------------------
 # Health HAL (safe)
@@ -118,9 +115,16 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.virtual_ab.skip_verify_source_hash=true \
     ro.product.device=$(PRODUCT_RELEASE_NAME)
 
-# Bunu MUTLAKA EKLE (Çünkü senin listede keystore2 yok):
+# -----------------------------------------------------------------------------
+# MANUAL COPY: Local Binaries (GitHub Ağacındaki Dosyalar)
+# -----------------------------------------------------------------------------
+# Bu satırlar yüklediğin dosyaların imaja girmesini GARANTİ eder.
+
 RECOVERY_COPY_FILES += \
-    $(TARGET_OUT_EXECUTABLES)/keystore2:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/keystore2
+    $(LOCAL_PATH)/recovery/root/system/bin/keystore2:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/keystore2 \
+    $(LOCAL_PATH)/recovery/root/system/bin/android.hardware.keymaster@4.0-service-qti:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/android.hardware.keymaster@4.0-service-qti \
+    $(LOCAL_PATH)/recovery/root/system/bin/android.hardware.gatekeeper@1.0-service.qti:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/android.hardware.gatekeeper@1.0-service.qti
+
 # -----------------------------------------------------------------------------
 # TW
 # -----------------------------------------------------------------------------
