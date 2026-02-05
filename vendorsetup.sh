@@ -79,7 +79,7 @@ export FOX_USE_FSCK_EROFS_BINARY=1
 # -----------------------------------------------------------------------------
 # Security & Encryption (Eski Dosyadan)
 # -----------------------------------------------------------------------------
-export OF_DEFAULT_KEYMASTER_VERSION=4.1
+export OF_DEFAULT_KEYMASTER_VERSION=4.0
 export OF_USE_FBE_DECRYPTION=1
 export OF_USE_METADATA_DECRYPTION=1
 export OF_FORCE_PREBUILT_KEYMASTER=1
