@@ -27,6 +27,24 @@ export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
 export FOX_VIRTUAL_AB_DEVICE=1
 export FOX_AB_DEVICE=1
 
+
+# -------------------------------------------------------------------
+# Pong’dan alınan faydalı stabilite ayarları
+# -------------------------------------------------------------------
+# Decryption sırasında metadata/partition hatalarını takma
+export OF_IGNORE_LOGICAL_MOUNT_ERRORS=1
+export OF_FBE_METADATA_MOUNT_IGNORE=1
+
+# Uyum kontrol hataları yerine devam et
+export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
+
+# AVB 2.0 yaması (genelde gerekli)
+export OF_PATCH_AVB20=1
+
+# Manuel flash OTA hatalarından kurtul
+export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
+
+
 # -----------------------------------------------------------------------
 # Screen / UI
 export OF_SCREEN_H=2400
@@ -48,6 +66,7 @@ export FOX_USE_BASH_SHELL=1
 export FOX_USE_NANO_EDITOR=1
 export FOX_ENABLE_APP_MANAGER=1
 export FOX_DELETE_AROMAFM=1
+
 export FOX_USE_TAR_BINARY=1
 export FOX_USE_SED_BINARY=1
 export FOX_USE_XZ_UTILS=1
@@ -55,6 +74,9 @@ export FOX_USE_LZ4_BINARY=1
 export FOX_USE_ZSTD_BINARY=1
 export FOX_USE_BUSYBOX_BINARY=1
 export FOX_USE_FSCK_EROFS_BINARY=1
+
+export FOX_USE_ZIP_BINARY=1
+export FOX_REPLACE_TOOLBOX_GETPROP=1
 
 # -----------------------------------------------------------------------
 # Security / Encryption
