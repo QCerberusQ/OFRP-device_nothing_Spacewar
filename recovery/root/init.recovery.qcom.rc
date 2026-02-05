@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------
 # Qualcomm Recovery Init – Nothing Phone (1) / Spacewar
-# FINAL / DEADLOCK-FREE
+# FINAL / SAFE / BOOTIMAGE BASED
 # ---------------------------------------------------------------------
 
 on init
@@ -9,14 +9,17 @@ on init
     setprop sys.usb.configfs 1
 
 on fs
+    # Recovery için yeterli library path
     export LD_LIBRARY_PATH /system/lib64:/system_ext/lib64:/vendor/lib64:/vendor/lib64/hw
 
+    # bootdevice symlink
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
+    # Firmware symlinkler (mount YOK)
     symlink /vendor/firmware_mnt /firmware
-    symlink /vendor/bt_firmware /bt_firmware
     symlink /vendor/dsp /dsp
+    symlink /vendor/bt_firmware /bt_firmware
 
     mkdir /dev/fscklogs 0770 root system
     mkdir /dev/fscklogs/log 0770 root system
@@ -30,7 +33,7 @@ on early-fs
 on boot
     setprop sys.usb.state adb
 
-# 🔥 SADECE crypto state hazır olunca çalışır
+# wrappedkey sadece property geldikten sonra
 on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     chmod 0755 /system/bin/wrappedkey-fix.sh
     start wrapped-key
