@@ -3,15 +3,13 @@
 # FINAL: Local Binaries + Permissions Fix
 # ---------------------------------------------------------------------
 
+on early-init
+    exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
+
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
-    setprop sys.usb.config adb
+    mkdir /dev/fscklogs 0770 root system
     setprop sys.usb.configfs 1
-    write /sys/fs/selinux/enforce 0
-
-    # Çalışma klasörlerini oluştur
-    mkdir /data/misc/keystore 0700 root root
-    mkdir /data/misc/gatekeeper 0700 root root
 
 on fs
     # Kütüphane yolları
@@ -28,65 +26,46 @@ on fs
     symlink /firmware /vendor/firmware_mnt
     symlink /dsp /vendor/dsp
     symlink /vendor/bt_firmware /bt_firmware
+    chown root system /dev/fscklogs/log
+    chmod 0770 /dev/fscklogs/log
 
 on post-fs
     start boot-hal-1-2
 
-on early-boot
-    # ---------------------------------------------------------
-    # KRİTİK: Dosyalara Çalışma İzni Ver (chmod 755)
-    # ---------------------------------------------------------
-    # Git'ten gelen dosyalarda izin sorunu olabilir, bunu düzeltiyoruz.
-    chmod 0755 /system/bin/keystore2
-    chmod 0755 /system/bin/android.hardware.keymaster@4.0-service-qti
-    chmod 0755 /system/bin/android.hardware.gatekeeper@1.0-service-qti
-
 on late-fs
-    # Servisleri başlat
-    start keymaster-4-0
-    start gatekeeper-1-0
-    start keystore2
+    start keymasterd
+    start set_permissive
+    start health-hal-2-1
 
 on boot
-    setprop sys.usb.state adb
+    setprop sys.usb.state mtp,adb
 
-# ---------------------------------------------------------
-# SERVİS TANIMLARI
-# ---------------------------------------------------------
-
-service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service-qti
-    user root
-    group root drmrpc
-    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
-    seclabel u:r:recovery:s0
-
-service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service.qti
-    user root
-    group root
-    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
-    seclabel u:r:recovery:s0
-
-service keystore2 /system/bin/keystore2 /data/misc/keystore
-    user root
-    group root
-    setenv LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/sbin
-    seclabel u:r:recovery:s0
-
-# ---------------------------------------------------------
-# Diğer
-# ---------------------------------------------------------
-on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
-    chmod 0755 /system/bin/wrappedkey-fix.sh
-    start wrapped-key
-
-service wrapped-key /system/bin/wrappedkey-fix.sh
-    user root
-    group root
-    oneshot
-    disabled
-    seclabel u:r:recovery:s0
+on property:twrp.modules.loaded=true
+    # Load ADSP firmware for PMIC
+    wait /sys/kernel/boot_adsp/boot
+    write /sys/kernel/boot_adsp/boot 1
+    wait /sys/class/power_supply/battery
 
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
     wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
     write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
+
+service set_permissive /system/bin/set_permissive.sh
+    user root
+    group root
+    disabled
+    oneshot 
+    seclabel u:r:recovery:s0
+
+service keymasterd /system/bin/keymasterd
+     user root
+     group root
+     disabled
+     seclabel u:r:recovery:s0
+
+service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0	
