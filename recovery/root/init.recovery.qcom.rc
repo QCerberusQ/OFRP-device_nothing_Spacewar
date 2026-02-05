@@ -63,8 +63,8 @@ on boot
 # -----------------------------------------------------------------------------
 # WRAPPED KEY – CORRECT TIMING
 # -----------------------------------------------------------------------------
-on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
-    chmod 0777 /system/bin/wrappedkey-fix.sh
+on property:twrp.modules.loaded=true
+    chmod 0755 /system/bin/wrappedkey-fix.sh
     start wrapped-key
 
 # -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ on property:ro.boot.usbcontroller=*
 # -----------------------------------------------------------------------------
 
 service vold /system/bin/vold
-    class main
+    class core
     user root
     group system
     seclabel u:r:recovery:s0
