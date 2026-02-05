@@ -99,11 +99,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.virtual_ab.skip_verify_source_hash=true \
     ro.product.device=$(PRODUCT_RELEASE_NAME)
 
-# Keymaster
-PRODUCT_PACKAGES += \
-    android.hardware.keymaster@4.1-impl \
-    android.hardware.keymaster@4.1-service
-
 # vold crypto
 PRODUCT_PACKAGES += \
     vold \
@@ -121,5 +116,5 @@ RECOVERY_COPY_FILES += \
 
 # keymaster + gatekeeper libleri
 RECOVERY_LIBRARY_SOURCE_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libvold_crypto.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libvold_crypto.so
 
