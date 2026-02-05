@@ -117,3 +117,14 @@ TARGET_RECOVERY_DEVICE_MODULES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.virtual_ab.skip_verify_source_hash=true \
     ro.product.device=$(PRODUCT_RELEASE_NAME)
+
+
+# -----------------------------------------------------------------------------
+# TW
+# -----------------------------------------------------------------------------
+TW_EXCLUDE_APEX := true
+
+# -----------------------------------------------------------------------------
+# VINTF
+# -----------------------------------------------------------------------------
+PRODUCT_ENFORCE_VINTF_MANIFEST := true
