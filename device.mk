@@ -117,7 +117,7 @@ TW_EXCLUDE_APEX := true
 PRODUCT_ENFORCE_VINTF_MANIFEST := true
 
 # -----------------------------------------------------------------------------
-# VINTF
+# SKIP VERIFY GAPPS
 # -----------------------------------------------------------------------------
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.virtual_ab.skip_verify_source_hash=true
