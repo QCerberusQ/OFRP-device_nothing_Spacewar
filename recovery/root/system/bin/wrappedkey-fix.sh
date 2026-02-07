@@ -27,43 +27,47 @@
 #!/system/bin/sh
 
 check_vendor_wrappedkey() {
+    # Spacewar için manuel testte onayladığımız kesin yol
     local V=/dev/block/bootdevice/by-name/vendor
     local VENDORDIR=/FFiles/temp/vendor_prop
     local VENDORFSTAB=/FFiles/temp/vendor_fstab
 
     mkdir -p $VENDORDIR
-    
-    # Mount denemesi - Tip belirtmeden kernel'e bırakıyoruz (Orijinaldeki gibi)
-    # Ama erofs desteği için -t parametresini yedekte tutuyoruz
-    mount -o ro $V $VENDORDIR || mount -t erofs -o ro $V $VENDORDIR
 
-    # Orijinaldeki gibi fstab.default dosyasına bakıyoruz
+    # Mount denemesi - EROFS (modern ROM) veya otomatik fallback
+    echo "OrangeFox: Vendor mount denemesi: $V" > /dev/kmsg
+    mount -t erofs -o ro $V $VENDORDIR 2>/dev/null || mount -o ro $V $VENDORDIR 2>/dev/null
+
+    # fstab dosyasını vendor içinden kopyala
     if [ -f "$VENDORDIR/etc/fstab.default" ]; then
         cp "$VENDORDIR/etc/fstab.default" $VENDORFSTAB
     elif [ -f "$VENDORDIR/etc/fstab.qcom" ]; then
         cp "$VENDORDIR/etc/fstab.qcom" $VENDORFSTAB
     fi
 
-    # Eğer dosya kopyalanamadıysa (mount başarısızsa) hiçbir şeyi değiştirme ve ÇIK
+    # KRİTİK: Eğer vendor fstab okunamadıysa, mevcut fstab'a (wrappedkey) DOKUNMA!
     if [ ! -f "$VENDORFSTAB" ]; then
-        echo "OrangeFox: Vendor fstab bulunamadı, varsayılan fstab korunuyor." > /dev/kmsg
-        umount $VENDORDIR
+        echo "OrangeFox: HATA - Vendor fstab bulunamadi. Varsayilan korunuyor." > /dev/kmsg
+        umount $VENDORDIR 2>/dev/null
         return
     fi
 
-    # Grep kontrolü (Büyük/Küçük harf duyarsız -i ekledik, daha garantidir)
+    # Şifreleme tipine göre fstab'ı yer değiştir
     if grep -qi "wrappedkey" $VENDORFSTAB; then
-        echo "OrangeFox: Wrappedkey TESPİT EDİLDİ." > /dev/kmsg
+        echo "OrangeFox: wrappedkey TESPIT EDILDI." > /dev/kmsg
         cp /system/etc/recovery-wrappedkey.fstab /system/etc/recovery.fstab
     else
-        echo "OrangeFox: Wrappedkey YOK (AOSP/Lunaris)." > /dev/kmsg
+        echo "OrangeFox: wrappedkey BULUNAMADI (AOSP Modu)." > /dev/kmsg
         cp /system/etc/recovery-no-wrappedkey.fstab /system/etc/recovery.fstab
     fi
 
-    umount $VENDORDIR
-    rmdir $VENDORDIR
+    # Temizlik
+    umount $VENDORDIR 2>/dev/null
+    rmdir $VENDORDIR 2>/dev/null
     rm -f $VENDORFSTAB
 }
 
+# Fonksiyonu çağır
 check_vendor_wrappedkey
+
 exit 0
