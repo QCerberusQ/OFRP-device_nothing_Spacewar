@@ -24,30 +24,49 @@
 # In such cases, remove the wrappedkey flag from the fstab file
 #
 
+#!/system/bin/sh
+
 check_vendor_wrappedkey() {
-    local V=/dev/block/bootdevice/by-name/vendor$(getprop ro.boot.slot_suffix);
-    local VENDORDIR=/FFiles/temp/vendor_prop;
-    local VENDORFSTAB=/FFiles/temp/vendor_fstab;
+    # A/B Slot desteği
+    local SLOT=$(getprop ro.boot.slot_suffix)
+    local V=/dev/block/bootdevice/by-name/vendor$SLOT
+    local VENDORDIR=/FFiles/temp/vendor_prop
+    local VENDORFSTAB=/FFiles/temp/vendor_fstab
 
-    mkdir -p $VENDORDIR;
-    mount $V $VENDORDIR;
-
-    cp $VENDORDIR/etc/fstab.default $VENDORFSTAB;
-    if [ ! -e $VENDORFSTAB ]; then
-        return;
+    mkdir -p $VENDORDIR
+    
+    # Mount denemesi (Hata verirse dmesg'e yazması için 2>&1 ekledik)
+    if ! mount -t erofs $V $VENDORDIR > /dev/null 2>&1; then
+        mount -t ext4 $V $VENDORDIR > /dev/null 2>&1
     fi
 
-    if grep -q "wrappedkey" $VENDORFSTAB; then
-        cp /system/etc/recovery-wrappedkey.fstab /system/etc/recovery.fstab;
+    # Kritik: fstab.default yerine fstab.* aramak daha garantidir
+    # Çünkü bazı ROM'larda fstab.qcom veya fstab.yupik olabilir
+    local ACTUAL_FSTAB=$(ls $VENDORDIR/etc/fstab.* | head -n 1)
+    
+    if [ -f "$ACTUAL_FSTAB" ]; then
+        cp "$ACTUAL_FSTAB" $VENDORFSTAB
     else
-        cp /system/etc/recovery-no-wrappedkey.fstab /system/etc/recovery.fstab;
+        # Eğer vendor fstab bulunamazsa varsayılan olarak no-wrappedkey seç (Güvenli liman)
+        cp /system/etc/recovery-no-wrappedkey.fstab /system/etc/recovery.fstab
+        umount $VENDORDIR
+        return
     fi
 
-    umount $VENDORDIR;
-    rmdir $VENDORDIR;
-    rm -f $VENDORFSTAB;
+    # Şifreleme kontrolü ve dosya değişimi
+    if grep -q "wrappedkey" $VENDORFSTAB; then
+        echo "OrangeFox: Wrappedkey algılandı, fstab güncelleniyor..." > /dev/kmsg
+        cp /system/etc/recovery-wrappedkey.fstab /system/etc/recovery.fstab
+    else
+        echo "OrangeFox: Wrappedkey bulunamadı, fstab güncelleniyor..." > /dev/kmsg
+        cp /system/etc/recovery-no-wrappedkey.fstab /system/etc/recovery.fstab
+    fi
+
+    # Temizlik
+    umount $VENDORDIR
+    rmdir $VENDORDIR
+    rm -f $VENDORFSTAB
 }
 
-check_vendor_wrappedkey;
-
-exit 0;
+check_vendor_wrappedkey
+exit 0
