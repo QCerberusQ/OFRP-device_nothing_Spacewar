@@ -25,7 +25,7 @@
 #
 
 check_vendor_wrappedkey() {
-    local V=/dev/block/bootdevice/by-name/vendor;
+    local V=/dev/block/bootdevice/by-name/vendor$(getprop ro.boot.slot_suffix);
     local VENDORDIR=/FFiles/temp/vendor_prop;
     local VENDORFSTAB=/FFiles/temp/vendor_fstab;
 
