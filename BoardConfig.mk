@@ -207,9 +207,9 @@ TARGET_RECOVERY_DEVICE_MODULES := \
     msm_drm.ko \
     goodix_fp.ko \
     fts_tp.ko \
-    swr_haptics_dlkm.ko \
-    qti_battery_debug.ko \
-    qti_battery_charger_main.ko
+    swr_haptics_dlkm.ko
+#    qti_battery_debug.ko \
+#    qti_battery_charger_main.ko
 
 
 
