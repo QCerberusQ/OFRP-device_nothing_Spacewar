@@ -28,7 +28,6 @@ on fs
     symlink /vendor/bt_firmware /bt_firmware
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
-    chmod 0755 /system/bin/switch_encryption.sh
 
 on post-fs
     start boot-hal-1-2
@@ -40,6 +39,10 @@ on late-fs
 
 on boot
     setprop sys.usb.state mtp,adb
+
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    chmod 0777 /system/bin/wrappedkey-fix.sh
+    start wrapped-key
 
 on property:twrp.modules.loaded=true
     # Load ADSP firmware for PMIC
@@ -69,4 +72,11 @@ service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
     user root
     group root
     disabled
+    seclabel u:r:recovery:s0
+
+service wrapped-key /system/bin/wrappedkey-fix.sh
+    user root
+    group root
+    disabled
+    oneshot
     seclabel u:r:recovery:s0
