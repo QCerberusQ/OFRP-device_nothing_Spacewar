@@ -27,47 +27,47 @@
 #!/system/bin/sh
 
 check_vendor_wrappedkey() {
-    # Spacewar için manuel testte onayladığımız kesin yol
+    # /FFiles yerine her zaman yazılabilir olan /tmp dizinini kullanıyoruz
     local V=/dev/block/bootdevice/by-name/vendor
-    local VENDORDIR=/FFiles/temp/vendor_prop
-    local VENDORFSTAB=/FFiles/temp/vendor_fstab
-
+    local VENDORDIR=/tmp/vendor_prop
+    local VENDORFSTAB=/tmp/vendor_fstab
+    
     mkdir -p $VENDORDIR
 
-    # Mount denemesi - EROFS (modern ROM) veya otomatik fallback
-    echo "OrangeFox: Vendor mount denemesi: $V" > /dev/kmsg
-    mount -t erofs -o ro $V $VENDORDIR 2>/dev/null || mount -o ro $V $VENDORDIR 2>/dev/null
+    # Dinamik bölümün (dm-4) hazır olması için gerçek bir bekleme döngüsü
+    local timeout=0
+    while [ ! -b "$V" ] && [ $timeout -lt 15 ]; do
+        echo "OrangeFox: Vendor ($V) bekleniyor... ($timeout)" > /dev/kmsg
+        sleep 1
+        timeout=$((timeout+1))
+    done
 
-    # fstab dosyasını vendor içinden kopyala
-    if [ -f "$VENDORDIR/etc/fstab.default" ]; then
-        cp "$VENDORDIR/etc/fstab.default" $VENDORFSTAB
-    elif [ -f "$VENDORDIR/etc/fstab.qcom" ]; then
-        cp "$VENDORDIR/etc/fstab.qcom" $VENDORFSTAB
+    # Bölüm hala yoksa çık
+    [ ! -b "$V" ] && { echo "OrangeFox: KRITIK HATA - Vendor bulunamadi!" > /dev/kmsg; return; }
+
+    # Mount denemesi
+    if ! mount -t erofs -o ro $V $VENDORDIR 2>/dev/null; then
+        mount -o ro $V $VENDORDIR 2>/dev/null
     fi
 
-    # KRİTİK: Eğer vendor fstab okunamadıysa, mevcut fstab'a (wrappedkey) DOKUNMA!
-    if [ ! -f "$VENDORFSTAB" ]; then
-        echo "OrangeFox: HATA - Vendor fstab bulunamadi. Varsayilan korunuyor." > /dev/kmsg
-        umount $VENDORDIR 2>/dev/null
-        return
-    fi
+    # fstab tespiti
+    local SOURCE_FSTAB=$(ls $VENDORDIR/etc/fstab.default $VENDORDIR/etc/fstab.qcom 2>/dev/null | head -n 1)
 
-    # Şifreleme tipine göre fstab'ı yer değiştir
-    if grep -qi "wrappedkey" $VENDORFSTAB; then
-        echo "OrangeFox: wrappedkey TESPIT EDILDI." > /dev/kmsg
-        cp /system/etc/recovery-wrappedkey.fstab /system/etc/recovery.fstab
+    if [ -f "$SOURCE_FSTAB" ]; then
+        if grep -qi "wrappedkey" "$SOURCE_FSTAB"; then
+            echo "OrangeFox: wrappedkey TESPIT EDILDI." > /dev/kmsg
+            cp /system/etc/recovery-wrappedkey.fstab /system/etc/recovery.fstab
+        else
+            echo "OrangeFox: wrappedkey YOK (AOSP Modu)." > /dev/kmsg
+            cp /system/etc/recovery-no-wrappedkey.fstab /system/etc/recovery.fstab
+        fi
     else
-        echo "OrangeFox: wrappedkey BULUNAMADI (AOSP Modu)." > /dev/kmsg
-        cp /system/etc/recovery-no-wrappedkey.fstab /system/etc/recovery.fstab
+        echo "OrangeFox: HATA - Vendor icinde fstab dosyasi bulunamadi!" > /dev/kmsg
     fi
 
-    # Temizlik
     umount $VENDORDIR 2>/dev/null
-    rmdir $VENDORDIR 2>/dev/null
-    rm -f $VENDORFSTAB
+    rm -rf $VENDORDIR
 }
 
-# Fonksiyonu çağır
 check_vendor_wrappedkey
-
 exit 0
