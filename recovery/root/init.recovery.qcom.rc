@@ -35,7 +35,6 @@ on post-fs
 on late-fs
     start keymasterd
     start set_permissive
-    start health-hal-2-1
 
 on boot
     setprop sys.usb.state mtp,adb
@@ -49,6 +48,7 @@ on property:twrp.modules.loaded=true
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
+    start health-hal-2-1
 
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
