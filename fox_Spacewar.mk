@@ -56,3 +56,4 @@ OF_BIND_MOUNT_SDCARD_ON_FORMAT := 1
 # Gelişmiş menü seçenekleri
 OF_OPTIONS_LIST_NUM := 9
 OF_ENABLE_FRP_ADDON := 1
+OF_CUSTOM_ACTIONS += "Switch Encryption [f:wrench]|/system/bin/switch_encryption.sh"
