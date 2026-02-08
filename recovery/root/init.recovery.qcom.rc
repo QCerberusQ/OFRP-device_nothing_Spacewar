@@ -5,8 +5,6 @@
 
 on early-init
     exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
-    chmod 0755 /system/bin/wrappedkey-fix.sh
-    start wrapped-key
 
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
@@ -30,6 +28,7 @@ on fs
     symlink /vendor/bt_firmware /bt_firmware
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
+    chmod 0755 /system/bin/switch_encryption.sh
 
 on post-fs
     start boot-hal-1-2
@@ -70,11 +69,4 @@ service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
     user root
     group root
     disabled
-    seclabel u:r:recovery:s0	
-
-service wrapped-key /system/bin/wrappedkey-fix.sh
-    user root
-    group root
-    disabled
-    oneshot
     seclabel u:r:recovery:s0
