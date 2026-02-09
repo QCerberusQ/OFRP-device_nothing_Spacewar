@@ -62,9 +62,10 @@ BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 6438256640
 # -----------------------------------------------------------------------------
 # Kernel CMDLINE (v3 Header Uyumlu)
 # -----------------------------------------------------------------------------
-BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8
+BOARD_KERNEL_CMDLINE := console=ttyMSM8,115200n8
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM0
+BOARD_KERNEL_CMDLINE += enforcing=0
+BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM8
 BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
 BOARD_KERNEL_CMDLINE += androidboot.memcg=1
 BOARD_KERNEL_CMDLINE += androidboot.usbcontroller=a600000.dwc3
@@ -87,7 +88,7 @@ BOARD_KERNEL_CMDLINE += iptable_raw.raw_before_defrag=1
 
 # v3 Header olduğu için bu değişkeni build sistemine tanıtıyoruz:
 # (Build sistemi bunu otomatik alsa da garantiye alıyoruz)
-BOARD_MKBOOTIMG_ARGS += --cmdline "$(BOARD_KERNEL_CMDLINE)"
+#BOARD_MKBOOTIMG_ARGS += --cmdline "$(BOARD_KERNEL_CMDLINE)"
 
 # File systems
 BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := erofs
@@ -199,18 +200,20 @@ TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 # 1. Hangi modül dosyası fiziksel olarak kopyalansın?
 #TARGET_RECOVERY_DEVICE_MODULES := goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko
 
-TARGET_RECOVERY_DEVICE_MODULES := \
-    adsp_loader_dlkm.ko \
-    apr_dlkm.ko \
-    q6_notifier_dlkm.ko \
-    q6_pdr_dlkm.ko \
-    q6_dlkm.ko \
-    msm_drm.ko \
-    goodix_fp.ko \
-    fts_tp.ko \
-    swr_haptics_dlkm.ko
+#TARGET_RECOVERY_DEVICE_MODULES := \
+#    adsp_loader_dlkm.ko \
+#    apr_dlkm.ko \
+#    q6_notifier_dlkm.ko \
+#    q6_pdr_dlkm.ko \
+#    q6_dlkm.ko \
+#    msm_drm.ko \
+#    goodix_fp.ko \
+#    fts_tp.ko \
+#    swr_haptics_dlkm.ko
 
-TW_LOAD_VENDOR_MODULES := $(shell echo \"$(shell ls $(DEVICE_PATH)/recovery/root/vendor/lib/modules)\")
+#TW_LOAD_VENDOR_MODULES := $(shell echo \"$(shell ls $(DEVICE_PATH)/recovery/root/vendor/lib/modules)\")
+
+TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko apr_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko q6_dlkm.ko swr_haptics_dlkm.ko goodix_fp.ko fts_tp.ko"
 
 # 3. Recovery açılınca hangi modül "insmod" ile yüklensin?
 #TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko apr_dlkm.ko q6_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko msm_drm.ko goodix_fp.ko fts_tp.ko swr_haptics_dlkm.ko qti_battery_debug.ko qti_battery_charger_main.ko"
