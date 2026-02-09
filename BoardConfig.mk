@@ -62,8 +62,8 @@ BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 6438256640
 # -----------------------------------------------------------------------------
 # Kernel CMDLINE (v3 Header Uyumlu)
 # -----------------------------------------------------------------------------
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_CMDLINE := console=ttyMSM0,115200n8
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM0
 BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
 BOARD_KERNEL_CMDLINE += androidboot.memcg=1
