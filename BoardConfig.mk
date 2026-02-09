@@ -215,8 +215,5 @@ TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 
 TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko apr_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko q6_dlkm.ko swr_haptics_dlkm.ko goodix_fp.ko fts_tp.ko"
 
-# 3. Recovery açılınca hangi modül "insmod" ile yüklensin?
-#TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko apr_dlkm.ko q6_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko msm_drm.ko goodix_fp.ko fts_tp.ko swr_haptics_dlkm.ko qti_battery_debug.ko qti_battery_charger_main.ko"
-
 # Hedef Klasör
 #TW_LOAD_VENDOR_MODULES_TARGET := /vendor/lib/modules
