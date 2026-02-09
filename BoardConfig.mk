@@ -207,9 +207,7 @@ TARGET_RECOVERY_DEVICE_MODULES := \
     msm_drm.ko \
     goodix_fp.ko \
     fts_tp.ko \
-    swr_haptics_dlkm.ko \
-    qti_battery_charger_main.ko \
-    qti_battery_debug.ko
+    swr_haptics_dlkm.ko
 
 TW_LOAD_VENDOR_MODULES := $(shell echo \"$(shell ls $(DEVICE_PATH)/recovery/root/vendor/lib/modules)\")
 
