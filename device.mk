@@ -95,9 +95,11 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
 # -----------------------------------------------------------------------------
 # Health HAL
 # -----------------------------------------------------------------------------
+# Health HAL
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl.recovery \
-    android.hardware.health@2.1-service
+    android.hardware.health@2.1-impl \
+    android.hardware.health@2.1-service \
+    libhealthd.lahaina
 
 # -----------------------------------------------------------------------------
 # Soong Namespaces
