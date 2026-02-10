@@ -21,8 +21,8 @@
 /persist         ext4       /dev/block/bootdevice/by-name/persist                 flags=backup=1;display="Persist"
 /prodpersist     ext4       /dev/block/bootdevice/by-name/prodpersist             flags=backup=1;display="Product Persist"
 
-/firmware        ext4       /dev/block/bootdevice/by-name/modem                   flags=backup=1;display="Firmware";slotselect;mounttodecrypt
-/bt_firmware     ext4       /dev/block/bootdevice/by-name/bluetooth               flags=backup=1;display="Bluetooth";slotselect
+/firmware        vfat       /dev/block/bootdevice/by-name/modem                   flags=backup=1;display="Firmware";slotselect;mounttodecrypt
+/bt_firmware     vfat       /dev/block/bootdevice/by-name/bluetooth               flags=backup=1;display="Bluetooth";slotselect
 /dsp             ext4       /dev/block/bootdevice/by-name/dsp                     flags=backup=1;display="Dsp";slotselect
 /super           emmc       /dev/block/bootdevice/by-name/super                   flags=backup=1;display="Super";flashimg=1
 /metadata        ext4       /dev/block/bootdevice/by-name/metadata                flags=backup=1;display="Metadata"
