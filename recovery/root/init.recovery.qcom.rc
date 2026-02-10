@@ -1,10 +1,9 @@
+import /init.recovery.qcom_decrypt.rc
+
 # ---------------------------------------------------------------------
 # Qualcomm Recovery Init – Nothing Phone (1) / Spacewar
 # FINAL: Local Binaries + Permissions Fix
 # ---------------------------------------------------------------------
-
-import /init.recovery.qcom_decrypt.rc
-
 
 on early-init
     exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
@@ -14,6 +13,7 @@ on early-init
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on init
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
     mount_all /vendor/etc/charger_fw_fstab.qti --early
     write /sys/class/backlight/panel0-backlight/brightness 200
     mkdir /dev/fscklogs 0770 root system
@@ -22,7 +22,7 @@ on init
 
 on fs
     # Kütüphane yolları
-    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+#    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
 
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
