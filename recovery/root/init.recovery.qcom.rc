@@ -5,7 +5,7 @@
 
 on early-init
     exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
-    symlink /vendor/firmware_mnt /firmware
+#    symlink /vendor/firmware_mnt /firmware
     symlink /vendor/bt_firmware /bt_firmware
     symlink /vendor/dsp /dsp
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
