@@ -21,7 +21,7 @@ on fs
     # Firmware Mount
     mkdir /firmware
     mkdir /dsp
-    mount vfat /dev/block/bootdevice/by-name/modem /firmware ro
+    mount vfat /dev/block/bootdevice/by-name/modem /firmware ro context=u:object_r:firmware_file:s0
     mount ext4 /dev/block/bootdevice/by-name/dsp /dsp ro
     symlink /firmware /vendor/firmware_mnt
     symlink /dsp /vendor/dsp
@@ -47,7 +47,6 @@ on property:twrp.modules.loaded=true
     # Load ADSP firmware for PMIC
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
-    wait /sys/class/power_supply/battery
     start health-hal-2-1
 
 on property:ro.boot.usbcontroller=*
