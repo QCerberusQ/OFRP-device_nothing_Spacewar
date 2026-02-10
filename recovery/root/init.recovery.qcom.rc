@@ -3,6 +3,9 @@
 # FINAL: Local Binaries + Permissions Fix
 # ---------------------------------------------------------------------
 
+import /init.recovery.qcom_decrypt.rc
+
+
 on early-init
     exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
 #    symlink /vendor/firmware_mnt /firmware
