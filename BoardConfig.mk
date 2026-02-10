@@ -74,7 +74,6 @@ TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/$(BOARD_KERNEL_IMAGE_NAME)
 # -----------------------------------------------------------------------------
 BOARD_KERNEL_CMDLINE += console=ttyMSM8,115200n8
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-BOARD_KERNEL_CMDLINE += enforcing=0
 BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM8
 BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom
 BOARD_KERNEL_CMDLINE += androidboot.memcg=1
