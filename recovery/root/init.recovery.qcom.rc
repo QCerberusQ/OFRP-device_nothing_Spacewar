@@ -25,7 +25,7 @@ on fs
     mkdir /firmware
     mkdir /dsp
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro context=u:object_r:firmware_file:s0
-    mount ext4 /dev/block/bootdevice/by-name/dsp /dsp ro
+    mount ext4 /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix} /dsp ro context=u:object_r:firmware_file:s0
     symlink /firmware /vendor/firmware_mnt
     symlink /dsp /vendor/dsp
     symlink /vendor/bt_firmware /bt_firmware
@@ -41,6 +41,7 @@ on late-fs
 
 on boot
     setprop sys.usb.state mtp,adb
+    start vendor.qti.vibrator
 
 on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     chmod 0777 /system/bin/wrappedkey-fix.sh
@@ -93,4 +94,11 @@ service wrapped-key /system/bin/wrappedkey-fix.sh
     group root
     disabled
     oneshot
+    seclabel u:r:recovery:s0
+
+service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
+    user root
+    group root
+    disabled
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
     seclabel u:r:recovery:s0
