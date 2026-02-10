@@ -72,7 +72,7 @@ TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/$(BOARD_KERNEL_IMAGE_NAME)
 # -----------------------------------------------------------------------------
 # Kernel CMDLINE (v3 Header Uyumlu)
 # -----------------------------------------------------------------------------
-BOARD_KERNEL_CMDLINE := console=ttyMSM8,115200n8
+BOARD_KERNEL_CMDLINE += console=ttyMSM8,115200n8
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_CMDLINE += enforcing=0
 BOARD_KERNEL_CMDLINE += androidboot.console=ttyMSM8
@@ -211,9 +211,9 @@ TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 #    fts_tp.ko \
 #    swr_haptics_dlkm.ko
 
-#TW_LOAD_VENDOR_MODULES := $(shell echo \"$(shell ls $(DEVICE_PATH)/recovery/root/vendor/lib/modules)\")
+TW_LOAD_VENDOR_MODULES := $(shell echo \"$(shell ls $(DEVICE_PATH)/recovery/root/vendor/lib/modules)\")
 
-TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko apr_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko q6_dlkm.ko swr_haptics_dlkm.ko goodix_fp.ko fts_tp.ko"
+#TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko apr_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko q6_dlkm.ko swr_haptics_dlkm.ko goodix_fp.ko fts_tp.ko"
 
 # Hedef Klasör
 #TW_LOAD_VENDOR_MODULES_TARGET := /vendor/lib/modules
