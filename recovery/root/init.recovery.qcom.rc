@@ -58,7 +58,7 @@ on property:dev.mnt.blk.firmware=*
     write /sys/kernel/boot_adsp/boot 1
     
     # Pil klasörünün oluşmasını bekle (Artık güvenli çünkü firmware mount edildi)
-    wait /sys/class/power_supply/battery
+    wait /sys/class/power_supply/battery/capacity
     
     # Her şey hazırsa servisi ateşle
     start health-hal-2-1
