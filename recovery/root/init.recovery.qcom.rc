@@ -7,14 +7,14 @@ import /init.recovery.qcom_decrypt.rc
 
 on early-init
     exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
-#    symlink /vendor/firmware_mnt /firmware
+    symlink /vendor/firmware_mnt /firmware
     symlink /vendor/bt_firmware /bt_firmware
     symlink /vendor/dsp /dsp
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on init
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
-    mount_all /vendor/etc/charger_fw_fstab.qti --early
+#    mount_all /vendor/etc/charger_fw_fstab.qti --early
     write /sys/class/backlight/panel0-backlight/brightness 200
     mkdir /dev/fscklogs 0770 root system
     setprop sys.usb.configfs 1
@@ -43,7 +43,6 @@ on late-fs
 
 on boot
     setprop sys.usb.state mtp,adb
-    start vendor.qti.vibrator
 
 on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     chmod 0777 /system/bin/wrappedkey-fix.sh
@@ -53,11 +52,9 @@ on property:dev.mnt.blk.firmware=*
     # ADSP hazır olana kadar bekle
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
-
-    # Fuel gauge’in ilk gerçek ölçümünü garanti et (sleep yok)
-    wait /sys/class/power_supply/battery/voltage_now
-
+    wait /sys/class/power_supply/battery
     start health-hal-2-1
+    start vendor.qti.vibrator
 
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
@@ -88,11 +85,4 @@ service wrapped-key /system/bin/wrappedkey-fix.sh
     group root
     disabled
     oneshot
-    seclabel u:r:recovery:s0
-
-service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
-    user root
-    group root
-    disabled
-    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
     seclabel u:r:recovery:s0
