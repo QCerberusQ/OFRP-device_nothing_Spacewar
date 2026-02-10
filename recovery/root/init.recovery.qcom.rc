@@ -5,11 +5,14 @@
 
 on early-init
     exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
+    write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on init
+    mount_all /vendor/etc/charger_fw_fstab.qti --early
     write /sys/class/backlight/panel0-backlight/brightness 200
     mkdir /dev/fscklogs 0770 root system
     setprop sys.usb.configfs 1
+    write /sys/class/power_supply/usb/otg_switch 1
 
 on fs
     # Kütüphane yolları
