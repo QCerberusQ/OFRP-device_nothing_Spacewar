@@ -24,7 +24,7 @@ on fs
     # Firmware Mount
     mkdir /firmware
     mkdir /dsp
-    mount vfat /dev/block/bootdevice/by-name/modem /firmware ro context=u:object_r:firmware_file:s0
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro context=u:object_r:firmware_file:s0
     mount ext4 /dev/block/bootdevice/by-name/dsp /dsp ro
     symlink /firmware /vendor/firmware_mnt
     symlink /dsp /vendor/dsp
