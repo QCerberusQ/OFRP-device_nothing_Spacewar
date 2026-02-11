@@ -19,17 +19,15 @@
 # Critical Partitions (Persist & EFS - IMEI Sigortası)
 /persist          ext4       /dev/block/bootdevice/by-name/persist                    flags=backup=1;display="Persist"
 /prodpersist      ext4       /dev/block/bootdevice/by-name/prodpersist                flags=backup=1;display="Product Persist"
-/efs1             emmc       /dev/block/bootdevice/by-name/modemst1                   flags=backup=1;display="EFS (Modemst1)"
-/efs2             emmc       /dev/block/bootdevice/by-name/modemst2                   flags=backup=1;display="EFS (Modemst2)"
-/efsc             emmc       /dev/block/bootdevice/by-name/fsg                        flags=backup=1;display="EFS (FSG)"
-/efsg             emmc       /dev/block/bootdevice/by-name/fsc                        flags=backup=1;display="EFS (FSC)"
+/efs1             emmc       /dev/block/bootdevice/by-name/modemst1                   flags=backup=1;display="EFS"
+/efs2             emmc       /dev/block/bootdevice/by-name/modemst2                   flags=backup=1;subpartitionof=/efs1
+/efsc             emmc       /dev/block/bootdevice/by-name/fsc                        flags=backup=1;subpartitionof=/efs1
+/efsg             emmc       /dev/block/bootdevice/by-name/fsg                        flags=backup=1;subpartitionof=/efs1
 
 # Firmware & DSP (Şarj ve Titreşim için senin çözdüğün kısımlar)
-/firmware         vfat       /dev/block/bootdevice/by-name/modem                      flags=backup=1;display="Firmware";slotselect;mounttodecrypt
-/dsp              vfat       /dev/block/bootdevice/by-name/dsp                        flags=display=DSP;slotselect
-/dsp_image        emmc       /dev/block/bootdevice/by-name/dsp                        flags=display=DSP;slotselect;backup=1;flashimg
-/modem            vfat       /dev/block/bootdevice/by-name/modem                      flags=display=Modem;slotselect;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0 wait"
-
+/firmware         vfat       /dev/block/bootdevice/by-name/modem                      flags=backup=1;display="Firmware";slotselect;mounttodecrypt;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=000,fmask=000,wait"
+/dsp              vfat       /dev/block/bootdevice/by-name/dsp                        flags=display="Dsp";slotselect;backup=1
+/dsp_image        emmc       /dev/block/bootdevice/by-name/dsp                        flags=display="Dsp Image";backup=1;flashimg=1;slotselect
 /bt_firmware      vfat       /dev/block/bootdevice/by-name/bluetooth                  flags=backup=1;display="Bluetooth";slotselect
 
 # Diğer
@@ -37,4 +35,4 @@
 /logo             emmc       /dev/block/bootdevice/by-name/logo                       flags=backup=1;display="Boot Logo";slotselect;flashimg=1
 
 # Removable storage
-/usb_otg          auto       /dev/block/sdg1        /dev/block/sdg                    flags=display="USB-OTG";storage;wipeingui;removable
+/usb_otg          auto       /dev/block/sdg1        /dev/block/sdg                    flags=fsflags=utf8;display="USB Storage";storage;wipeingui;removable
