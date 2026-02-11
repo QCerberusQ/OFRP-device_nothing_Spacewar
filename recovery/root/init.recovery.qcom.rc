@@ -27,7 +27,7 @@ on fs
     mkdir /firmware
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro context=u:object_r:firmware_file:s0
     symlink /firmware /vendor/firmware_mnt
-    symlink /dsp /vendor/dsp
+    symlink /vendor/dsp /dsp
     symlink /vendor/bt_firmware /bt_firmware
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
