@@ -7,14 +7,10 @@ import /init.recovery.qcom_decrypt.rc
 
 on early-init
     exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
-    symlink /vendor/firmware_mnt /firmware
-    symlink /vendor/bt_firmware /bt_firmware
-    symlink /vendor/dsp /dsp
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on init
-    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
-#    mount_all /vendor/etc/charger_fw_fstab.qti --early
+    mount_all /vendor/etc/charger_fw_fstab.qti --early
     write /sys/class/backlight/panel0-backlight/brightness 200
     mkdir /dev/fscklogs 0770 root system
     setprop sys.usb.configfs 1
@@ -22,15 +18,17 @@ on init
 
 on fs
     # Kütüphane yolları
-#    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
 
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    # MOUNT İŞLEMİ (Yollar zaten early-init'te hazırlandığı için hata payı düşük)
+    # Firmware Mount
     mkdir /firmware
-    wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro context=u:object_r:firmware_file:s0
+    symlink /firmware /vendor/firmware_mnt
+    symlink /dsp /vendor/dsp
+    symlink /vendor/bt_firmware /bt_firmware
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
 
@@ -48,13 +46,17 @@ on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     chmod 0777 /system/bin/wrappedkey-fix.sh
     start wrapped-key
 
+# Eski repodaki çalışan mantık: Firmware mount edilince başla
 on property:dev.mnt.blk.firmware=*
-    # ADSP hazır olana kadar bekle
+    # ADSP (Ses/Sensör İşlemcisi) uyandır
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
+    
+    # Pil klasörünün oluşmasını bekle (Artık güvenli çünkü firmware mount edildi)
     wait /sys/class/power_supply/battery
+    
+    # Her şey hazırsa servisi ateşle
     start health-hal-2-1
-    start vendor.qti.vibrator
 
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
