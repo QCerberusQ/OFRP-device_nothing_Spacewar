@@ -59,7 +59,7 @@ on property:dev.mnt.blk.firmware=*
     
     # Pil klasörünün oluşmasını bekle (Artık güvenli çünkü firmware mount edildi)
     wait /sys/class/qcom-haptics/fifo_vmax
-    write /sys/class/qcom-haptics/fifo_vmax 2500mv
+    write /sys/class/qcom-haptics/fifo_vmax 1500mv
     wait /sys/class/power_supply/battery
     
     # Her şey hazırsa servisi ateşle
