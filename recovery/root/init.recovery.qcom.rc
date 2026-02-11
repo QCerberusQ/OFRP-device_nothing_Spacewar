@@ -45,6 +45,7 @@ on late-fs
     start set_permissive
 
 on boot
+    start vendor.qti.vibrator
     setprop sys.usb.state mtp,adb
 
 on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
@@ -62,7 +63,6 @@ on property:dev.mnt.blk.firmware=*
     
     # Her şey hazırsa servisi ateşle
     start health-hal-2-1
-    start vendor.qti.vibrator
 
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
