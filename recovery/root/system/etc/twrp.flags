@@ -25,10 +25,9 @@
 /efsg             emmc       /dev/block/bootdevice/by-name/fsg                        flags=backup=1;subpartitionof=/efs1
 
 # Firmware & DSP (Şarj ve Titreşim için senin çözdüğün kısımlar)
-/firmware         vfat       /dev/block/bootdevice/by-name/modem                      flags=backup=1;display="Firmware";slotselect;mounttodecrypt;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=000,fmask=000,wait"
-/dsp              vfat       /dev/block/bootdevice/by-name/dsp                        flags=display="Dsp";fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=000,fmask=000,wait";slotselect;backup=1
-/dsp_image        emmc       /dev/block/bootdevice/by-name/dsp                        flags=display="Dsp Image";backup=1;flashimg=1;slotselect
-/bt_firmware      vfat       /dev/block/bootdevice/by-name/bluetooth                  flags=backup=1;display="Bluetooth";fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=000,fmask=000,wait";slotselect
+/firmware         vfat       /dev/block/bootdevice/by-name/modem                      flags=backup=1;display="Firmware";slotselect;mounttodecrypt;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=000,fmask=000,context=u:object_r:firmware_file:s0 wait"
+/dsp              ext4       /dev/block/bootdevice/by-name/dsp                        flags=backup=1;display="Dsp";slotselect
+/bt_firmware      vfat       /dev/block/bootdevice/by-name/bluetooth                  flags=backup=1;display="Bluetooth";slotselect;fsflags="ro,shortname=lower,uid=1002,gid=3002,dmask=000,fmask=000,wait";
 
 # Diğer
 /super            emmc       /dev/block/bootdevice/by-name/super                      flags=display="Super Image";flashimg=1
