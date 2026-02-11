@@ -195,7 +195,7 @@ TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone50/temp"
 TW_USE_HEALTH_SERVICES_FOR_BATTERY := true
 #TW_CUSTOM_BATTERY_PATH := "/sys/class/power_supply/battery"
-#TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
+TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 
 # 1. Hangi modül dosyası fiziksel olarak kopyalansın?
 #TARGET_RECOVERY_DEVICE_MODULES := goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko
