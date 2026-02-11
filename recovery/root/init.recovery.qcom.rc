@@ -45,7 +45,6 @@ on late-fs
     start set_permissive
 
 on boot
-    start vendor.qti.vibrator
     setprop sys.usb.state mtp,adb
 
 on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
@@ -59,10 +58,13 @@ on property:dev.mnt.blk.firmware=*
     write /sys/kernel/boot_adsp/boot 1
     
     # Pil klasörünün oluşmasını bekle (Artık güvenli çünkü firmware mount edildi)
+    wait /sys/class/qcom-haptics/fifo_vmax
+    write /sys/class/qcom-haptics/fifo_vmax 2500mv
     wait /sys/class/power_supply/battery
     
     # Her şey hazırsa servisi ateşle
     start health-hal-2-1
+    start vendor.qti.vibrator
 
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
@@ -93,11 +95,4 @@ service wrapped-key /system/bin/wrappedkey-fix.sh
     group root
     disabled
     oneshot
-    seclabel u:r:recovery:s0
-
-service vendor.qti.vibrator /system/bin/vendor.qti.hardware.vibrator.service
-    user root
-    group root
-    disabled
-    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
     seclabel u:r:recovery:s0
