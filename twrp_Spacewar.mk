@@ -29,7 +29,7 @@ $(call inherit-product, $(DEVICE_PATH)/device.mk)
 # 4. Optional OrangeFox Config
 # -----------------------------------------------------------------------------
 # Eğer fox_spacewar.mk varsa onu da dahil et (özelleştirmeler için)
-$(call inherit-product-if-exists, $(DEVICE_PATH)/fox_spacewar.mk)
+$(call inherit-product-if-exists, $(DEVICE_PATH)/fox_Spacewar.mk)
 
 # -----------------------------------------------------------------------------
 # 5. Inherit Common TWRP / OrangeFox Configuration
