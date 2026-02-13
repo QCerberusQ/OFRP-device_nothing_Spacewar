@@ -198,23 +198,9 @@ TW_USE_HEALTH_SERVICES_FOR_BATTERY := true
 #TW_CUSTOM_BATTERY_PATH := "/sys/class/power_supply/battery"
 TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 
-# 1. Hangi modül dosyası fiziksel olarak kopyalansın?
-#TARGET_RECOVERY_DEVICE_MODULES := goodix_fp.ko adsp_loader_dlkm.ko msm_drm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko sensors_ssc.ko qti_battery_charger_main.ko fts_tp.ko
-
-#TARGET_RECOVERY_DEVICE_MODULES := \
-#    adsp_loader_dlkm.ko \
-#    apr_dlkm.ko \
-#    q6_notifier_dlkm.ko \
-#    q6_pdr_dlkm.ko \
-#    q6_dlkm.ko \
-#    msm_drm.ko \
-#    goodix_fp.ko \
-#    fts_tp.ko \
-#    swr_haptics_dlkm.ko
+# -----------------------------------------------------------------------------
+# Modules Load
+# -----------------------------------------------------------------------------
 
 TW_LOAD_VENDOR_MODULES := $(shell echo \"$(shell ls $(DEVICE_PATH)/recovery/root/vendor/lib/modules)\")
 
-#TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko apr_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko q6_dlkm.ko swr_haptics_dlkm.ko goodix_fp.ko fts_tp.ko"
-
-# Hedef Klasör
-#TW_LOAD_VENDOR_MODULES_TARGET := /vendor/lib/modules
