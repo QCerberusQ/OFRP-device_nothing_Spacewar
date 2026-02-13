@@ -61,6 +61,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
 
+PRODUCT_PACKAGES += \
+    checkpoint_gc \
+    update_engine_sideload \
+    update_verifier
+
 # -----------------------------------------------------------------------------
 # Fastbootd
 # -----------------------------------------------------------------------------
