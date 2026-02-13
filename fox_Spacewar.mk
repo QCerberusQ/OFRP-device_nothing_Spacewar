@@ -33,6 +33,7 @@ OF_QUICK_BACKUP_LIST := /boot;/data;
 # -----------------------------------------------------------------------------
 # System & Partition Tools (Advanced)
 # -----------------------------------------------------------------------------
+OF_NO_TREBLE_COMPATIBILITY_CHECK := 1
 # Dinamik partisyonlar (Super) için araçlar
 OF_ENABLE_LPTOOLS := 1
 OF_ENABLE_ALL_PARTITION_TOOLS := 1
