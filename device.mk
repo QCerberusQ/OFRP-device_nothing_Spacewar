@@ -66,6 +66,12 @@ PRODUCT_PACKAGES += \
     update_engine_sideload \
     update_verifier
 
+# f2fs utilities
+PRODUCT_PACKAGES += \
+    sg_write_buffer \
+    f2fs_io \
+    check_f2fs
+
 # -----------------------------------------------------------------------------
 # Fastbootd
 # -----------------------------------------------------------------------------
@@ -85,13 +91,22 @@ PRODUCT_PACKAGES += \
 # Recovery Libraries & Display
 # -----------------------------------------------------------------------------
 TARGET_RECOVERY_DEVICE_MODULES += \
-    libandroidicu \
+    android.hidl.allocator@1.0 \
+    android.hidl.memory@1.0 \
+    android.hidl.memory.token@1.0 \
+    libdmabufheap \
+    libhidlmemory \
     libdisplayconfig.qti \
     libion \
     vendor.display.config@1.0 \
     vendor.display.config@2.0
 
 RECOVERY_LIBRARY_SOURCE_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.allocator@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.memory@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.memory.token@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libdmabufheap.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libhidlmemory.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/libdisplayconfig.qti.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
@@ -114,6 +129,18 @@ PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     hardware/qcom-caf/bootctrl \
     vendor/qcom/opensource/commonsys-intf/display
+
+# -----------------------------------------------------------------------------
+# differentiate legacy 'sg' or 'bsg' framework
+# -----------------------------------------------------------------------------
+# namespace definition for librecovery_updater
+# differentiate legacy 'sg' or 'bsg' framework
+SOONG_CONFIG_NAMESPACES += ufsbsg
+SOONG_CONFIG_ufsbsg += ufsframework
+SOONG_CONFIG_ufsbsg_ufsframework := bsg
+
+# Support to compile recovery without msm headers
+TARGET_HAS_GENERIC_KERNEL_HEADERS := true
 
 # -----------------------------------------------------------------------------
 # TW
