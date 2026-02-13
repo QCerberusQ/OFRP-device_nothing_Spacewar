@@ -8,6 +8,7 @@ DEVICE_PATH := device/nothing/Spacewar
 TARGET_BOARD_PLATFORM := lahaina
 
 # A/B
+ENABLE_VIRTUAL_AB := true
 AB_OTA_UPDATER := true
 
 AB_OTA_PARTITIONS += \
