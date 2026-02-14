@@ -62,9 +62,12 @@ PRODUCT_PACKAGES_DEBUG += \
     bootctl
 
 PRODUCT_PACKAGES += \
+    otapreopt_script \
     checkpoint_gc \
-    update_engine_sideload \
-    update_verifier
+    cppreopts.sh \
+    update_engine \
+    update_verifier \
+    update_engine_sideload
 
 # f2fs utilities
 PRODUCT_PACKAGES += \
