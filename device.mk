@@ -55,8 +55,7 @@ PRODUCT_PACKAGES += \
     android.hardware.boot-service.qti \
     android.hardware.boot-service.qti.recovery \
     libgptutils.nothing \
-    bootctl \
-    otapreopt_script
+    bootctl
 
 PRODUCT_PACKAGES_DEBUG += \
     bootctl
