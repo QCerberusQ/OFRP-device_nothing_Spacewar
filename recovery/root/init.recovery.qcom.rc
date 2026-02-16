@@ -35,6 +35,7 @@ on fs
     mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /vendor/bt_firmware ro context=u:object_r:rootfs:s0
 
     # Symlinkler
+    exec u:r:recovery:s0 -- /system/bin/sh -c "rm -rf /dsp /bt_firmware"
     symlink /firmware /vendor/firmware_mnt
     symlink /vendor/bt_firmware /bt_firmware
     symlink /vendor/dsp /dsp
