@@ -2,38 +2,39 @@ import /init.recovery.qcom_decrypt.rc
 
 # ---------------------------------------------------------------------
 # Qualcomm Recovery Init – Nothing Phone (1) / Spacewar
-# FINAL: Local Binaries + Permissions Fix
+# OPTIMIZED: Boot Speed & Mount Fix
 # ---------------------------------------------------------------------
 
 on early-init
-    exec u:r:set_permissive:s0 -- /system/bin/set_permissive.sh
+    # SELinux'u en başta permissive yap (Scriptin u:r:recovery:s0 bağlamında çalışmalı)
+    exec u:r:recovery:s0 -- /system/bin/set_permissive.sh
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on init
-    mount_all /vendor/etc/charger_fw_fstab.qti --early
     write /sys/class/backlight/panel0-backlight/brightness 200
     mkdir /dev/fscklogs 0770 root system
     setprop sys.usb.configfs 1
     write /sys/class/power_supply/usb/otg_switch 1
 
 on fs
-    # Kütüphane yolları
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
 
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    # Firmware Mount
+    # 1. Firmware Mount (Modem)
     mkdir /firmware
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro context=u:object_r:rootfs:s0
 
-# 2. DSP MOUNT (Senin ekleyeceğin kısım)
-    mkdir /dsp
-    mount ext4 /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix} /dsp ro context=u:object_r:rootfs:s0
-
+    # 2. DSP Mount (Doğru Mantık: Vendor altına mount, köke link)
+    mkdir /vendor/dsp
+    mount ext4 /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix} /vendor/dsp ro context=u:object_r:rootfs:s0
+    
+    # Symlinkler
     symlink /firmware /vendor/firmware_mnt
     symlink /vendor/bt_firmware /bt_firmware
     symlink /vendor/dsp /dsp
+    
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
 
@@ -41,8 +42,8 @@ on post-fs
     start boot-hal-1-2
 
 on late-fs
+    # Keymaster decryption için hayati
     start keymasterd
-    start set_permissive
 
 on boot
     setprop sys.usb.state mtp,adb
@@ -51,18 +52,15 @@ on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     chmod 0777 /system/bin/wrappedkey-fix.sh
     start wrapped-key
 
-# Eski repodaki çalışan mantık: Firmware mount edilince başla
+# Firmware hazır olduğunda donanım servislerini ateşle
 on property:dev.mnt.blk.firmware=*
-    # ADSP (Ses/Sensör İşlemcisi) uyandır
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
     
-    # Pil klasörünün oluşmasını bekle (Artık güvenli çünkü firmware mount edildi)
+    # Titreşim motoru ayarı
     wait /sys/class/qcom-haptics/fifo_vmax
     write /sys/class/qcom-haptics/fifo_vmax 1500mv
-    wait /sys/class/power_supply/battery
     
-    # Her şey hazırsa servisi ateşle
     start health-hal-2-1
     start vendor.qti.vibrator
 
@@ -71,18 +69,13 @@ on property:ro.boot.usbcontroller=*
     wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
     write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
 
-service set_permissive /system/bin/set_permissive.sh
+# --- Servis Tanımları ---
+
+service keymasterd /system/bin/keymasterd
     user root
     group root
     disabled
-    oneshot 
     seclabel u:r:recovery:s0
-
-service keymasterd /system/bin/keymasterd
-     user root
-     group root
-     disabled
-     seclabel u:r:recovery:s0
 
 service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
     user root
