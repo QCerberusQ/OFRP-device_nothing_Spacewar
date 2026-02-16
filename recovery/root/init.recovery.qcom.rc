@@ -27,18 +27,17 @@ on fs
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro context=u:object_r:rootfs:s0
 
     # 2. DSP Mount (Doğru Mantık: Vendor altına mount, köke link)
-    mkdir /vendor/dsp
+    mkdir /dsp
     mount ext4 /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix} /vendor/dsp ro context=u:object_r:rootfs:s0
 
     # Bluetooth Mount (crDroid Fstab'ına göre eklendi)
-    mkdir /vendor/bt_firmware
+    mkdir /bt_firmware
     mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /vendor/bt_firmware ro context=u:object_r:rootfs:s0
 
     # Symlinkler
-    exec u:r:recovery:s0 -- /system/bin/sh -c "rm -rf /dsp /bt_firmware"
     symlink /firmware /vendor/firmware_mnt
-    symlink /vendor/bt_firmware /bt_firmware
-    symlink /vendor/dsp /dsp
+    symlink /bt_firmware /vendor/bt_firmware
+    symlink /dsp /vendor/dsp
     
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
