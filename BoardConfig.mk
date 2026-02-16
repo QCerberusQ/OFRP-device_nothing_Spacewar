@@ -143,7 +143,7 @@ BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --board "$(TARGET_BOOTLOADER_BOARD_NAME)"
 
 # System as root
-BOARD_ROOT_EXTRA_FOLDERS := firmware persist
+BOARD_ROOT_EXTRA_FOLDERS := dsp bt_firmware firmware persist
 BOARD_HAS_LARGE_FILESYSTEM := true
 # Properties
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
