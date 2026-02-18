@@ -24,7 +24,7 @@ export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
 
 # -----------------------------------------------------------------------
 # A/B & Virtual AB
-#export FOX_VIRTUAL_AB_DEVICE=1
+export FOX_VIRTUAL_AB_DEVICE=1
 export FOX_AB_DEVICE=1
 
 
