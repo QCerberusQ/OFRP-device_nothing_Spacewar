@@ -6,7 +6,7 @@
 # -----------------------------------------------------------------------------
 # Base inherits
 # -----------------------------------------------------------------------------
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
@@ -25,8 +25,10 @@ TW_FRAMERATE := 120
 # -----------------------------------------------------------------------------
 # A/B OTA
 # -----------------------------------------------------------------------------
-ENABLE_VIRTUAL_AB := true
+#ENABLE_VIRTUAL_AB := true
+
 AB_OTA_UPDATER := true
+
 AB_OTA_PARTITIONS += \
     boot \
     dtbo \
@@ -163,12 +165,12 @@ PRODUCT_ENFORCE_VINTF_MANIFEST := true
 # -----------------------------------------------------------------------------
 # SKIP VERIFY GAPPS
 # -----------------------------------------------------------------------------
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.virtual_ab.skip_verify_source_hash=true
+#PRODUCT_PROPERTY_OVERRIDES += \
+#	ro.virtual_ab.skip_verify_source_hash=true
 
 # -----------------------------------------------------------------------------
 # SKIP SNAPSHOT
 # -----------------------------------------------------------------------------
 # skip some snapshot stuff in update_engine
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.virtual_ab.skip_snapshot_creation=true
+#PRODUCT_PROPERTY_OVERRIDES += \
+#	ro.virtual_ab.skip_snapshot_creation=true
