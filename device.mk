@@ -76,14 +76,20 @@ PRODUCT_PACKAGES += \
     update_verifier \
     update_engine_sideload
 
-# f2fs utilities
+# f2fs ve ext4 araçlarını zorla içeri sok
 PRODUCT_PACKAGES += \
     mkfs.f2fs \
-    fsck.f2fs
+    fsck.f2fs \
+    mke2fs \
+    tune2fs \
+    libf2fs
 
 TARGET_RECOVERY_DEVICE_MODULES += \
     mkfs.f2fs \
-    fsck.f2fs
+    fsck.f2fs \
+    mke2fs \
+    tune2fs \
+    libf2fs
 
 # -----------------------------------------------------------------------------
 # Fastbootd
