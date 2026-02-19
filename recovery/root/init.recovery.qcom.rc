@@ -56,9 +56,6 @@ on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     chmod 0777 /system/bin/wrappedkey-fix.sh
     start wrapped-key
 
-on property:prepdecrypt.vendor_mounted=1
-    setprop crypto.ready 1
-
 # Firmware hazır olduğunda donanım servislerini ateşle
 on property:dev.mnt.blk.firmware=*
     wait /sys/kernel/boot_adsp/boot
