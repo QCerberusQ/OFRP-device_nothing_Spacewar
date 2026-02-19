@@ -18,11 +18,6 @@ export FOX_BUILD_TYPE="Stable"
 export FOX_VARIANT="BaR"
 
 # -----------------------------------------------------------------------
-# Install Target (critical for bootimage-based recovery)
-export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
-export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
-
-# -----------------------------------------------------------------------
 # A/B & Virtual AB
 export FOX_VIRTUAL_AB_DEVICE=1
 export FOX_AB_DEVICE=1
