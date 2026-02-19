@@ -32,6 +32,7 @@
 # Diğer
 /super            emmc       /dev/block/bootdevice/by-name/super                      flags=display="Super Image";flashimg=1
 /logo             emmc       /dev/block/bootdevice/by-name/logo                       flags=backup=1;display="Boot Logo";slotselect;flashimg=1
+/misc             emmc       /dev/block/bootdevice/by-name/misc                       flags=backup=1;display="misc";flashimg=1
 
 # Removable storage
 /usb_otg          auto       /dev/block/sdg1        /dev/block/sdg                    flags=fsflags=utf8;display="USB Storage";storage;wipeingui;removable
