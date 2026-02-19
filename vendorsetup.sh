@@ -27,14 +27,11 @@ export FOX_AB_DEVICE=1
 # Pong’dan alınan faydalı stabilite ayarları
 # -------------------------------------------------------------------
 # Decryption sırasında metadata/partition hatalarını takma
-export OF_IGNORE_LOGICAL_MOUNT_ERRORS=1
+#export OF_IGNORE_LOGICAL_MOUNT_ERRORS=1
 export OF_FBE_METADATA_MOUNT_IGNORE=1
 
-# Uyum kontrol hataları yerine devam et
-export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
-
 # AVB 2.0 yaması (genelde gerekli)
-export OF_PATCH_AVB20=1
+#export OF_PATCH_AVB20=1
 
 # Manuel flash OTA hatalarından kurtul
 export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
@@ -43,17 +40,9 @@ export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
 export OF_RUN_POST_FORMAT_PROCESS=1
 # -----------------------------------------------------------------------
 # Screen / UI
-export OF_SCREEN_H=2400
-export OF_SCREEN_W=1080
-export OF_STATUS_H=115
-export OF_STATUS_INDENT_LEFT=165
-export OF_STATUS_INDENT_RIGHT=48
-export OF_HIDE_NOTCH=1
-export OF_CLOCK_POS=0
 export TW_THEME="portrait_hdpi"
 export TW_MAX_BRIGHTNESS=2047
 export TW_DEFAULT_BRIGHTNESS=1200
-export OF_USE_GREEN_LED=0
 export OF_DISABLE_MIUI_SPECIFIC_FEATURES=1
 
 # -----------------------------------------------------------------------
@@ -77,7 +66,6 @@ export FOX_REPLACE_TOOLBOX_GETPROP=1
 
 # -----------------------------------------------------------------------
 # Deneysel/Test
-export FOX_ENABLE_KERNELSU_SUPPORT=1
 export FOX_USE_PATCHELF_BINARY=1
 
 # -----------------------------------------------------------------------
