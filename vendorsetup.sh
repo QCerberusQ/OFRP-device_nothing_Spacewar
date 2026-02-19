@@ -41,7 +41,6 @@ export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
 
 # Format sonrası ek temizlik süreci
 export OF_RUN_POST_FORMAT_PROCESS=1
-export FOX_RESET_SETTINGS=1
 # -----------------------------------------------------------------------
 # Screen / UI
 export OF_SCREEN_H=2400
