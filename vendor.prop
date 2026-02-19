@@ -7,4 +7,7 @@ ro.crypto.volume.metadata.method=dm-default-key
 # Battery Property
 ro.charger.enable_suspend=1
 
+# Virtual A/B Merge Delay (A16 Snapshot stability)
+ro.virtual_ab.merge_delay_seconds=35
+
 vendor.usb.use_ffs_mtp=1
