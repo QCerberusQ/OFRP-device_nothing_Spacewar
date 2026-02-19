@@ -80,6 +80,8 @@ export FOX_REPLACE_TOOLBOX_GETPROP=1
 # Deneysel/Test
 export FOX_ENABLE_KERNELSU_SUPPORT=1
 export FOX_USE_PATCHELF_BINARY=1
+export OF_USE_AIDL_BOOT_CONTROL=1
+
 # -----------------------------------------------------------------------
 # Security / Encryption
 export OF_DEFAULT_KEYMASTER_VERSION=4.1
