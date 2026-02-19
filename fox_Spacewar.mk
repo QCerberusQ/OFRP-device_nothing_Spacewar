@@ -14,7 +14,7 @@ OF_STATUS_INDENT_LEFT := 165
 OF_STATUS_INDENT_RIGHT := 48
 
 OF_HIDE_NOTCH := 1
-OF_CLOCK_POS := 1
+OF_CLOCK_POS := 0
 
 # -----------------------------------------------------------------------------
 # LED & FRP
