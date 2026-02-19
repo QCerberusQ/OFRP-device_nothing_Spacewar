@@ -28,7 +28,7 @@ OF_ENABLE_FRP_ADDON := 1
 # Backup Settings
 # -----------------------------------------------------------------------------
 # Hızlı yedekleme listesi
-OF_QUICK_BACKUP_LIST := /boot;/data;/metadata;
+OF_QUICK_BACKUP_LIST := /boot;/data;/metadata;/vendor_boot;/dtbo;
 
 # -----------------------------------------------------------------------------
 # System & Partition Tools (Advanced)
@@ -40,7 +40,8 @@ OF_ENABLE_ALL_PARTITION_TOOLS := 1
 OF_USE_DMCTL := 1
 OF_KEEP_DM_PATH := 1
 OF_USE_TWRP_SAR_DETECT := 1
-OF_DYNAMIC_FULL_SIZE := 6442450944
+OF_CHECK_STAGED_OTA := 1
+
 # -----------------------------------------------------------------------------
 # Data Format & Encryption
 # -----------------------------------------------------------------------------
@@ -52,6 +53,9 @@ OF_WIPE_METADATA_AFTER_DATAFORMAT := 1
 
 # Format sonrası MTP sorunlarını çözer
 OF_BIND_MOUNT_SDCARD_ON_FORMAT := 1
+
+# Hızlı yedekleme 
+OF_SKIP_MULTIUSER_FOLDERS_BACKUP := 1
 
 # -----------------------------------------------------------------------------
 # Extras
