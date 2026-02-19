@@ -28,7 +28,7 @@ OF_ENABLE_FRP_ADDON := 1
 # Backup Settings
 # -----------------------------------------------------------------------------
 # Hızlı yedekleme listesi
-OF_QUICK_BACKUP_LIST := /boot;/data;
+OF_QUICK_BACKUP_LIST := /boot;/data;/metadata;
 
 # -----------------------------------------------------------------------------
 # System & Partition Tools (Advanced)
@@ -38,6 +38,8 @@ OF_NO_TREBLE_COMPATIBILITY_CHECK := 1
 OF_ENABLE_LPTOOLS := 1
 OF_ENABLE_ALL_PARTITION_TOOLS := 1
 OF_USE_DMCTL := 1
+OF_KEEP_DM_PATH := 1
+OF_USE_TWRP_SAR_DETECT := 1
 OF_DYNAMIC_FULL_SIZE := 6442450944
 # -----------------------------------------------------------------------------
 # Data Format & Encryption
