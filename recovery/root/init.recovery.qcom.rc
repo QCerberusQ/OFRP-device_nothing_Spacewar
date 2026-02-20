@@ -7,7 +7,7 @@ import /init.recovery.qcom_decrypt.rc
 
 on early-init
     # SELinux'u en başta permissive yap (Scriptin u:r:recovery:s0 bağlamında çalışmalı)
-    exec u:r:recovery:s0 -- /system/bin/set_permissive.sh
+#    exec u:r:recovery:s0 -- /system/bin/set_permissive.sh
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on init
