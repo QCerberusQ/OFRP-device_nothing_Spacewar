@@ -16,3 +16,8 @@
 
 PRODUCT_MAKEFILES := \
      $(LOCAL_DIR)/twrp_Spacewar.mk
+
+COMMON_LUNCH_CHOICES := \
+    twrp_Spacewar-user \
+    twrp_Spacewar-userdebug \
+    twrp_Spacewar-eng
