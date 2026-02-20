@@ -32,6 +32,7 @@
 /******************************************************************************
  * INCLUDE SECTION
  ******************************************************************************/
+#include <stdio.h>
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
@@ -42,6 +43,7 @@
 #include <limits.h>
 #include <dirent.h>
 #include <linux/kernel.h>
+#include <asm/byteorder.h>
 #include <map>
 #include <vector>
 #include <string>
@@ -50,12 +52,14 @@
 #endif
 #include <inttypes.h>
 
+
 #define LOG_TAG "gpt-utils"
-#include <log/log.h>
+#include <cutils/log.h>
 #include <cutils/properties.h>
 #include "gpt-utils.h"
 #include <zlib.h>
 #include <endian.h>
+
 
 /******************************************************************************
  * DEFINE SECTION
@@ -84,6 +88,7 @@
 /******************************************************************************
  * MACROS
  ******************************************************************************/
+
 
 #define GET_4_BYTES(ptr)    ((uint32_t) *((uint8_t *)(ptr)) | \
         ((uint32_t) *((uint8_t *)(ptr) + 1) << 8) | \
@@ -154,14 +159,22 @@ static int blk_rw(int fd, int rw, int64_t offset, uint8_t *buf, unsigned len)
     else
         r = read(fd, buf, len);
 
-    if (r < 0)
+    if (r < 0) {
         fprintf(stderr, "block dev %s failed: %s\n", rw ? "write" : "read",
                 strerror(errno));
-    else
-        r = 0;
-
+    } else {
+        if (rw) {
+            r = fsync(fd);
+            if (r < 0)
+                fprintf(stderr, "fsync failed: %s\n", strerror(errno));
+        } else {
+            r = 0;
+        }
+    }
     return r;
 }
+
+
 
 /**
  *  ==========================================================================
@@ -205,6 +218,8 @@ static uint8_t *gpt_pentry_seek(const char *ptn_name,
 
     return NULL;
 }
+
+
 
 /**
  *  ==========================================================================
@@ -262,6 +277,8 @@ static int gpt_boot_chain_swap(const uint8_t *pentries_start,
     return backup_not_found;
 }
 
+
+
 /**
  *  ==========================================================================
  *
@@ -288,6 +305,7 @@ static int gpt2_set_boot_chain(int fd, enum boot_chain boot)
     uint32_t crc_zero;
     uint32_t blk_size = 0;
     int r;
+
 
     crc_zero = crc32(0L, Z_NULL, 0);
     if (ioctl(fd, BLKSSZGET, &blk_size) != 0) {
@@ -447,6 +465,8 @@ error:
     return -1;
 }
 
+
+
 /**
  *  ==========================================================================
  *
@@ -594,6 +614,8 @@ error:
                 closedir(scsi_dir);
         return -1;
 }
+
+
 
 //Swtich betwieen using either the primary or the backup
 //boot LUN for boot. This is required since UFS boot partitions
@@ -1287,6 +1309,8 @@ error:
         return -1;
 }
 
+
+
 //Allocate a handle used by calls to the "gpt_disk" api's
 struct gpt_disk * gpt_disk_alloc()
 {
@@ -1323,12 +1347,12 @@ void gpt_disk_free(struct gpt_disk *disk)
 int gpt_disk_get_disk_info(const char *dev, struct gpt_disk *dsk)
 {
 
-    struct gpt_disk *disk = NULL;
-    int fd = -1;
-    uint32_t gpt_header_size = 0;
-    uint32_t crc_zero;
+	struct gpt_disk *disk = NULL;
+	int fd = -1;
+	uint32_t gpt_header_size = 0;
+	uint32_t crc_zero;
 
-    crc_zero = crc32(0L, Z_NULL, 0);
+	crc_zero = crc32(0L, Z_NULL, 0);
         if (!dsk || !dev) {
                 ALOGE("%s: Invalid arguments", __func__);
                 goto error;
@@ -1462,7 +1486,7 @@ int gpt_disk_commit(struct gpt_disk *disk)
                 ALOGE("%s: Invalid args", __func__);
                 goto error;
         }
-        fd = open(disk->devpath, O_RDWR);
+        fd = open(disk->devpath, O_RDWR | O_DSYNC);
         if (fd < 0) {
                 ALOGE("%s: Failed to open %s: %s",
                                 __func__,
@@ -1494,6 +1518,7 @@ int gpt_disk_commit(struct gpt_disk *disk)
                                 __func__);
                 goto error;
         }
+        fsync(fd);
         close(fd);
         return 0;
 error:
