@@ -166,5 +166,5 @@ PRODUCT_ENFORCE_VINTF_MANIFEST := true
 # SKIP SNAPSHOT
 # -----------------------------------------------------------------------------
 # skip some snapshot stuff in update_engine
-#PRODUCT_PROPERTY_OVERRIDES += \
-#	ro.virtual_ab.skip_snapshot_creation=true
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.virtual_ab.skip_snapshot_creation=true
