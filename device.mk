@@ -7,6 +7,7 @@
 # Base inherits
 # -----------------------------------------------------------------------------
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
