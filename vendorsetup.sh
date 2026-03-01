@@ -29,7 +29,7 @@ export FOX_AB_DEVICE=1
 # Decryption sırasında metadata/partition hatalarını takma
 #export OF_IGNORE_LOGICAL_MOUNT_ERRORS=1
 export OF_FBE_METADATA_MOUNT_IGNORE=1
-
+export OF_DYNAMIC_FULL_SIZE=6442450944
 # AVB 2.0 yaması (genelde gerekli)
 #export OF_PATCH_AVB20=1
 
@@ -57,6 +57,7 @@ export FOX_USE_TAR_BINARY=1
 export FOX_USE_SED_BINARY=1
 export FOX_USE_XZ_UTILS=1
 export FOX_USE_LZ4_BINARY=1
+export OF_USE_LZ4_COMPRESSION=1
 export FOX_USE_ZSTD_BINARY=1
 export FOX_USE_BUSYBOX_BINARY=1
 export FOX_USE_FSCK_EROFS_BINARY=1
