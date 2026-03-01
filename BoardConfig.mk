@@ -125,6 +125,9 @@ TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
 BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
 TARGET_COPY_OUT_VENDOR_BOOT := vendor_boot
 
+# vAB Compress
+BOARD_VIRTUAL_AB_COMPRESSION := true
+
 # -----------------------------------------------------------------------------
 # Kernel & Boot Image Offsets (v3 Fixed)
 # -----------------------------------------------------------------------------
