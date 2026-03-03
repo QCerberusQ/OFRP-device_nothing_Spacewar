@@ -30,8 +30,9 @@ export FOX_AB_DEVICE=1
 #export OF_IGNORE_LOGICAL_MOUNT_ERRORS=1
 export OF_FBE_METADATA_MOUNT_IGNORE=1
 export OF_DYNAMIC_FULL_SIZE=6442450944
-# AVB 2.0 yaması (genelde gerekli)
-#export OF_PATCH_AVB20=1
+
+# AVB 2.0 yaması
+export OF_SUPPORT_VBMETA_AVB2_PATCHING=1
 
 # Manuel flash OTA hatalarından kurtul
 export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
