@@ -52,6 +52,9 @@ on post-fs
 on boot
     setprop sys.usb.state mtp,adb
 
+on property:prepdecrypt.vendor_mounted=1
+    setprop crypto.ready 1
+
 on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     chmod 0777 /system/bin/wrappedkey-fix.sh
     start wrapped-key
