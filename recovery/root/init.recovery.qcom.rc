@@ -9,7 +9,6 @@ on early-init
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on init
-    exec u:r:recovery:s0 -- /system/bin/wrappedkey-fix.sh
     write /sys/class/backlight/panel0-backlight/brightness 200
     mkdir /dev/fscklogs 0770 root system
     setprop sys.usb.configfs 1
@@ -21,15 +20,18 @@ on fs
 
     # 1. Firmware Mount (Modem)
     mkdir /firmware
-    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro context=u:object_r:rootfs:s0
+    wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro context=u:object_r:firmware_file:s0
 
     # 2. DSP Mount (Doğru Mantık: Vendor altına mount, köke link)
     mkdir /dsp
+    wait /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix}
     mount ext4 /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix} /dsp ro 
 
     # Bluetooth Mount (crDroid Fstab'ına göre eklendi)
     mkdir /bt_firmware
-    mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /bt_firmware ro context=u:object_r:rootfs:s0
+    wait /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix}
+    mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /bt_firmware ro context=u:object_r:bt_firmware_file:s0
 
     # Symlinkler
     symlink /firmware /vendor/firmware_mnt
@@ -48,9 +50,9 @@ on post-fs
 on boot
     setprop sys.usb.state mtp,adb
 
-#on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
-#    chmod 0777 /system/bin/wrappedkey-fix.sh
-#    start wrapped-key
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    chmod 0777 /system/bin/wrappedkey-fix.sh
+    start wrapped-key
 
 # Firmware hazır olduğunda donanım servislerini ateşle
 on property:dev.mnt.blk.firmware=*
@@ -83,9 +85,9 @@ service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
     disabled
     seclabel u:r:recovery:s0
 
-#service wrapped-key /system/bin/wrappedkey-fix.sh
-#    user root
-#    group root
-#    disabled
-#    oneshot
-#    seclabel u:r:recovery:s0
+service wrapped-key /system/bin/wrappedkey-fix.sh
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
