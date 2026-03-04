@@ -49,6 +49,3 @@ PRODUCT_BRAND := Nothing
 PRODUCT_MODEL := A063
 PRODUCT_MANUFACTURER := Nothing
 PRODUCT_GMS_CLIENTID_BASE := android-nothing
-
-PRODUCT_BUILD_PROP_OVERRIDES += \
-    BuildFingerprint="Nothing/Spacewar/Spacewar:12/SKQ1.211230.001/1666412462:user/release-keys"
