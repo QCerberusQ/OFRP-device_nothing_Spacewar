@@ -160,8 +160,8 @@ PRODUCT_ENFORCE_VINTF_MANIFEST := true
 # -----------------------------------------------------------------------------
 # SKIP VERIFY GAPPS
 # -----------------------------------------------------------------------------
-#PRODUCT_PROPERTY_OVERRIDES += \
-#	ro.virtual_ab.skip_verify_source_hash=true
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.virtual_ab.skip_verify_source_hash=true
 
 # -----------------------------------------------------------------------------
 # SKIP SNAPSHOT
