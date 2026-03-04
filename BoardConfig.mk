@@ -7,8 +7,6 @@ BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 
 DEVICE_PATH := device/nothing/Spacewar
 
-BOARD_SHIPPING_API_LEVEL := 31
-
 # Platform
 TARGET_BOARD_PLATFORM := lahaina
 
