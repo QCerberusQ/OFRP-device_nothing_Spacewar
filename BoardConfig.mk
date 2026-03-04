@@ -98,10 +98,6 @@ BOARD_KERNEL_CMDLINE += loop.max_part=7
 BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
 BOARD_KERNEL_CMDLINE += iptable_raw.raw_before_defrag=1
 
-# v3 Header olduğu için bu değişkeni build sistemine tanıtıyoruz:
-# (Build sistemi bunu otomatik alsa da garantiye alıyoruz)
-#BOARD_MKBOOTIMG_ARGS += --cmdline "$(BOARD_KERNEL_CMDLINE)"
-
 # File systems
 BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := erofs
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -166,15 +162,13 @@ BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
 BOARD_AVB_VBMETA_SYSTEM := system system_ext product
 BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA4096
 BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
-#BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
-BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := 1
+BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
 
 
 # Property desteği
 TW_INCLUDE_LIBRESETPROP := true
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
-
 
 # Crypto
 TW_INCLUDE_CRYPTO := true
@@ -209,7 +203,6 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone50/temp"
 TW_USE_HEALTH_SERVICES_FOR_BATTERY := true
-#TW_CUSTOM_BATTERY_PATH := "/sys/class/power_supply/battery"
 TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 TW_INCLUDE_FASTBOOTD := true
 
