@@ -90,7 +90,8 @@ PRODUCT_PACKAGES += \
 # Crypto / Decryption
 # -----------------------------------------------------------------------------
 PRODUCT_PACKAGES += \
-    qcom_decrypt \
+    android.system.keystore2 \
+	qcom_decrypt \
     qcom_decrypt_fbe
 
 # -----------------------------------------------------------------------------
