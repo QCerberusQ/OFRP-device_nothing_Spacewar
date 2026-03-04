@@ -6,8 +6,6 @@ import /init.recovery.qcom_decrypt.rc
 # ---------------------------------------------------------------------
 
 on early-init
-    # SELinux'u en başta permissive yap (Scriptin u:r:recovery:s0 bağlamında çalışmalı)
-#    exec u:r:recovery:s0 -- /system/bin/set_permissive.sh
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on init
@@ -17,8 +15,6 @@ on init
     write /sys/class/power_supply/usb/otg_switch 1
 
 on fs
-#    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
-
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
@@ -28,7 +24,7 @@ on fs
 
     # 2. DSP Mount (Doğru Mantık: Vendor altına mount, köke link)
     mkdir /dsp
-    mount ext4 /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix} /dsp ro context=u:object_r:rootfs:s0
+    mount ext4 /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix} /dsp ro 
 
     # Bluetooth Mount (crDroid Fstab'ına göre eklendi)
     mkdir /bt_firmware
@@ -44,10 +40,6 @@ on fs
 
 on post-fs
     start boot-hal-1-2
-
-#on late-fs
-    # Keymaster decryption için hayati
-#    start keymasterd
 
 on boot
     setprop sys.usb.state mtp,adb
@@ -77,12 +69,6 @@ on property:ro.boot.usbcontroller=*
     write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
 
 # --- Servis Tanımları ---
-
-#service keymasterd /system/bin/keymasterd
-#    user root
-#    group root
-#    disabled
-#    seclabel u:r:recovery:s0
 
 service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
     user root
