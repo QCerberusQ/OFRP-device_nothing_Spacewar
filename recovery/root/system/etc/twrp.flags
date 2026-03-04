@@ -1,38 +1,39 @@
 # Android fstab file.
-# The filesystem that contains the filesystem checker binary (typically /system) cannot
-# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
-# mount point    fstype     device                                                   flags
-/boot             emmc       /dev/block/bootdevice/by-name/boot                       flags=slotselect
-/vendor_boot      emmc       /dev/block/bootdevice/by-name/vendor_boot                flags=slotselect;display="Vendor Boot";backup=1;flashimg=1
-/dtbo             emmc       /dev/block/bootdevice/by-name/dtbo                       flags=backup=1;display="DTBO";slotselect;flashimg=1
+# mount point    fstype   device                                              flags
+/boot            emmc     /dev/block/bootdevice/by-name/boot                  flags=slotselect
+/vendor_boot     emmc     /dev/block/bootdevice/by-name/vendor_boot           flags=slotselect;display="Vendor Boot";backup=1;flashimg=1
+/dtbo            emmc     /dev/block/bootdevice/by-name/dtbo                  flags=backup=1;display="DTBO";slotselect;flashimg=1
 
 # AVB & VBMeta
-/vbmeta           emmc       /dev/block/bootdevice/by-name/vbmeta                     flags=backup=1;display="VBMeta";slotselect;flashimg=1
-/vbmeta_system    emmc       /dev/block/bootdevice/by-name/vbmeta_system              flags=backup=1;display="VBMeta System";slotselect;flashimg=1
+/vbmeta          emmc     /dev/block/bootdevice/by-name/vbmeta                flags=backup=1;display="VBMeta";slotselect;flashimg=1
+/vbmeta_system   emmc     /dev/block/bootdevice/by-name/vbmeta_system         flags=backup=1;display="VBMeta System";slotselect;flashimg=1
 
 # Userdata & Storage
-/metadata         ext4       /dev/block/bootdevice/by-name/metadata                   flags=display="Metadata";backup=1;wipeingui
-/data             f2fs       /dev/block/bootdevice/by-name/userdata                   flags=fileencryption=auto;keydirectory=/metadata/vold/metadata_encryption;wipeingui
-/storage          ext4       /data/media/0                                            flags=display="Internal Storage";usermrf;fsflags="bind";removable
+# DÜZELTME: backup=1 kaldırıldı (Bootloop riskine karşı sadece Wipe edilebilir)
+/metadata        ext4     /dev/block/bootdevice/by-name/metadata              flags=display="Metadata";wipeingui
+/storage         ext4     /data/media/0                                       flags=display="Internal Storage";usermrf;fsflags="bind";removable
 
-# Critical Partitions (Persist & EFS - IMEI Sigortası)
-/persist          ext4       /dev/block/bootdevice/by-name/persist                    flags=backup=1;display="Persist"
-/prodpersist      ext4       /dev/block/bootdevice/by-name/prodpersist                flags=backup=1;display="Product Persist"
-/efs1             emmc       /dev/block/bootdevice/by-name/modemst1                   flags=backup=1;display="EFS"
-/efs2             emmc       /dev/block/bootdevice/by-name/modemst2                   flags=backup=1;subpartitionof=/efs1
-/efsc             emmc       /dev/block/bootdevice/by-name/fsc                        flags=backup=1;subpartitionof=/efs1
-/efsg             emmc       /dev/block/bootdevice/by-name/fsg                        flags=backup=1;subpartitionof=/efs1
+# Critical Partitions (Persist & EFS - IMEI)
+/persist         ext4     /dev/block/bootdevice/by-name/persist               flags=display="Persist";fsflags=ro
+/persist_image   emmc     /dev/block/bootdevice/by-name/persist               flags=display="Persist Image";backup=1;flashimg=1
+/prodpersist     ext4     /dev/block/bootdevice/by-name/prodpersist           flags=display="Product Persist";backup=1
 
-# Firmware & DSP (SELinux Düzeltmeleri Yapıldı)
-/firmware         vfat       /dev/block/bootdevice/by-name/modem                       flags=backup=1;display="Firmware";slotselect;mounttodecrypt;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=000,fmask=000,context=u:object_r:rootfs:s0";wait
-/dsp              ext4       /dev/block/bootdevice/by-name/dsp                         flags=backup=1;display="Dsp";slotselect
-/bt_firmware      vfat       /dev/block/bootdevice/by-name/bluetooth                   flags=backup=1;display="Bluetooth";slotselect;fsflags="ro,shortname=lower,uid=1002,gid=3002,dmask=000,fmask=000,context=u:object_r:rootfs:s0";wait
+/efs1            emmc     /dev/block/bootdevice/by-name/modemst1              flags=backup=1;display="EFS"
+/efs2            emmc     /dev/block/bootdevice/by-name/modemst2              flags=backup=1;subpartitionof=/efs1
+/efsc            emmc     /dev/block/bootdevice/by-name/fsc                   flags=backup=1;subpartitionof=/efs1
+/efsg            emmc     /dev/block/bootdevice/by-name/fsg                   flags=backup=1;subpartitionof=/efs1
+
+# Firmware & DSP 
+/firmware        vfat     /dev/block/bootdevice/by-name/modem                 flags=slotselect;display="Firmware";mounttodecrypt;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0"
+/modem           emmc     /dev/block/bootdevice/by-name/modem                 flags=slotselect;backup=1;display="Modem"
+/bluetooth       emmc     /dev/block/bootdevice/by-name/bluetooth             flags=slotselect;backup=1;subpartitionof=/modem
+/dsp             emmc     /dev/block/bootdevice/by-name/dsp                   flags=slotselect;backup=1;subpartitionof=/modem
 
 # Diğer
-/super            emmc       /dev/block/bootdevice/by-name/super                      flags=display="Super Image";flashimg=1
-/logo             emmc       /dev/block/bootdevice/by-name/logo                       flags=backup=1;display="Boot Logo";slotselect;flashimg=1
-/misc             emmc       /dev/block/bootdevice/by-name/misc                       flags=backup=1;display="misc";flashimg=1
+/super           emmc     /dev/block/bootdevice/by-name/super                 flags=display="Super Image";flashimg=1
+/logo            emmc     /dev/block/bootdevice/by-name/logo                  flags=backup=1;display="Boot Logo";slotselect;flashimg=1
+/misc            emmc     /dev/block/bootdevice/by-name/misc                  flags=backup=1;display="misc";flashimg=1
 
 # Removable storage
-/usb_otg          auto       /dev/block/sdg1        /dev/block/sdg                    flags=fsflags=utf8;display="USB Storage";storage;wipeingui;removable
+/usb_otg         auto     /dev/block/sdg1        /dev/block/sdg               flags=fsflags=utf8;display="USB Storage";storage;wipeingui;removable
