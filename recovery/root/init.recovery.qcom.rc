@@ -17,7 +17,7 @@ on init
     write /sys/class/power_supply/usb/otg_switch 1
 
 on fs
-    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+#    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
 
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
@@ -45,9 +45,9 @@ on fs
 on post-fs
     start boot-hal-1-2
 
-on late-fs
+#on late-fs
     # Keymaster decryption için hayati
-    start keymasterd
+#    start keymasterd
 
 on boot
     setprop sys.usb.state mtp,adb
@@ -75,11 +75,11 @@ on property:ro.boot.usbcontroller=*
 
 # --- Servis Tanımları ---
 
-service keymasterd /system/bin/keymasterd
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
+#service keymasterd /system/bin/keymasterd
+#    user root
+#    group root
+#    disabled
+#    seclabel u:r:recovery:s0
 
 service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
     user root
