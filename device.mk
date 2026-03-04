@@ -20,6 +20,7 @@ LOCAL_PATH := device/nothing/Spacewar
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_SHIPPING_API_LEVEL := 31
 PRODUCT_TARGET_VNDK_VERSION := 31
+SHIPPING_API_LEVEL := 31
 
 TW_FRAMERATE := 120
 
@@ -82,13 +83,13 @@ PRODUCT_PACKAGES += \
 # -----------------------------------------------------------------------------
 # Mock (Taklit) HAL silindi. Sadece binary kalsın.
 PRODUCT_PACKAGES += \
-    fastbootd
+    fastbootd \
+	android.hardware.fastboot@1.1-impl-mock
 
 # -----------------------------------------------------------------------------
 # Crypto / Decryption
 # -----------------------------------------------------------------------------
 PRODUCT_PACKAGES += \
-    android.system.keystore2 \
     qcom_decrypt \
     qcom_decrypt_fbe
 
@@ -166,6 +167,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # -----------------------------------------------------------------------------
 # SKIP SNAPSHOT
 # -----------------------------------------------------------------------------
-# skip some snapshot stuff in update_engine
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.virtual_ab.skip_snapshot_creation=true
+
+# -----------------------------------------------------------------------------
+# FUSE PASSTHROUGH
+# -----------------------------------------------------------------------------
+PRODUCT_PROPERTY_OVERRIDES += persist.sys.fuse.passthrough.enable=true
