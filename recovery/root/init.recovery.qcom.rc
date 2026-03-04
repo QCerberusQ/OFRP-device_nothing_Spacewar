@@ -38,6 +38,9 @@ on fs
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
 
+on late-fs
+    start keymasterd
+
 on post-fs
     start boot-hal-1-2
 
@@ -69,6 +72,12 @@ on property:ro.boot.usbcontroller=*
     write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
 
 # --- Servis Tanımları ---
+
+service keymasterd /system/bin/keymasterd
+     user root
+     group root
+     disabled
+     seclabel u:r:recovery:s0
 
 service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
     user root
