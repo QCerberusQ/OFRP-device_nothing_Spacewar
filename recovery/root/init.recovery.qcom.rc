@@ -21,14 +21,17 @@ on fs
 
     # 1. Firmware Mount
     mkdir /firmware
+    wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro context=u:object_r:firmware_file:s0
 
     # 2. DSP Mount
     mkdir /dsp
+    wait /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix}
     mount ext4 /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix} /dsp ro 
 
     # Bluetooth Mount
     mkdir /bt_firmware
+    wait /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix}
     mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /bt_firmware ro context=u:object_r:bt_firmware_file:s0
 
     # Symlinkler
