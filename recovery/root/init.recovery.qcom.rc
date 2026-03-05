@@ -9,6 +9,7 @@ on early-init
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on init
+    exec u:r:recovery:s0 -- /system/bin/wrappedkey-fix.sh
     write /sys/class/backlight/panel0-backlight/brightness 200
     mkdir /dev/fscklogs 0770 root system
     setprop sys.usb.configfs 1
@@ -41,18 +42,16 @@ on fs
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
 
-on late-fs
-    start keymasterd
-
 on post-fs
+    start keymasterd
     start boot-hal-1-2
 
 on boot
     setprop sys.usb.state mtp,adb
 
-on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
-    chmod 0777 /system/bin/wrappedkey-fix.sh
-    start wrapped-key
+#on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+#    chmod 0777 /system/bin/wrappedkey-fix.sh
+#    start wrapped-key
 
 # Firmware hazır olduğunda donanım servislerini ateşle
 on property:dev.mnt.blk.firmware=*
@@ -83,11 +82,4 @@ service health-hal-2-1 /system/bin/android.hardware.health@2.1-service
     user root
     group root
     disabled
-    seclabel u:r:recovery:s0
-
-service wrapped-key /system/bin/wrappedkey-fix.sh
-    user root
-    group root
-    disabled
-    oneshot
     seclabel u:r:recovery:s0
