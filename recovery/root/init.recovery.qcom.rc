@@ -19,19 +19,16 @@ on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    # 1. Firmware Mount (Modem)
+    # 1. Firmware Mount
     mkdir /firmware
-    wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro context=u:object_r:firmware_file:s0
 
-    # 2. DSP Mount (Doğru Mantık: Vendor altına mount, köke link)
+    # 2. DSP Mount
     mkdir /dsp
-    wait /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix}
     mount ext4 /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix} /dsp ro 
 
-    # Bluetooth Mount (crDroid Fstab'ına göre eklendi)
+    # Bluetooth Mount
     mkdir /bt_firmware
-    wait /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix}
     mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /bt_firmware ro context=u:object_r:bt_firmware_file:s0
 
     # Symlinkler
@@ -48,10 +45,6 @@ on post-fs
 
 on boot
     setprop sys.usb.state mtp,adb
-
-#on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
-#    chmod 0777 /system/bin/wrappedkey-fix.sh
-#    start wrapped-key
 
 # Firmware hazır olduğunda donanım servislerini ateşle
 on property:dev.mnt.blk.firmware=*
