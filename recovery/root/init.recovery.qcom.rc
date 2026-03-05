@@ -47,7 +47,7 @@ on post-fs
     start boot-hal-1-2
 
 on boot
-    setprop sys.usb.state mtp,adb
+    setprop sys.usb.config none
 
 # Firmware hazır olduğunda donanım servislerini ateşle
 on property:dev.mnt.blk.firmware=*
@@ -63,8 +63,9 @@ on property:dev.mnt.blk.firmware=*
 
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
-    wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
-    write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
+    wait /sys/bus/platform/devices/a600000.ssusb/mode
+    write /sys/bus/platform/devices/a600000.ssusb/mode peripheral
+    setprop sys.usb.config mtp,adb
 
 # --- Servis Tanımları ---
 
