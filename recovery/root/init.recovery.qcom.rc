@@ -22,7 +22,7 @@ on fs
     # 1. Firmware Mount
     mkdir /firmware
     wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
-    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro context=u:object_r:firmware_file:s0
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
 
     # 2. DSP Mount
     mkdir /dsp
@@ -32,7 +32,7 @@ on fs
     # Bluetooth Mount
     mkdir /bt_firmware
     wait /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix}
-    mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /bt_firmware ro context=u:object_r:bt_firmware_file:s0
+    mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /bt_firmware ro
 
     # Symlinkler
     symlink /firmware /vendor/firmware_mnt
