@@ -26,27 +26,27 @@
 
 check_vendor_wrappedkey() {
 
-    V=/dev/block/bootdevice/by-name/vendor
-    TMP=/FFiles/temp/vendor_prop
-    VENDORFSTAB=/FFiles/temp/vendor_fstab
+    local V="/dev/block/bootdevice/by-name/vendor"
+    local TMP="/FFiles/temp/vendor_prop"
+    local VENDORFSTAB="/FFiles/temp/vendor_fstab"
 
-    mkdir -p $TMP
+    mkdir -p "$TMP"
 
-    mount -o ro $V $TMP || return
+    mount -o ro "$V" "$TMP" || return
 
-    cp $TMP/etc/fstab.default $VENDORFSTAB 2>/dev/null
+    cp "$TMP/etc/fstab.default" "$VENDORFSTAB" 2>/dev/null
 
-    if [ -e "$VENDORFSTAB" ]; then
-        if grep -q "wrappedkey_v" "$VENDORFSTAB"; then
+    if [ -f "$VENDORFSTAB" ]; then
+        if grep -q "wrappedkey" "$VENDORFSTAB"; then
             cp /system/etc/recovery-wrappedkey.fstab /system/etc/recovery.fstab
         else
             cp /system/etc/recovery-no-wrappedkey.fstab /system/etc/recovery.fstab
         fi
     fi
 
-    umount -l $TMP 2>/dev/null
-    rmdir $TMP
-    rm -f $VENDORFSTAB
+    umount -l "$TMP" 2>/dev/null
+    rmdir "$TMP"
+    rm -f "$VENDORFSTAB"
 }
 
 check_vendor_wrappedkey
