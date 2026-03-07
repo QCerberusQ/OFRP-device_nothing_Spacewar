@@ -43,7 +43,7 @@ on fs
 
 on post-fs
     start keymasterd
-    start boot-hal-1-2
+    start boot-hal-1-1
 
 on boot
     setprop sys.usb.config mtp,adb
