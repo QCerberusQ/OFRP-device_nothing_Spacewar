@@ -1,10 +1,5 @@
 import /init.recovery.qcom_decrypt.rc
 
-# ---------------------------------------------------------------------
-# Qualcomm Recovery Init – Nothing Phone (1) / Spacewar
-# OPTIMIZED: Boot Speed & Mount Fix
-# ---------------------------------------------------------------------
-
 on early-init
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
@@ -48,6 +43,7 @@ on fs
 
 on post-fs
     start keymasterd
+    start boot-hal-1-2
 
 on boot
     setprop sys.usb.config mtp,adb
