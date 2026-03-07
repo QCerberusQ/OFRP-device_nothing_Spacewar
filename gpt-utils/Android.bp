@@ -14,28 +14,21 @@
 // limitations under the License.
 //
 
-
 cc_library {
     name: "libgptutils.nothing",
     vendor: true,
     recovery_available: true,
+    srcs: [
+        "gpt-utils.cpp",
+        "recovery-ufs-bsg.cpp",
+    ],
     shared_libs: [
         "libcutils",
         "liblog",
         "libz",
     ],
-    cflags: [
-        "-Wall",
-        "-Werror",
-        "-Wno-unused-parameter",
-    ],
-    srcs: [
-        "gpt-utils.cpp",
-        "recovery-ufs-bsg.cpp",
-    ],
+    cflags: ["-D_BSG_FRAMEWORK_KERNEL_HEADERS"],
     owner: "qti",
-    header_libs: [
-        "device_kernel_headers",
-    ],
     export_include_dirs: ["."],
+    header_libs: ["device_kernel_headers"],
 }
