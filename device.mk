@@ -60,8 +60,9 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # Boot Control (NP1 Custom)
 # -----------------------------------------------------------------------------
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.1-impl-qti.recovery \
-    bootctrl.lahaina.recovery \
+    android.hardware.boot@1.2-impl-qti \
+    android.hardware.boot-service.qti \
+    android.hardware.boot-service.qti.recovery \
     libgptutils.nothing \
     bootctl
 
