@@ -1,10 +1,5 @@
 import /init.recovery.qcom_decrypt.rc
 
-# ---------------------------------------------------------------------
-# Qualcomm Recovery Init – Nothing Phone (1) / Spacewar
-# OPTIMIZED: Boot Speed & Mount Fix
-# ---------------------------------------------------------------------
-
 on early-init
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
@@ -14,6 +9,10 @@ on init
     mkdir /dev/fscklogs 0770 root system
     setprop sys.usb.configfs 1
     write /sys/class/power_supply/usb/otg_switch 1
+
+on early-fs
+    write /proc/sys/walt/sched_lib_name "recovery,Updater,updater,update_engine_sideload"
+    write /proc/sys/walt/sched_lib_mask_force 255
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
@@ -44,10 +43,10 @@ on fs
 
 on post-fs
     start keymasterd
-    start boot-hal-1-2
+    start boot-hal-1-1
 
 on boot
-    setprop sys.usb.config none
+    setprop sys.usb.config mtp,adb
 
 # Firmware hazır olduğunda donanım servislerini ateşle
 on property:dev.mnt.blk.firmware=*
@@ -63,9 +62,16 @@ on property:dev.mnt.blk.firmware=*
 
 on property:ro.boot.usbcontroller=*
     setprop sys.usb.controller ${ro.boot.usbcontroller}
-    wait /sys/bus/platform/devices/a600000.ssusb/mode
-    write /sys/bus/platform/devices/a600000.ssusb/mode peripheral
+
+    wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
+    write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
+
+    wait /sys/class/udc/${ro.boot.usbcontroller} 1
+
     setprop sys.usb.config mtp,adb
+
+on property:hwservicemanager.ready=true
+    setprop sys.boot_completed 1
 
 # --- Servis Tanımları ---
 
