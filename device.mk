@@ -61,8 +61,8 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # -----------------------------------------------------------------------------
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl-qti \
-    android.hardware.boot-service.qti \
-    android.hardware.boot-service.qti.recovery \
+    android.hardware.boot@1.2-impl-qti.recovery \
+    android.hardware.boot@1.2-service \
     libgptutils.nothing \
     bootctl
 
@@ -80,7 +80,6 @@ PRODUCT_PACKAGES += \
 # -----------------------------------------------------------------------------
 # Fastbootd
 # -----------------------------------------------------------------------------
-# Mock (Taklit) HAL silindi. Sadece binary kalsın.
 PRODUCT_PACKAGES += \
     fastbootd \
 	android.hardware.fastboot@1.1-impl-mock
@@ -156,7 +155,7 @@ TW_EXCLUDE_APEX := true
 # -----------------------------------------------------------------------------
 # VINTF
 # -----------------------------------------------------------------------------
-PRODUCT_ENFORCE_VINTF_MANIFEST := true
+#PRODUCT_ENFORCE_VINTF_MANIFEST := true
 
 # -----------------------------------------------------------------------------
 # SKIP VERIFY GAPPS
