@@ -63,6 +63,7 @@ AB_OTA_POSTINSTALL_CONFIG += \
 PRODUCT_PACKAGES += \
     android.hardware.boot-service.qti \
     android.hardware.boot-service.qti.recovery \
+	android.hardware.boot@1.0-impl-1.1-qti \
     libgptutils.nothing \
     bootctl
 
