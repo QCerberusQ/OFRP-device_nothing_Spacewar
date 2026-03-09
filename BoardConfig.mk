@@ -129,20 +129,20 @@ BOARD_VIRTUAL_AB_COMPRESSION := true
 # Kernel & Boot Image Offsets (v3 Fixed)
 # -----------------------------------------------------------------------------
 # Standart Qualcomm Offsetleri (Spacewar için genelde budur)
-BOARD_KERNEL_BASE        := 0x00000000
-BOARD_KERNEL_OFFSET      := 0x00008000
-BOARD_RAMDISK_OFFSET     := 0x01000000
-BOARD_TAGS_OFFSET        := 0x00000100
-BOARD_DTB_OFFSET         := 0x01f00000
+#BOARD_KERNEL_BASE        := 0x00000000
+#BOARD_KERNEL_OFFSET      := 0x00008000
+#BOARD_RAMDISK_OFFSET     := 0x01000000
+#BOARD_TAGS_OFFSET        := 0x00000100
+#BOARD_DTB_OFFSET         := 0x01f00000
 
 # Argümanları Tek Seferde ve Düzgün Tanımla
-BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
-BOARD_MKBOOTIMG_ARGS += --base $(BOARD_KERNEL_BASE)
-BOARD_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_TAGS_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --board "$(TARGET_BOOTLOADER_BOARD_NAME)"
+#BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
+#BOARD_MKBOOTIMG_ARGS += --base $(BOARD_KERNEL_BASE)
+#BOARD_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET)
+#BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
+#BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_TAGS_OFFSET)
+#BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
+#BOARD_MKBOOTIMG_ARGS += --board "$(TARGET_BOOTLOADER_BOARD_NAME)"
 
 # System as root
 BOARD_ROOT_EXTRA_FOLDERS := dsp bt_firmware firmware persist
