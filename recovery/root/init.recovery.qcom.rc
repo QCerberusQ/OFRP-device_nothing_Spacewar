@@ -19,9 +19,9 @@ on fs
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
     # 1. Firmware Mount
-    mkdir /firmware
+    mkdir /modem
     wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
-    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /modem ro
 
     # 2. DSP Mount
     mkdir /dsp
@@ -29,13 +29,13 @@ on fs
     mount ext4 /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix} /dsp ro 
 
     # Bluetooth Mount
-    mkdir /bt_firmware
+    mkdir /bluetooth
     wait /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix}
-    mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /bt_firmware ro
+    mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /bluetooth ro
 
     # Symlinkler
-    symlink /firmware /vendor/firmware_mnt
-    symlink /bt_firmware /vendor/bt_firmware
+    symlink /modem /vendor/firmware_mnt
+    symlink /bluetooth /vendor/bt_firmware
     symlink /dsp /vendor/dsp
     
     chown root system /dev/fscklogs/log
