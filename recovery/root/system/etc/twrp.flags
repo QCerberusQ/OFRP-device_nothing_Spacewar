@@ -9,6 +9,8 @@
 /boot            emmc     /dev/block/bootdevice/by-name/boot                  flags=backup=1;slotselect;flashimg
 /vendor_boot     emmc     /dev/block/bootdevice/by-name/vendor_boot           flags=backup=1;display="vendor_boot";slotselect;flashimg
 /dtbo            emmc     /dev/block/bootdevice/by-name/dtbo                  flags=backup=1;display="Dtbo";slotselect;flashimg
+/cust            ext4     /dev/block/bootdevice/by-name/cust                  flags=display=Cust;backup=1
+/cust_image      emmc     /dev/block/bootdevice/by-name/cust                  flags=display=Cust;backup=0;flashimg
 
 # AVB & VBMeta
 /vbmeta          emmc     /dev/block/bootdevice/by-name/vbmeta                flags=backup=1;display="vbmeta";slotselect;flashimg
