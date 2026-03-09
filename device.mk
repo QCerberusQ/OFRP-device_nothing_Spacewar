@@ -152,8 +152,8 @@ TW_EXCLUDE_APEX := true
 # -----------------------------------------------------------------------------
 # SKIP SNAPSHOT
 # -----------------------------------------------------------------------------
-#PRODUCT_PROPERTY_OVERRIDES += \
-#	ro.virtual_ab.skip_snapshot_creation=true
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.virtual_ab.skip_snapshot_creation=true
 
 # -----------------------------------------------------------------------------
 # FUSE PASSTHROUGH
