@@ -145,7 +145,7 @@ BOARD_VIRTUAL_AB_COMPRESSION := true
 #BOARD_MKBOOTIMG_ARGS += --board "$(TARGET_BOOTLOADER_BOARD_NAME)"
 
 # System as root
-BOARD_ROOT_EXTRA_FOLDERS := dsp bt_firmware firmware persist
+BOARD_ROOT_EXTRA_FOLDERS := dsp bluetooth modem persist
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
 
