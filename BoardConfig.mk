@@ -210,7 +210,7 @@ TW_INCLUDE_FASTBOOTD := true
 # -----------------------------------------------------------------------------
 # Modules Load
 # -----------------------------------------------------------------------------
-#TW_LOAD_VENDOR_MODULES := $(shell echo \"$(shell ls $(DEVICE_PATH)/recovery/root/vendor/lib/modules)\")
+TW_LOAD_VENDOR_MODULES := $(shell echo \"$(shell ls $(DEVICE_PATH)/prebuilt/modules)\")
 
 # -----------------------------------------------------------------------------
 # Override System Properties
