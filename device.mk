@@ -81,8 +81,7 @@ PRODUCT_PACKAGES += \
 # Fastbootd
 # -----------------------------------------------------------------------------
 PRODUCT_PACKAGES += \
-    fastbootd \
-	android.hardware.fastboot@1.1-impl-mock
+    fastbootd
 
 # -----------------------------------------------------------------------------
 # Crypto / Decryption
