@@ -96,27 +96,14 @@ PRODUCT_PACKAGES += \
 # Recovery Libraries & Display
 # -----------------------------------------------------------------------------
 TARGET_RECOVERY_DEVICE_MODULES += \
-    android.hidl.allocator@1.0 \
-    android.hidl.memory@1.0 \
-    android.hidl.memory.token@1.0 \
-    libdmabufheap \
-    libhidlmemory \
-    libdisplayconfig.qti \
     libion \
     vendor.display.config@1.0 \
     vendor.display.config@2.0
 
 RECOVERY_LIBRARY_SOURCE_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.allocator@1.0.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.memory@1.0.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.memory.token@1.0.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libdmabufheap.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libhidlmemory.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
-    $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/libdisplayconfig.qti.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so
-
 
 # -----------------------------------------------------------------------------
 # Health HAL
@@ -160,14 +147,14 @@ TW_EXCLUDE_APEX := true
 # -----------------------------------------------------------------------------
 # SKIP VERIFY GAPPS
 # -----------------------------------------------------------------------------
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.virtual_ab.skip_verify_source_hash=true
+#PRODUCT_PROPERTY_OVERRIDES += \
+#	ro.virtual_ab.skip_verify_source_hash=true
 
 # -----------------------------------------------------------------------------
 # SKIP SNAPSHOT
 # -----------------------------------------------------------------------------
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.virtual_ab.skip_snapshot_creation=true
+#PRODUCT_PROPERTY_OVERRIDES += \
+#	ro.virtual_ab.skip_snapshot_creation=true
 
 # -----------------------------------------------------------------------------
 # FUSE PASSTHROUGH
