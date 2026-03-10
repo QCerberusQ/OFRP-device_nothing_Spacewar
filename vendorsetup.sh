@@ -34,6 +34,8 @@ export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
 export OF_RUN_POST_FORMAT_PROCESS=1
 export FOX_USE_DATA_RECOVERY_FOR_SETTINGS=1
 export OF_DONT_PATCH_ON_FRESH_INSTALLATION=1
+export OF_SKIP_ORANGEFOX_PROCESS=1
+
 # -----------------------------------------------------------------------
 # Tools & Features
 export FOX_USE_BASH_SHELL=1
