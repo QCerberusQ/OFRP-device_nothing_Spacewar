@@ -1,8 +1,6 @@
 #
 # fox_Spacewar.mk - OrangeFox Configuration for Nothing Phone (1)
-# Pure Vendor Boot Edition
 #
-
 # -----------------------------------------------------------------------------
 # Screen Settings (Corrected for Camera Hole)
 # -----------------------------------------------------------------------------
