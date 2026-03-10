@@ -40,7 +40,7 @@ OF_ENABLE_ALL_PARTITION_TOOLS := 1
 OF_USE_DMCTL := 1
 OF_KEEP_DM_PATH := 1
 OF_CHECK_STAGED_OTA := 1
-
+FOX_USE_DMSETUP := 1
 # -----------------------------------------------------------------------------
 # Data Format & Encryption
 # -----------------------------------------------------------------------------
