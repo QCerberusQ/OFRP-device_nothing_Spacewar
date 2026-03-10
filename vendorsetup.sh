@@ -22,8 +22,8 @@ export FOX_VANILLA_BUILD=1
 
 # -----------------------------------------------------------------------
 # A/B & Virtual AB
-export FOX_VIRTUAL_AB_DEVICE=1
 export FOX_AB_DEVICE=1
+export FOX_VIRTUAL_AB_DEVICE=1
 
 # -----------------------------------------------------------------------
 # Storage & Format Rescuers (Bootloop Fixers)
@@ -33,7 +33,7 @@ export OF_DYNAMIC_FULL_SIZE=6442450944
 export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
 export OF_RUN_POST_FORMAT_PROCESS=1
 export FOX_USE_DATA_RECOVERY_FOR_SETTINGS=1
-
+export OF_DONT_PATCH_ON_FRESH_INSTALLATION=1
 # -----------------------------------------------------------------------
 # Tools & Features
 export FOX_USE_BASH_SHELL=1
