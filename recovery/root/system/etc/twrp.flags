@@ -20,30 +20,25 @@
 
 # Kritik Bölüntüler (Persist)
 /persist         ext4     /dev/block/bootdevice/by-name/persist               flags=display="Persist";backup=1
-/persist_image   emmc     /dev/block/bootdevice/by-name/persist               flags=display=Persist;backup=0;flashimg=1
-/prodpersist     ext4     /dev/block/bootdevice/by-name/prodpersist           flags=backup=1;display="Product Persist"
+/persist_image   emmc     /dev/block/bootdevice/by-name/persist               flags=display="Persist Image";backup=0;flashimg=1
 
 # EFS (IMEI)
-/efs1            emmc     /dev/block/bootdevice/by-name/modemst1              flags=backup=1;display="EFS"
+/efs1            emmc     /dev/block/bootdevice/by-name/modemst1              flags=backup=1;display="Efs"
 /efs2            emmc     /dev/block/bootdevice/by-name/modemst2              flags=backup=1;subpartitionof=/efs1
 /efsc            emmc     /dev/block/bootdevice/by-name/fsc                   flags=backup=1;subpartitionof=/efs1
 /efsg            emmc     /dev/block/bootdevice/by-name/fsg                   flags=backup=1;subpartitionof=/efs1
 
-# Firmware
-#/firmware_mnt   vfat     /dev/block/bootdevice/by-name/modem                 flags=backup=1;display="Firmware";slotselect;mounttodecrypt;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0"
-/modem           vfat     /dev/block/bootdevice/by-name/modem                 flags=display=Modem;slotselect;mounttodecrypt;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0"
-
 # Modem, Bluetooth ve DSP
-/modem_img       emmc     /dev/block/bootdevice/by-name/modem                 flags=backup=1;display=Modem;slotselect;flashimg=1
-/dsp             ext4     /dev/block/bootdevice/by-name/dsp                   flags=backup=1;display="Dsp";slotselect
-/dsp_image       emmc     /dev/block/bootdevice/by-name/dsp                   flags=display=DSP;slotselect;backup=1;flashimg=1
-#/bt_firmware    vfat     /dev/block/bootdevice/by-name/bluetooth             flags=backup=1;display="Bluetooth";slotselect;fsflags="ro,shortname=lower,uid=1002,gid=3002,dmask=227,fmask=337,context=u:object_r:bt_firmware_file:s0"
+/modem           vfat     /dev/block/bootdevice/by-name/modem                 flags=display=Modem;slotselect;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0"
+/modem_img       emmc     /dev/block/bootdevice/by-name/modem                 flags=backup=1;display="Modem Image";slotselect;flashimg=1
+/dsp             ext4     /dev/block/bootdevice/by-name/dsp                   flags=backup=1;display=Dsp;slotselect
+/dsp_image       emmc     /dev/block/bootdevice/by-name/dsp                   flags=display="DSP Image";slotselect;backup=1;flashimg=1
 /bluetooth       vfat     /dev/block/bootdevice/by-name/bluetooth             flags=display=Bluetooth;slotselect;fsflags="ro,shortname=lower,uid=1002,gid=3002,dmask=227,fmask=337,context=u:object_r:bt_firmware_file:s0"
-/bluetooth_image emmc     /dev/block/bootdevice/by-name/bluetooth             flags=display=Bluetooth;slotselect;backup=1;flashimg=1
+/bluetooth_image emmc     /dev/block/bootdevice/by-name/bluetooth             flags=display="Bluetooth Image";slotselect;backup=1;flashimg=1
 
 # Diğer Donanım Bölüntüleri
-/logo            emmc     /dev/block/bootdevice/by-name/logo                  flags=backup=1;display="Boot Logo";slotselect;flashimg=1
-/super           emmc     /dev/block/bootdevice/by-name/super                 flags=backup=1;display="Super";flashimg=1
+/splash          emmc     /dev/block/bootdevice/by-name/splash                flags=display="Splash Logo";backup=1;flashimg=1
+/super           emmc     /dev/block/bootdevice/by-name/super                 flags=display="Super";backup=0;flashimg=1
 /misc            emmc     /dev/block/bootdevice/by-name/misc                  flags=backup=1;display="Misc";flashimg=1
 /keymaster       emmc     /dev/block/bootdevice/by-name/keymaster             flags=slotselect
 
