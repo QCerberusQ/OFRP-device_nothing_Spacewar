@@ -34,8 +34,8 @@ on fs
 #    mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /bluetooth ro
 
     # Symlinkler
-    symlink /modem /vendor/firmware_mnt
-    symlink /bluetooth /vendor/bt_firmware
+    symlink /firmware /vendor/firmware_mnt
+#    symlink /bluetooth /vendor/bt_firmware
     symlink /dsp /vendor/dsp
     
     chown root system /dev/fscklogs/log
