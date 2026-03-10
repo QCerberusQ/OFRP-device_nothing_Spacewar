@@ -17,7 +17,7 @@ export FOX_BUILD_DEVICE="Spacewar"
 export FOX_TARGET_DEVICES="Spacewar,spacewar"
 export OF_MAINTAINER="QCerberusQ"
 export FOX_BUILD_TYPE="Stable"
-export FOX_VARIANT="BaR"
+#export FOX_VARIANT="BaR"
 export FOX_VANILLA_BUILD=1
 
 # -----------------------------------------------------------------------
