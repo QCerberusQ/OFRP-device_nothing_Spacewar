@@ -16,6 +16,7 @@ OF_STATUS_INDENT_RIGHT := 48
 OF_HIDE_NOTCH := 1
 OF_CLOCK_POS := 0
 
+FOX_VANILLA_BUILD := 1
 # -----------------------------------------------------------------------------
 # LED & FRP
 # -----------------------------------------------------------------------------
@@ -33,6 +34,7 @@ OF_QUICK_BACKUP_LIST := /boot;/data;/metadata;/vendor_boot;/dtbo;
 # -----------------------------------------------------------------------------
 # System & Partition Tools (Advanced)
 # -----------------------------------------------------------------------------
+OF_NO_ADDITIONAL_MIUI_PROPS_CHECK := 1
 OF_NO_TREBLE_COMPATIBILITY_CHECK := 1
 # Dinamik partisyonlar (Super) için araçlar
 OF_ENABLE_LPTOOLS := 1
@@ -41,12 +43,13 @@ OF_USE_DMCTL := 1
 OF_KEEP_DM_PATH := 1
 OF_CHECK_STAGED_OTA := 1
 FOX_USE_DMSETUP := 1
+OF_FORCE_CASEFOLDING := 1
 # -----------------------------------------------------------------------------
 # Data Format & Encryption
 # -----------------------------------------------------------------------------
 # F2FS formatlarken sdcard hatasını önler
 OF_UNBIND_SDCARD_F2FS := 1
-
+OF_FORCE_DATA_FORMAT_F2FS := 1
 # Format Data sonrası şifreleme meta verisini temizler (Bootloop önler - KRİTİK)
 OF_WIPE_METADATA_AFTER_DATAFORMAT := 1
 
@@ -55,9 +58,12 @@ OF_BIND_MOUNT_SDCARD_ON_FORMAT := 1
 
 # Hızlı yedekleme 
 OF_SKIP_MULTIUSER_FOLDERS_BACKUP := 1
-
+OF_SKIP_DECRYPTED_ADOPTED_STORAGE := 1
 # -----------------------------------------------------------------------------
 # Extras
 # -----------------------------------------------------------------------------
 # Gelişmiş menü seçenekleri
+OF_UNMOUNT_SDCARDS_BEFORE_REBOOT := 1
+FOX_USE_DATA_RECOVERY_FOR_SETTINGS := 1
 OF_OPTIONS_LIST_NUM := 9
+FOX_DELETE_INITD_ADDON := 1
