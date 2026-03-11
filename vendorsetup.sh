@@ -36,6 +36,7 @@ export FOX_USE_DATA_RECOVERY_FOR_SETTINGS=1
 export OF_DONT_PATCH_ON_FRESH_INSTALLATION=1
 export OF_SKIP_ORANGEFOX_PROCESS=1
 export OF_NO_REFLASH_CURRENT_ORANGEFOX=1
+export OF_SUPPORT_VBMETA_AVB2_PATCHING=1
 
 # -----------------------------------------------------------------------
 # Tools & Features
