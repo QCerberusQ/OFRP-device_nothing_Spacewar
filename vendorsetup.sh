@@ -24,7 +24,6 @@ export FOX_VANILLA_BUILD=1
 # A/B & Virtual AB
 export FOX_AB_DEVICE=1
 export FOX_VIRTUAL_AB_DEVICE=1
-export FOX_VENDOR_BOOT_RECOVERY=1
 
 # -----------------------------------------------------------------------
 # Storage & Format Rescuers (Bootloop Fixers)
