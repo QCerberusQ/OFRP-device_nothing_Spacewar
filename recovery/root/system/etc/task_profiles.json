@@ -203,6 +203,19 @@
       ]
     },
     {
+      "Name": "NtCamAlgoPerformance",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpu",
+            "Path": "ntcam-algo"
+          }
+        }
+      ]
+    },
+    {
       "Name": "AudioAppPerformance",
       "Actions" : [
         {
@@ -238,7 +251,16 @@
             "Controller": "cpu",
             "Path": "dex2oat"
           }
+        },
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "dex2oat"
+          }
         }
+
       ]
     },
     {
@@ -449,6 +471,19 @@
           {
             "Controller": "cpuset",
             "Path": "camera-daemon"
+          }
+        }
+      ]
+    },
+    {
+      "Name": "NtCamAlgoCapacity",
+      "Actions": [
+        {
+          "Name": "JoinCgroup",
+          "Params":
+          {
+            "Controller": "cpuset",
+            "Path": "ntcam-algo"
           }
         }
       ]
@@ -705,7 +740,7 @@
       "Profiles": [ "ServicePerformance", "LowIoPriority", "TimerSlackNormal" ]
     },
     {
-      "Name": "VMCompilationPerformance",
+      "Name": "SCHED_SP_COMPUTE",
       "Profiles": [ "HighPerformance", "ProcessCapacityHigh", "LowIoPriority", "TimerSlackNormal" ]
     },
     {
@@ -739,6 +774,10 @@
     {
       "Name": "Dex2OatBootComplete",
       "Profiles": [ "Dex2oatPerformance", "LowIoPriority", "TimerSlackHigh" ]
+    },
+    {
+      "Name": "Dex2OatBackground",
+      "Profiles": [ "Dex2OatBootComplete" ]
     },
     {
       "Name": "OtaProfiles",
