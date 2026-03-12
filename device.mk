@@ -77,6 +77,13 @@ PRODUCT_PACKAGES += \
     update_verifier \
     update_engine_sideload
 
+PRODUCT_PACKAGES += \
+	snapuserd \
+	liburing \
+	libz \
+	liblz4 \
+	libsnapshot_cow
+
 # -----------------------------------------------------------------------------
 # Fastbootd
 # -----------------------------------------------------------------------------
@@ -152,8 +159,8 @@ TW_EXCLUDE_APEX := true
 # -----------------------------------------------------------------------------
 # SKIP SNAPSHOT
 # -----------------------------------------------------------------------------
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.virtual_ab.skip_snapshot_creation=true
+#PRODUCT_PROPERTY_OVERRIDES += \
+#	ro.virtual_ab.skip_snapshot_creation=true
 
 # -----------------------------------------------------------------------------
 # FUSE PASSTHROUGH
