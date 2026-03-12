@@ -37,7 +37,8 @@ export OF_DONT_PATCH_ON_FRESH_INSTALLATION=1
 export OF_SKIP_ORANGEFOX_PROCESS=1
 export OF_NO_REFLASH_CURRENT_ORANGEFOX=1
 export OF_SUPPORT_VBMETA_AVB2_PATCHING=1
-
+export OF_NO_RELOAD_AFTER_DECRYPTION=1
+export TW_PREPARE_DATA_MEDIA_EARLY=1
 # -----------------------------------------------------------------------
 # Tools & Features
 export FOX_USE_BASH_SHELL=1
