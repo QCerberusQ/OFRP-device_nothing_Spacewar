@@ -22,21 +22,6 @@ on fs
     mkdir /firmware
     wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
-
-    # 2. DSP Mount
-#    mkdir /dsp
-#    wait /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix}
-#    mount ext4 /dev/block/bootdevice/by-name/dsp${ro.boot.slot_suffix} /dsp ro 
-
-    # Bluetooth Mount
-#    mkdir /bluetooth
-#    wait /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix}
-#    mount vfat /dev/block/bootdevice/by-name/bluetooth${ro.boot.slot_suffix} /bluetooth ro
-
-    # Symlinkler
-#    symlink /firmware /vendor/firmware_mnt
-#    symlink /bluetooth /vendor/bt_firmware
-#    symlink /dsp /vendor/dsp
     
     chown root system /dev/fscklogs/log
     chmod 0770 /dev/fscklogs/log
