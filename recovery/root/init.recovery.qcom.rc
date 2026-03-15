@@ -11,7 +11,7 @@ on init
     write /sys/class/power_supply/usb/otg_switch 1
 
 on early-fs
-    write /proc/sys/walt/sched_lib_name "recovery,Updater,updater,update_engine_sideload"
+    write /proc/sys/walt/sched_lib_name "recovery,updater,update_engine,update_engine_sideload"
     write /proc/sys/walt/sched_lib_mask_force 255
 
 on fs
