@@ -13,6 +13,7 @@ export ALLOW_MISSING_DEPENDENCIES=true
 
 # -----------------------------------------------------------------------
 # Device & Build Info
+# -----------------------------------------------------------------------
 export FOX_BUILD_DEVICE="Spacewar"
 export FOX_TARGET_DEVICES="Spacewar,spacewar"
 export OF_MAINTAINER="QCerberusQ"
@@ -22,11 +23,13 @@ export FOX_VANILLA_BUILD=1
 
 # -----------------------------------------------------------------------
 # A/B & Virtual AB
+# -----------------------------------------------------------------------
 export FOX_AB_DEVICE=1
 export FOX_VIRTUAL_AB_DEVICE=1
 
 # -----------------------------------------------------------------------
-# Storage & Format Rescuers (Bootloop Fixers)
+# Storage & Format Rescuers
+# -----------------------------------------------------------------------
 export FOX_USE_DMSETUP=1
 export OF_FBE_METADATA_MOUNT_IGNORE=1
 export OF_DYNAMIC_FULL_SIZE=6442450944
@@ -39,8 +42,10 @@ export OF_NO_REFLASH_CURRENT_ORANGEFOX=1
 export OF_SUPPORT_VBMETA_AVB2_PATCHING=1
 export OF_NO_RELOAD_AFTER_DECRYPTION=1
 export TW_PREPARE_DATA_MEDIA_EARLY=1
+
 # -----------------------------------------------------------------------
 # Tools & Features
+# -----------------------------------------------------------------------
 export FOX_USE_BASH_SHELL=1
 export FOX_ASH_IS_BASH=1
 export FOX_USE_NANO_EDITOR=1
@@ -52,7 +57,9 @@ export FOX_ALLOW_EARLY_SETTINGS_LOAD=1
 export OF_LOOP_DEVICE_ERRORS_TO_LOG=1
 export OF_DONT_KEEP_LOG_HISTORY=1
 
+# -----------------------------------------------------------------------
 # Binaries & Compression
+# -----------------------------------------------------------------------
 export FOX_USE_TAR_BINARY=1
 export FOX_USE_SED_BINARY=1
 export FOX_USE_XZ_UTILS=1
@@ -64,6 +71,7 @@ export FOX_USE_FSCK_EROFS_BINARY=1
 
 # -----------------------------------------------------------------------
 # Security / Encryption
+# -----------------------------------------------------------------------
 export OF_DEFAULT_KEYMASTER_VERSION=4.1
 export OF_USE_FBE_DECRYPTION=1
 export OF_USE_METADATA_DECRYPTION=1
@@ -71,6 +79,7 @@ export OF_USE_INLINE_CRYPTO=1
 
 # -----------------------------------------------------------------------
 # Magisk / AVB Patch & Root
+# -----------------------------------------------------------------------
 export FOX_PATCH_VBMETA_FLAG=1
 export FOX_USE_UPDATED_MAGISKBOOT=1
 export OF_USE_MAGISKBOOT_FOR_ALL_PATCHES=1
