@@ -34,12 +34,10 @@ OF_KEEP_DM_PATH := 1
 OF_CHECK_STAGED_OTA := 1
 
 # -----------------------------------------------------------------------------
-# Data Format & Encryption
+# Data Format & Encryption (SAF VE RİSKSİZ)
 # -----------------------------------------------------------------------------
 OF_UNBIND_SDCARD_F2FS := 1
-OF_FORCE_DATA_FORMAT_F2FS := 1
 OF_WIPE_METADATA_AFTER_DATAFORMAT := 1
-OF_BIND_MOUNT_SDCARD_ON_FORMAT := 1
 OF_SKIP_DECRYPTED_ADOPTED_STORAGE := 1
 OF_FORCE_CASEFOLDING := 1
 
