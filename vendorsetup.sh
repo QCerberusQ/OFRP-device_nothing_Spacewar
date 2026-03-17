@@ -30,7 +30,7 @@ export FOX_VIRTUAL_AB_DEVICE=1
 # -----------------------------------------------------------------------
 # Storage & Format Rescuers
 # -----------------------------------------------------------------------
-export FOX_USE_DMSETUP=1
+export OF_USE_DMCTL=1
 export OF_FBE_METADATA_MOUNT_IGNORE=1
 export OF_DYNAMIC_FULL_SIZE=6442450944
 export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
