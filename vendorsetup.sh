@@ -18,7 +18,6 @@ export FOX_BUILD_DEVICE="Spacewar"
 export FOX_TARGET_DEVICES="Spacewar,spacewar"
 export OF_MAINTAINER="QCerberusQ"
 export FOX_BUILD_TYPE="Stable"
-#export FOX_VARIANT="BaR"
 export FOX_VANILLA_BUILD=1
 
 # -----------------------------------------------------------------------
@@ -28,16 +27,14 @@ export FOX_AB_DEVICE=1
 export FOX_VIRTUAL_AB_DEVICE=1
 
 # -----------------------------------------------------------------------
-# Storage & Format Rescuers
+# Storage & Format Rescuers (SAF & STABİL)
 # -----------------------------------------------------------------------
 export OF_USE_DMCTL=1
 export OF_FBE_METADATA_MOUNT_IGNORE=1
-export OF_DYNAMIC_FULL_SIZE=6442450944
+export OF_WIPE_METADATA_AFTER_DATAFORMAT=1
 export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
 export OF_RUN_POST_FORMAT_PROCESS=1
 export FOX_USE_DATA_RECOVERY_FOR_SETTINGS=1
-export OF_DONT_PATCH_ON_FRESH_INSTALLATION=1
-export OF_SKIP_ORANGEFOX_PROCESS=1
 export OF_NO_REFLASH_CURRENT_ORANGEFOX=1
 export OF_NO_RELOAD_AFTER_DECRYPTION=1
 export TW_PREPARE_DATA_MEDIA_EARLY=1
@@ -77,10 +74,7 @@ export OF_USE_METADATA_DECRYPTION=1
 export OF_USE_INLINE_CRYPTO=1
 
 # -----------------------------------------------------------------------
-# Magisk / AVB Patch & Root
+# Magisk / AVB Patch & Root (Yarış Durumu Önlendi)
 # -----------------------------------------------------------------------
-export FOX_PATCH_VBMETA_FLAG=1
 export FOX_USE_UPDATED_MAGISKBOOT=1
 export OF_USE_MAGISKBOOT_FOR_ALL_PATCHES=1
-export FOX_ENABLE_KERNELSU_SUPPORT=1
-export OF_SUPPORT_VBMETA_AVB2_PATCHING=1
