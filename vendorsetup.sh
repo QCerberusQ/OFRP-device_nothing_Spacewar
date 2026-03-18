@@ -43,13 +43,16 @@ export TW_PREPARE_DATA_MEDIA_EARLY=1
 export FOX_USE_BASH_SHELL=1
 export FOX_ASH_IS_BASH=1
 export FOX_USE_NANO_EDITOR=1
-export FOX_ENABLE_APP_MANAGER=1
+#export FOX_ENABLE_APP_MANAGER=1
 export FOX_DELETE_AROMAFM=1
 export FOX_DELETE_INITD_ADDON=1
 export FOX_REPLACE_TOOLBOX_GETPROP=1
 export FOX_ALLOW_EARLY_SETTINGS_LOAD=1
 export OF_LOOP_DEVICE_ERRORS_TO_LOG=1
 export OF_DONT_KEEP_LOG_HISTORY=1
+export FOX_USE_GREP_BINARY=1
+export FOX_USE_DATE_BINARY=1
+export FOX_USE_PATCHELF_BINARY=1
 
 # -----------------------------------------------------------------------
 # Binaries & Compression
