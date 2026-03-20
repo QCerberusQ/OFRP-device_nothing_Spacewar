@@ -30,7 +30,6 @@ export FOX_VIRTUAL_AB_DEVICE=1
 # Storage & Format Rescuers (SAF & STABİL)
 # -----------------------------------------------------------------------
 export OF_USE_DMCTL=1
-export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
 export OF_RUN_POST_FORMAT_PROCESS=1
 export OF_NO_REFLASH_CURRENT_ORANGEFOX=1
 
