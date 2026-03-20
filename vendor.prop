@@ -25,3 +25,4 @@ vendor.usb.use_ffs_mtp=1
 # Dynamic Property
 # -----------------------------------------------------------------------
 ro.boot.dynamic_partitions=true
+ro.virtual_ab.compression.enabled=false
