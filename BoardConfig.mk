@@ -143,8 +143,8 @@ TARGET_COPY_OUT_VENDOR_BOOT := vendor_boot
 # -----------------------------------------------------------------------------
 # vAB Compress
 # -----------------------------------------------------------------------------
-BOARD_VIRTUAL_AB_COMPRESSION := true
-BOARD_VIRTUAL_AB_COMPRESSION_METHOD := none
+#BOARD_VIRTUAL_AB_COMPRESSION := true
+#BOARD_VIRTUAL_AB_COMPRESSION_METHOD := none
 
 # -----------------------------------------------------------------------------
 # System as root
