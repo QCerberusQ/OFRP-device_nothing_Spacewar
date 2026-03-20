@@ -20,9 +20,8 @@ LOCAL_PATH := device/nothing/Spacewar
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_SHIPPING_API_LEVEL := 31
 PRODUCT_TARGET_VNDK_VERSION := 31
-PRODUCT_VIRTUAL_AB_COW_VERSION := 2
+#PRODUCT_VIRTUAL_AB_COW_VERSION := 2
 
-TW_FRAMERATE := 120
 
 # -----------------------------------------------------------------------------
 # A/B OTA
