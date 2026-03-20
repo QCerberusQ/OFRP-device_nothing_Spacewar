@@ -23,8 +23,7 @@ on fs
     wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
     
-    chown root system /dev/fscklogs/log
-    chmod 0770 /dev/fscklogs/log
+    mkdir /dev/fscklogs 0770 root system
 
 on post-fs
     start keymasterd
