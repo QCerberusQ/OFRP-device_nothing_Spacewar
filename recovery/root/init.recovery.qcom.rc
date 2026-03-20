@@ -23,8 +23,6 @@ on fs
     wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
     
-    mkdir /dev/fscklogs 0770 root system
-
 on post-fs
     start keymasterd
     start boot-hal-1-2
