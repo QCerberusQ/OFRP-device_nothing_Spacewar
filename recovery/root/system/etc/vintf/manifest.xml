@@ -10,11 +10,11 @@
 
     <!-- Required by hwservicemanager in recovery environment -->
     <hal format="hidl">
-        <n>android.hidl.manager</n>
+        <name>android.hidl.manager</name>
         <transport>hwbinder</transport>
         <version>1.2</version>
         <interface>
-            <n>IServiceManager</n>
+            <name>IServiceManager</name>
             <instance>default</instance>
         </interface>
         <fqname>@1.2::IServiceManager/default</fqname>
@@ -22,11 +22,11 @@
 
     <!-- Display service -->
     <hal format="hidl" max-level="6">
-        <n>android.frameworks.displayservice</n>
+        <name>android.frameworks.displayservice</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
-            <n>IDisplayService</n>
+            <name>IDisplayService</name>
             <instance>default</instance>
         </interface>
         <fqname>@1.0::IDisplayService/default</fqname>
@@ -34,11 +34,11 @@
 
     <!-- Scheduler service -->
     <hal format="hidl" max-level="5">
-        <n>android.frameworks.schedulerservice</n>
+        <name>android.frameworks.schedulerservice</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
-            <n>ISchedulingPolicyService</n>
+            <name>ISchedulingPolicyService</name>
             <instance>default</instance>
         </interface>
         <fqname>@1.0::ISchedulingPolicyService/default</fqname>
@@ -46,11 +46,11 @@
 
     <!-- Sensor service -->
     <hal format="hidl">
-        <n>android.frameworks.sensorservice</n>
+        <name>android.frameworks.sensorservice</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
-            <n>ISensorManager</n>
+            <name>ISensorManager</name>
             <instance>default</instance>
         </interface>
         <fqname>@1.0::ISensorManager/default</fqname>
@@ -58,11 +58,11 @@
 
     <!-- Memory mapper -->
     <hal format="hidl">
-        <n>android.hidl.memory</n>
+        <name>android.hidl.memory</name>
         <transport arch="32+64">passthrough</transport>
         <version>1.0</version>
         <interface>
-            <n>IMapper</n>
+            <name>IMapper</name>
             <instance>ashmem</instance>
         </interface>
         <fqname>@1.0::IMapper/ashmem</fqname>
@@ -70,11 +70,11 @@
 
     <!-- Token manager -->
     <hal format="hidl">
-        <n>android.hidl.token</n>
+        <name>android.hidl.token</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
-            <n>ITokenManager</n>
+            <name>ITokenManager</name>
             <instance>default</instance>
         </interface>
         <fqname>@1.0::ITokenManager/default</fqname>
@@ -82,11 +82,11 @@
 
     <!-- Network daemon -->
     <hal format="hidl">
-        <n>android.system.net.netd</n>
+        <name>android.system.net.netd</name>
         <transport>hwbinder</transport>
         <version>1.1</version>
         <interface>
-            <n>INetd</n>
+            <name>INetd</name>
             <instance>default</instance>
         </interface>
         <fqname>@1.1::INetd/default</fqname>
@@ -94,11 +94,11 @@
 
     <!-- WiFi keystore -->
     <hal format="hidl">
-        <n>android.system.wifi.keystore</n>
+        <name>android.system.wifi.keystore</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
-            <n>IKeystore</n>
+            <name>IKeystore</name>
             <instance>default</instance>
         </interface>
         <fqname>@1.0::IKeystore/default</fqname>
@@ -106,44 +106,43 @@
 
     <!-- Netutils -->
     <hal format="native">
-        <n>netutils-wrapper</n>
+        <name>netutils-wrapper</name>
         <version>1.0</version>
     </hal>
 
     <!-- QTI system HALs - Nothing Phone (1) / Lahaina specific -->
-    <!-- version 1.2 confirmed from Nothing Phone (1) stock dump -->
     <hal format="hidl">
-        <n>vendor.qti.hardware.qccsyshal</n>
+        <name>vendor.qti.hardware.qccsyshal</name>
         <transport>hwbinder</transport>
         <version>1.2</version>
         <interface>
-            <n>IQccsyshal</n>
+            <name>IQccsyshal</name>
             <instance>qccsyshal</instance>
         </interface>
         <fqname>@1.2::IQccsyshal/qccsyshal</fqname>
     </hal>
 
     <hal format="hidl">
-        <n>vendor.qti.hardware.radio.atcmdfwd</n>
+        <name>vendor.qti.hardware.radio.atcmdfwd</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
-            <n>IAtCmdFwd</n>
+            <name>IAtCmdFwd</name>
             <instance>AtCmdFwdService</instance>
         </interface>
         <fqname>@1.0::IAtCmdFwd/AtCmdFwdService</fqname>
     </hal>
 
     <hal format="hidl">
-        <n>vendor.qti.hardware.systemhelper</n>
+        <name>vendor.qti.hardware.systemhelper</name>
         <transport>hwbinder</transport>
         <version>1.0</version>
         <interface>
-            <n>ISystemEvent</n>
+            <name>ISystemEvent</name>
             <instance>default</instance>
         </interface>
         <interface>
-            <n>ISystemResource</n>
+            <name>ISystemResource</name>
             <instance>default</instance>
         </interface>
         <fqname>@1.0::ISystemEvent/default</fqname>
