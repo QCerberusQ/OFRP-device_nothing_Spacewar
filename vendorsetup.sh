@@ -30,7 +30,6 @@ export FOX_VIRTUAL_AB_DEVICE=1
 # Storage & Format Rescuers (SAF & STABİL)
 # -----------------------------------------------------------------------
 export OF_USE_DMCTL=1
-export OF_RUN_POST_FORMAT_PROCESS=1
 export OF_NO_REFLASH_CURRENT_ORANGEFOX=1
 
 # -----------------------------------------------------------------------
@@ -66,9 +65,6 @@ export FOX_USE_FSCK_EROFS_BINARY=1
 # Security / Encryption
 # -----------------------------------------------------------------------
 export OF_DEFAULT_KEYMASTER_VERSION=4.1
-export OF_USE_FBE_DECRYPTION=1
-export OF_USE_METADATA_DECRYPTION=1
-export OF_USE_INLINE_CRYPTO=1
 
 # -----------------------------------------------------------------------
 # Magisk / AVB Patch & Root (Yarış Durumu Önlendi)
