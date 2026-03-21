@@ -226,7 +226,7 @@ TW_INCLUDE_FASTBOOTD := true
 # -----------------------------------------------------------------------------
 # Modules Load
 # -----------------------------------------------------------------------------
-TW_LOAD_VENDOR_MODULES := $(shell echo \"$(shell ls $(DEVICE_PATH)/prebuilt/modules)\")
+TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko apr_dlkm.ko fts_tp.ko goodix_fp.ko q6_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko snd_event_dlkm.ko swr_haptics_dlkm.ko"
 
 # -----------------------------------------------------------------------------
 # Override System Properties
