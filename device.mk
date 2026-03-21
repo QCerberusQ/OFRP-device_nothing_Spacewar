@@ -98,7 +98,6 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
 # -----------------------------------------------------------------------------
 # Health HAL
 # -----------------------------------------------------------------------------
-# Health HAL
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
     android.hardware.health@2.1-service \
@@ -115,8 +114,6 @@ PRODUCT_SOONG_NAMESPACES += \
 # -----------------------------------------------------------------------------
 # differentiate legacy 'sg' or 'bsg' framework
 # -----------------------------------------------------------------------------
-# namespace definition for librecovery_updater
-# differentiate legacy 'sg' or 'bsg' framework
 SOONG_CONFIG_NAMESPACES += ufsbsg
 SOONG_CONFIG_ufsbsg += ufsframework
 SOONG_CONFIG_ufsbsg_ufsframework := bsg
@@ -128,23 +125,6 @@ TARGET_HAS_GENERIC_KERNEL_HEADERS := true
 # TW
 # -----------------------------------------------------------------------------
 TW_EXCLUDE_APEX := true
-
-# -----------------------------------------------------------------------------
-# VINTF
-# -----------------------------------------------------------------------------
-#PRODUCT_ENFORCE_VINTF_MANIFEST := true
-
-# -----------------------------------------------------------------------------
-# SKIP VERIFY GAPPS
-# -----------------------------------------------------------------------------
-#PRODUCT_PROPERTY_OVERRIDES += \
-#	ro.virtual_ab.skip_verify_source_hash=true
-
-# -----------------------------------------------------------------------------
-# SKIP SNAPSHOT
-# -----------------------------------------------------------------------------
-#PRODUCT_PROPERTY_OVERRIDES += \
-#	ro.virtual_ab.skip_snapshot_creation=true
 
 # -----------------------------------------------------------------------------
 # FUSE PASSTHROUGH
