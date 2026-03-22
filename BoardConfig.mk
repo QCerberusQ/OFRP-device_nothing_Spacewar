@@ -237,7 +237,7 @@ TW_USE_HEALTH_SERVICES_FOR_BATTERY := true
 # -----------------------------------------------------------------------------
 # Modules Load
 # -----------------------------------------------------------------------------
-TW_LOAD_VENDOR_MODULES := $(shell echo "$(shell ls $(DEVICE_PATH)/prebuilt/modules)")
+TW_LOAD_VENDOR_MODULES := $(shell echo \"$(shell ls $(DEVICE_PATH)/prebuilt/modules)\")
 
 # -----------------------------------------------------------------------------
 # Override System Properties
