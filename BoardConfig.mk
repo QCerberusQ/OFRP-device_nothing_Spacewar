@@ -195,33 +195,44 @@ BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 # -----------------------------------------------------------------------------
 # TWRP Configuration
 # -----------------------------------------------------------------------------
+
+# Display
 TW_THEME := portrait_hdpi
 TW_MAX_BRIGHTNESS := 2047
 TW_DEFAULT_BRIGHTNESS := 1200
 TW_FRAMERATE := 120
-#TW_SKIP_ADDITIONAL_FSTAB := true
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+
+# Storage
 RECOVERY_SDCARD_ON_DATA := true
-TARGET_RECOVERY_QCOM_RTC_FIX := true
-TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_ENABLE_FS_COMPRESSION := true
 TW_INCLUDE_NTFS_3G := true
-TW_USE_TOOLBOX := true
-#TW_SCREEN_BLANK_ON_BOOT := true
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
+
+# Input
 TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_SUPPORT_INPUT_AIDL_HAPTICS := true
+TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
+
+# Tools
+TW_USE_TOOLBOX := true
 TW_INCLUDE_RESETPROP := true
-#TW_HAS_EDL_MODE := true
-TW_INCLUDE_REPACKTOOLS := true
-TWRP_INCLUDE_LOGCAT := true
 TW_INCLUDE_LIBRESETPROP := true
+TW_INCLUDE_REPACKTOOLS := true
+TW_INCLUDE_FASTBOOTD := true
+TARGET_RECOVERY_QCOM_RTC_FIX := true
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+#TW_SKIP_ADDITIONAL_FSTAB := true
+#TW_HAS_EDL_MODE := true
+
+# Logging
+TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
 TARGET_USES_MKE2FS := true
-TW_SUPPORT_INPUT_AIDL_HAPTICS := true
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
-TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+
+# Hardware
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone50/temp"
 TW_USE_HEALTH_SERVICES_FOR_BATTERY := true
-TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
-TW_INCLUDE_FASTBOOTD := true
 
 # -----------------------------------------------------------------------------
 # Modules Load
