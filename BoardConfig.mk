@@ -13,6 +13,7 @@ DEVICE_PATH := device/nothing/Spacewar
 # Platform
 # -----------------------------------------------------------------------------
 TARGET_BOARD_PLATFORM := lahaina
+TARGET_HAS_GENERIC_KERNEL_HEADERS := true
 
 # -----------------------------------------------------------------------------
 # A/B
@@ -141,12 +142,6 @@ BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
 TARGET_COPY_OUT_VENDOR_BOOT := vendor_boot
 
 # -----------------------------------------------------------------------------
-# vAB Compress
-# -----------------------------------------------------------------------------
-#BOARD_VIRTUAL_AB_COMPRESSION := true
-#BOARD_VIRTUAL_AB_COMPRESSION_METHOD := none
-
-# -----------------------------------------------------------------------------
 # System as root
 # -----------------------------------------------------------------------------
 BOARD_ROOT_EXTRA_FOLDERS := bluetooth dsp firmware persist
@@ -164,7 +159,7 @@ TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
 TARGET_NO_RECOVERY := true
 BOARD_USES_RECOVERY_AS_BOOT := true
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
-BOARD_USES_METADATA_PARTITION := true
+TARGET_RECOVERY_QCOM_RTC_FIX := true
 
 # -----------------------------------------------------------------------------
 # AVB
@@ -182,6 +177,7 @@ BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
 # -----------------------------------------------------------------------------
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
+BOARD_USES_METADATA_PARTITION := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
 BOARD_USES_QCOM_FBE_DECRYPTION := true
 TW_PREPARE_DATA_MEDIA_EARLY := true
@@ -220,10 +216,10 @@ TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_LIBRESETPROP := true
 TW_INCLUDE_REPACKTOOLS := true
 TW_INCLUDE_FASTBOOTD := true
-TARGET_RECOVERY_QCOM_RTC_FIX := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
-#TW_SKIP_ADDITIONAL_FSTAB := true
-#TW_HAS_EDL_MODE := true
+TW_INCLUDE_LPDUMP := true
+TW_INCLUDE_LPTOOLS := true
+TW_EXCLUDE_APEX := true
 
 # Logging
 TWRP_INCLUDE_LOGCAT := true
