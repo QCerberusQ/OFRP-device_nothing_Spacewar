@@ -19,8 +19,6 @@ LOCAL_PATH := device/nothing/Spacewar
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_SHIPPING_API_LEVEL := 31
 PRODUCT_TARGET_VNDK_VERSION := 31
-#PRODUCT_VIRTUAL_AB_COW_VERSION := 2
-
 
 # -----------------------------------------------------------------------------
 # A/B OTA
@@ -49,9 +47,6 @@ PRODUCT_PACKAGES += \
     libgptutils.nothing \
     bootctl
 
-PRODUCT_PACKAGES_DEBUG += \
-    bootctl
-
 PRODUCT_PACKAGES += \
     otapreopt_script \
     checkpoint_gc \
@@ -61,11 +56,11 @@ PRODUCT_PACKAGES += \
     update_engine_sideload
 
 PRODUCT_PACKAGES += \
-	snapuserd \
-	liburing \
-	libz \
-	liblz4 \
-	libsnapshot_cow
+    snapuserd \
+    liburing \
+    libz \
+    liblz4 \
+    libsnapshot_cow
 
 # -----------------------------------------------------------------------------
 # Fastbootd
@@ -116,14 +111,6 @@ PRODUCT_SOONG_NAMESPACES += \
 SOONG_CONFIG_NAMESPACES += ufsbsg
 SOONG_CONFIG_ufsbsg += ufsframework
 SOONG_CONFIG_ufsbsg_ufsframework := bsg
-
-# Support to compile recovery without msm headers
-TARGET_HAS_GENERIC_KERNEL_HEADERS := true
-
-# -----------------------------------------------------------------------------
-# TW
-# -----------------------------------------------------------------------------
-TW_EXCLUDE_APEX := true
 
 # -----------------------------------------------------------------------------
 # FUSE PASSTHROUGH
