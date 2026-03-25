@@ -20,7 +20,7 @@ TARGET_HAS_GENERIC_KERNEL_HEADERS := true
 # -----------------------------------------------------------------------------
 AB_OTA_UPDATER := true
 
-AB_OTA_PARTITIONS += \
+AB_OTA_PARTITIONS := \
     boot \
     dtbo \
     odm \
