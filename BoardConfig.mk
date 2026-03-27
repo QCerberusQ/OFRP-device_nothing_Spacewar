@@ -102,14 +102,8 @@ BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x237
 BOARD_KERNEL_CMDLINE += swiotlb=0
 BOARD_KERNEL_CMDLINE += cgroup.memory=nokmem,nosocket
 BOARD_KERNEL_CMDLINE += pcie_ports=compat
-
-# Debug için önemli (Ekran gelmezse log okumanı sağlar)
 BOARD_KERNEL_CMDLINE += earlycon=msm_geni_serial,0x880000
-
-# Dinamik bölümlerin görünmesi için KRİTİK (Bunu unutma!)
-BOARD_KERNEL_CMDLINE += loop.max_part=16
-
-# Firewall/Ağ hatalarını engeller
+BOARD_KERNEL_CMDLINE += loop.max_part=7
 BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
 BOARD_KERNEL_CMDLINE += iptable_raw.raw_before_defrag=1
 
