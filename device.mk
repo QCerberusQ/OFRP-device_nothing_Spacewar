@@ -57,9 +57,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     snapuserd \
-    liburing \
-    libz \
-    liblz4 \
     libsnapshot_cow
 
 # -----------------------------------------------------------------------------
