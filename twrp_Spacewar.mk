@@ -1,14 +1,15 @@
 #
+# Copyright (C) 2025 The Android Open Source Project
+# Copyright (C) 2025 SebaUbuntu's TWRP device tree generator
+#
 # SPDX-License-Identifier: Apache-2.0
 #
-# OrangeFox Recovery Project
-# Product makefile for Nothing Phone (1)
-# Codename: Spacewar
-# Recovery type: Vendor Boot (Header v3)
+# Copyright (C) 2024-2026 The OrangeFox Recovery Project
+# SPDX-License-Identifier: GPL-3.0-or-later
 #
 
 # -----------------------------------------------------------------------------
-# 1. Base Android Configuration (CRITICAL)
+# 1. Base Android Configuration
 # -----------------------------------------------------------------------------
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
@@ -25,12 +26,12 @@ DEVICE_PATH := device/nothing/$(PRODUCT_RELEASE_NAME)
 $(call inherit-product, $(DEVICE_PATH)/device.mk)
 
 # -----------------------------------------------------------------------------
-# 4. Inherit Common TWRP / OrangeFox Configuration (Orta - override yapar)
+# 4. Inherit Common TWRP / OrangeFox Configuration
 # -----------------------------------------------------------------------------
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # -----------------------------------------------------------------------------
-# 5. Inherit OrangeFox Config (SON - en yüksek öncelik)
+# 5. Inherit OrangeFox Config
 # -----------------------------------------------------------------------------
 # fox_Spacewar.mk'deki ayarlar common.mk'yi ezer
 $(call inherit-product-if-exists, $(DEVICE_PATH)/fox_Spacewar.mk)
