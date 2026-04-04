@@ -47,6 +47,8 @@ OF_NO_ADDITIONAL_MIUI_PROPS_CHECK := 1
 OF_NO_TREBLE_COMPATIBILITY_CHECK := 1
 OF_ENABLE_LPTOOLS := 1
 OF_ENABLE_ALL_PARTITION_TOOLS := 1
+OF_FBE_METADATA_MOUNT_IGNORE := 1
+OF_SUPPORT_VBMETA_AVB2_PATCHING := 1
 
 # -----------------------------------------------------------------------------
 # Data Format & Encryption (SAF VE RİSKSİZ)
