@@ -226,8 +226,7 @@ TARGET_USES_LOGD := true
 
 # Hardware
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone50/temp"
-#TW_USE_HEALTH_SERVICES_FOR_BATTERY := true
-TW_CUSTOM_BATTERY_PATH := "/sys/class/power_supply/battery"
+TW_USE_HEALTH_SERVICES_FOR_BATTERY := true
 
 # -----------------------------------------------------------------------------
 # Modules Load
