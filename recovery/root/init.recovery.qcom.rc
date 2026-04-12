@@ -65,7 +65,10 @@ on property:dev.mnt.blk.firmware=*
     # Titreşim motoru ayarı
     wait /sys/class/qcom-haptics/fifo_vmax
     write /sys/class/qcom-haptics/fifo_vmax 1500mv
-    
+
+    # Battery timeout
+    wait /sys/class/power_supply/battery 20
+
     start health-hal-2-1
     start vendor.qti.vibrator
 
