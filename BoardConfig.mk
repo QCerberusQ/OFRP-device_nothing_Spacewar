@@ -207,6 +207,7 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.
 # Input
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
+TW_SUPPORT_INPUT_AIDL_HAPTICS_FQNAME := "IVibrator/default"
 TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 
 # Tools
@@ -227,6 +228,7 @@ TARGET_USES_LOGD := true
 # Hardware
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/devices/virtual/thermal/thermal_zone50/temp"
 TW_USE_HEALTH_SERVICES_FOR_BATTERY := true
+TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 
 # -----------------------------------------------------------------------------
 # Modules Load
