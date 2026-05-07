@@ -53,7 +53,6 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 
 	# Storage & Format Rescuers
 	export OF_USE_DMCTL=1
-	export OF_NO_REFLASH_CURRENT_ORANGEFOX=1
 
 	# Tools & Features
 	export FOX_USE_BASH_SHELL=1
