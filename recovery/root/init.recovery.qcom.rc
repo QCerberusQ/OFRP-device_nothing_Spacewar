@@ -31,7 +31,6 @@ on early-init
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on init
-    exec u:r:recovery:s0 -- /system/bin/wrappedkey-fix.sh
     write /sys/class/backlight/panel0-backlight/brightness 200
     mkdir /dev/fscklogs 0770 root system
     setprop sys.usb.configfs 1
