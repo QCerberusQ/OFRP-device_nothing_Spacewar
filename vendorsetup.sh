@@ -47,6 +47,10 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export TARGET_DEVICE_ALT="spacewar"
 	export FOX_TARGET_DEVICES="Spacewar,$TARGET_DEVICE_ALT"
 
+	# Storage Theme Paths
+	export FOX_SETTINGS_ROOT_DIRECTORY=/data/recovery
+	export FOX_MISCELLANEOUS_ROOT_DIRECTORY=/sdcard
+
 	# A/B & Virtual AB
 	export FOX_AB_DEVICE=1
 	export FOX_VIRTUAL_AB_DEVICE=1
