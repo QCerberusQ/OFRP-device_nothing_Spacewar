@@ -42,7 +42,6 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export ALLOW_MISSING_DEPENDENCIES=true
 
 	# Device & Build Info
-	export OF_MAINTAINER="QCerberusQ"
 	export FOX_BUILD_TYPE="Stable"
 	export FOX_VANILLA_BUILD=1
 	
@@ -57,9 +56,6 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export FOX_AB_DEVICE=1
 	export FOX_VIRTUAL_AB_DEVICE=1
 
-	# Storage & Format Rescuers
-	export OF_USE_DMCTL=1
-
 	# Tools & Features
 	export FOX_USE_BASH_SHELL=1
 	export FOX_ASH_IS_BASH=1
@@ -68,8 +64,6 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export FOX_DELETE_INITD_ADDON=1
 	export FOX_REPLACE_TOOLBOX_GETPROP=1
 	export FOX_ALLOW_EARLY_SETTINGS_LOAD=1
-	export OF_LOOP_DEVICE_ERRORS_TO_LOG=1
-	export OF_DONT_KEEP_LOG_HISTORY=1
 	export FOX_USE_GREP_BINARY=1
 	export FOX_USE_DATE_BINARY=1
 	export FOX_USE_PATCHELF_BINARY=1
@@ -79,13 +73,9 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export FOX_USE_SED_BINARY=1
 	export FOX_USE_XZ_UTILS=1
 	export FOX_USE_LZ4_BINARY=1
-	export OF_USE_LZ4_COMPRESSION=1
 	export FOX_USE_ZSTD_BINARY=1
 	export FOX_USE_BUSYBOX_BINARY=1
 	export FOX_USE_FSCK_EROFS_BINARY=1
-
-	# Security / Encryption
-	export OF_DEFAULT_KEYMASTER_VERSION=4.1
 
 	# Magisk
 	export FOX_USE_UPDATED_MAGISKBOOT=1
