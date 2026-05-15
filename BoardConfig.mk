@@ -3,14 +3,19 @@
 #
 
 # -----------------------------------------------------------------------------
+# Device path
+# -----------------------------------------------------------------------------
+
+DEVICE_PATH := device/nothing/Spacewar
+
+# -----------------------------------------------------------------------------
 # Broken rules
 # -----------------------------------------------------------------------------
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 ALLOW_MISSING_DEPENDENCIES := true
 BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
-
-DEVICE_PATH := device/nothing/Spacewar
+BUILD_BROKEN_ARTIFACT_PATH_REQUIREMENTS := true
 
 # -----------------------------------------------------------------------------
 # Platform
