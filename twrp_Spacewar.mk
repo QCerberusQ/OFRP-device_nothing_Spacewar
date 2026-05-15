@@ -28,12 +28,7 @@ $(call inherit-product, vendor/twrp/config/common.mk)
 # 5. Inherit OrangeFox Config
 # -----------------------------------------------------------------------------
 # fox_Spacewar.mk'deki ayarlar common.mk'yi ezer
-$(call inherit-product-if-exists, $(DEVICE_PATH)/fox_Spacewar.mk)
-
-# -----------------------------------------------------------------------------
-# 6. Build Sanity
-# -----------------------------------------------------------------------------
-BUILD_BROKEN_ARTIFACT_PATH_REQUIREMENTS := true
+$(call inherit-product, $(DEVICE_PATH)/fox_Spacewar.mk)
 
 # -----------------------------------------------------------------------------
 # 7. Device Identifiers (MUST be last)
