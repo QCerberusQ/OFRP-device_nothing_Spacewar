@@ -63,6 +63,7 @@ OF_FORCE_CASEFOLDING := 1
 # -----------------------------------------------------------------------------
 OF_UNMOUNT_SDCARDS_BEFORE_REBOOT := 1
 OF_OPTIONS_LIST_NUM := 8
+OF_VAB_ORS_WIPE_DATA_IS_FORMAT := 1
 
 # -----------------------------------------------------------------------------
 # Maintainer & Storage Tools
