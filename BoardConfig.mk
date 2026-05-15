@@ -18,6 +18,7 @@ DEVICE_PATH := device/nothing/Spacewar
 TARGET_BOARD_PLATFORM := lahaina
 TARGET_HAS_GENERIC_KERNEL_HEADERS := true
 TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
+TARGET_OTA_ASSERT_DEVICE := Spacewar
 
 # -----------------------------------------------------------------------------
 # A/B
