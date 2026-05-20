@@ -150,7 +150,6 @@ TARGET_COPY_OUT_VENDOR_BOOT := vendor_boot
 # -----------------------------------------------------------------------------
 BOARD_ROOT_EXTRA_FOLDERS := bluetooth dsp firmware persist
 BOARD_HAS_LARGE_FILESYSTEM := true
-BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
 
 # -----------------------------------------------------------------------------
 # Properties
