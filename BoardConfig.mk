@@ -205,6 +205,7 @@ TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
 # Storage
 RECOVERY_SDCARD_ON_DATA := true
 TW_ENABLE_FS_COMPRESSION := true
+TW_ENABLE_BLKDISCARD := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TW_INCLUDE_NTFS_3G := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
