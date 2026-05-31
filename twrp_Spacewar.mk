@@ -15,7 +15,7 @@ PRODUCT_RELEASE_NAME := Spacewar
 DEVICE_PATH := device/nothing/$(PRODUCT_RELEASE_NAME)
 
 # -----------------------------------------------------------------------------
-# 3. Inherit Device Configuration (Önce base)
+# 3. Inherit Device Configuration
 # -----------------------------------------------------------------------------
 $(call inherit-product, $(DEVICE_PATH)/device.mk)
 
@@ -27,11 +27,10 @@ $(call inherit-product, vendor/twrp/config/common.mk)
 # -----------------------------------------------------------------------------
 # 5. Inherit OrangeFox Config
 # -----------------------------------------------------------------------------
-# fox_Spacewar.mk'deki ayarlar common.mk'yi ezer
 $(call inherit-product, $(DEVICE_PATH)/fox_Spacewar.mk)
 
 # -----------------------------------------------------------------------------
-# 7. Device Identifiers (MUST be last)
+# 6. Device Identifiers (MUST be last)
 # -----------------------------------------------------------------------------
 PRODUCT_DEVICE := $(PRODUCT_RELEASE_NAME)
 PRODUCT_NAME := twrp_$(PRODUCT_RELEASE_NAME)
