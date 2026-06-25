@@ -5,7 +5,6 @@
 # -----------------------------------------------------------------------------
 # Device path
 # -----------------------------------------------------------------------------
-
 DEVICE_PATH := device/nothing/Spacewar
 
 # -----------------------------------------------------------------------------
@@ -16,14 +15,6 @@ BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 ALLOW_MISSING_DEPENDENCIES := true
 BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 BUILD_BROKEN_ARTIFACT_PATH_REQUIREMENTS := true
-
-# -----------------------------------------------------------------------------
-# Platform
-# -----------------------------------------------------------------------------
-TARGET_BOARD_PLATFORM := lahaina
-TARGET_HAS_GENERIC_KERNEL_HEADERS := true
-TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
-TARGET_OTA_ASSERT_DEVICE := Spacewar
 
 # -----------------------------------------------------------------------------
 # A/B
@@ -52,17 +43,14 @@ TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := cortex-a76
 
-
 TARGET_2ND_ARCH := arm
-TARGET_2ND_ARCH_VARIANT := armv8-2a
+TARGET_2ND_ARCH_VARIANT := armv8-a
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := cortex-a55
-
+TARGET_2ND_CPU_VARIANT := cortex-a76
 
 ENABLE_CPUSETS := true
 ENABLE_SCHEDBOOST := true
-BOARD_USES_QCOM_HARDWARE := true
 TARGET_USES_64_BIT_BINDER := true
 TARGET_SUPPORTS_64_BIT_APPS := true
 
@@ -74,18 +62,6 @@ TARGET_NO_BOOTLOADER := true
 TARGET_USES_UEFI := true
 
 # -----------------------------------------------------------------------------
-# Partitions
-# -----------------------------------------------------------------------------
-BOARD_FLASH_BLOCK_SIZE := 262144
-BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
-BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := $(BOARD_BOOTIMAGE_PARTITION_SIZE)
-
-BOARD_SUPER_PARTITION_SIZE := 6442450944
-BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
-BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := odm product system system_ext vendor vendor_dlkm
-BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 6438256640
-
-# -----------------------------------------------------------------------------
 # Kernel
 # -----------------------------------------------------------------------------
 BOARD_KERNEL_PAGESIZE := 4096
@@ -95,6 +71,7 @@ TARGET_KERNEL_HEADER_ARCH := arm64
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_BOOT_HEADER_VERSION := 3
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_KERNEL_SEPARATED_DTBO := true
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/$(BOARD_KERNEL_IMAGE_NAME)
 
 # -----------------------------------------------------------------------------
@@ -118,7 +95,28 @@ BOARD_KERNEL_CMDLINE += ip6table_raw.raw_before_defrag=1
 BOARD_KERNEL_CMDLINE += iptable_raw.raw_before_defrag=1
 
 # -----------------------------------------------------------------------------
-# File systems
+# Platform
+# -----------------------------------------------------------------------------
+TARGET_BOARD_PLATFORM := lahaina
+TARGET_HAS_GENERIC_KERNEL_HEADERS := true
+TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
+TARGET_OTA_ASSERT_DEVICE := Spacewar
+
+# -----------------------------------------------------------------------------
+# Partitions
+# -----------------------------------------------------------------------------
+BOARD_FLASH_BLOCK_SIZE := 262144
+BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
+BOARD_DTBOIMG_PARTITION_SIZE := 25165824
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := $(BOARD_BOOTIMAGE_PARTITION_SIZE)
+
+BOARD_SUPER_PARTITION_SIZE := 6442450944
+BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
+BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := odm product system system_ext vendor vendor_dlkm
+BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 6438256640
+
+# -----------------------------------------------------------------------------
+# File systems & Vendor DLKM
 # -----------------------------------------------------------------------------
 BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := erofs
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
@@ -126,24 +124,19 @@ BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := erofs
+BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
 
 TARGET_COPY_OUT_ODM := odm
 TARGET_COPY_OUT_PRODUCT := product
 TARGET_COPY_OUT_SYSTEM_EXT := system_ext
 TARGET_COPY_OUT_VENDOR := vendor
+TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
 
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 BOARD_SUPPRESS_SECURE_ERASE := true
 BOARD_RAMDISK_USE_LZ4 := true
-
-# -----------------------------------------------------------------------------
-# Vendor DLKM
-# -----------------------------------------------------------------------------
 BOARD_USES_VENDOR_DLKMIMAGE := true
-TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
-BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
-TARGET_COPY_OUT_VENDOR_BOOT := vendor_boot
 
 # -----------------------------------------------------------------------------
 # System as root
@@ -157,12 +150,26 @@ BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
 
 # -----------------------------------------------------------------------------
+# QCOM
+# -----------------------------------------------------------------------------
+BOARD_USES_QCOM_HARDWARE := true
+
+# -----------------------------------------------------------------------------
 # Recovery
 # -----------------------------------------------------------------------------
 TARGET_NO_RECOVERY := true
 BOARD_USES_RECOVERY_AS_BOOT := true
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_RECOVERY_QCOM_RTC_FIX := true
+
+# -----------------------------------------------------------------------------
+# Security patch level
+# -----------------------------------------------------------------------------
+PLATFORM_VERSION := 99.87.36
+PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
+PLATFORM_SECURITY_PATCH := 2099-12-31
+VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
+BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
 # -----------------------------------------------------------------------------
 # AVB
@@ -185,16 +192,10 @@ TW_INCLUDE_FBE_METADATA_DECRYPT := true
 BOARD_USES_QCOM_FBE_DECRYPTION := true
 TW_PREPARE_DATA_MEDIA_EARLY := true
 TW_USE_FSCRYPT_POLICY := 2
-PLATFORM_VERSION := 99.87.36
-PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
-PLATFORM_SECURITY_PATCH := 2099-12-31
-VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
-BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
 # -----------------------------------------------------------------------------
 # TWRP Configuration
 # -----------------------------------------------------------------------------
-
 # Display
 TW_THEME := portrait_hdpi
 TW_MAX_BRIGHTNESS := 2047
