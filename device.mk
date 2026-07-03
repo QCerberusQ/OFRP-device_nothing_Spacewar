@@ -16,6 +16,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 # -----------------------------------------------------------------------------
 LOCAL_PATH := device/nothing/Spacewar
 
+PRODUCT_PLATFORM := lahaina
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 PRODUCT_SHIPPING_API_LEVEL := 31
 
@@ -115,3 +116,13 @@ SOONG_CONFIG_ufsbsg_ufsframework := bsg
 # FUSE PASSTHROUGH
 # -----------------------------------------------------------------------------
 PRODUCT_PROPERTY_OVERRIDES += persist.sys.fuse.passthrough.enable=true
+
+# -----------------------------------------------------------------------------
+# Overrides
+# -----------------------------------------------------------------------------
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRODUCT_NAME=$(PRODUCT_RELEASE_NAME) \
+    TARGET_DEVICE=$(PRODUCT_RELEASE_NAME)
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.product.device=$(PRODUCT_RELEASE_NAME)
