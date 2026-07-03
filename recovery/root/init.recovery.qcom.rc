@@ -33,7 +33,6 @@ on early-init
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
     mkdir /dev/fscklogs 0770 root system
-    setprop sys.usb.configfs 1
     write /sys/class/power_supply/usb/otg_switch 1
 
 on early-fs
@@ -44,7 +43,6 @@ on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    # 1. Firmware Mount
     mkdir /firmware
     wait /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix}
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
@@ -53,17 +51,12 @@ on post-fs
     start keymasterd
     start boot-hal-1-2
 
-on boot
-    setprop sys.usb.config mtp,adb
-
-# Firmware hazır olduğunda donanım servislerini ateşle
 on property:dev.mnt.blk.firmware=*
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
     
-    # Titreşim motoru ayarı
     wait /sys/class/qcom-haptics/fifo_vmax
-    write /sys/class/qcom-haptics/fifo_vmax 1500mv
+    write /sys/class/qcom-haptics/fifo_vmax 800mv
 
     wait /sys/class/power_supply/battery
     start health-hal-2-1
@@ -81,8 +74,6 @@ on property:ro.boot.usbcontroller=*
 
 on property:hwservicemanager.ready=true
     setprop sys.boot_completed 1
-
-# --- Servis Tanımları ---
 
 service keymasterd /system/bin/keymasterd
     user root
