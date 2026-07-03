@@ -33,7 +33,6 @@ on early-init
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
     mkdir /dev/fscklogs 0770 root system
-    write /sys/class/power_supply/usb/otg_switch 1
 
 on early-fs
     write /proc/sys/walt/sched_lib_name "recovery,updater,update_engine,update_engine_sideload"
@@ -51,6 +50,9 @@ on post-fs
     start keymasterd
     start boot-hal-1-2
 
+on boot
+    setprop sys.usb.config adb
+
 on property:dev.mnt.blk.firmware=*
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
@@ -61,16 +63,6 @@ on property:dev.mnt.blk.firmware=*
     wait /sys/class/power_supply/battery
     start health-hal-2-1
     start vendor.qti.vibrator
-
-on property:ro.boot.usbcontroller=*
-    setprop sys.usb.controller ${ro.boot.usbcontroller}
-
-    wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
-    write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
-
-    wait /sys/class/udc/${ro.boot.usbcontroller} 1
-
-    setprop sys.usb.config mtp,adb
 
 on property:hwservicemanager.ready=true
     setprop sys.boot_completed 1
